@@ -1625,14 +1625,15 @@ remove)										# 已被远程仓库移除的分支
   1.  `git branch serverfix origin/serverfix`
 2.  ``git checkout -b serverfix origin/serverfix`
   3.  `git checkout --track origin/serverfix`
+
     *   1/2的简写，无法自行设置跟踪分支名
-  
+
 4.  `git checkout serverfix`
   
     *   如果不存在本地分支`serverfix`：自动创建该分支并跟踪``origin/serverfix`
-  
+    
     *   如果存在本地分支`serverfix`：自动跟踪`origin/serverfix`
-  
+
 * 将当前所在分支设置成跟踪分支
   
     1.  `git branch -u origin/serverfix`
@@ -1853,24 +1854,15 @@ git push origin new_br	# 会将new_br推送到origin中
 
     终止`rebase`操作并回退到`rebase`之前的状态
 
-* `rebase`之前
-
-  ![rebase操作之前](./image/rebase操作之前.jpg)
-  
-* ***注意***！！！
-
-  `git rebase master`的解释：将当前所在分支`experiment`基于与`master`的共同祖先的多个commit的多个`diff`，应用于`master`
-
 * 优势：获得简洁的提交历史，提交结果毫无区别；
 
 * 用途示例：
 
   ```
-$ git checkout iss53
+  $ git checkout iss53
   $ git rebase master
-$ git push origin iss53
-  
-# 推送以后，远程分支的管理员便可以只进行简单的快进合并就可以运用你开发的功能了
+  $ git push origin iss53
+  推送以后，远程分支的管理员便可以只进行简单的快进合并就可以运用你开发的功能了
   ```
 
 ### 更有趣的变基操作 ###
@@ -1904,7 +1896,7 @@ $ git push origin iss53
 
 *   在变基过程中合并提交
 
-    ```
+  ```
     git rebase -i master exp
     进入编辑器会显示多条类似下面的信息
     pick 9c01382 exp ahead 1
@@ -1919,7 +1911,7 @@ $ git push origin iss53
     * 9fc795e (master) master ahead 1
     * b2b2c94 master init
     # 27f1a22即为合并后的唯一提交
-    ```
+  ```
 
 ### 变基操作的潜在危害 ###
 
