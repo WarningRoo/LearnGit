@@ -1742,92 +1742,136 @@ git push origin new_br	# 会将new_br推送到origin中
 
 ## 变基 ##
 
-* 什么是变基？
+* "在Git中整合来自不同分支的修改主要有两种方法：`merge`以及`rebase`"
+
+* 什么是变基：整合分支的一种方法（`merge`是另外一种）
 
 * 如何使用变基？
 
-* 变基的强大之处？
+* 变基的强大之处
 
 * 变基不适用的场合有哪些？
 
 * 一次变基操作可能产生多个提交吗？
 
-  换言之，`diff`是合并在一起重现的？还是单个多次重现的？单次提交
+  换言之，`diff`是合并在一起重现的？还是单个多次重现的？
+  
+  解答：一次变基操作可能产生多个提交，产生提交的次数取决于rebase时所在分支在***共同祖先***之后提交的次数；由此可以得出，git的变基操作会生成每次commit基于前一次commit的diff文件，并依次应用在目标分支上
 
 ### 基本的变基操作 ###
 
-* 要合并`c4`与`c3`，既可以在`c3`上执行`git merge c4`也可以通过变基的方式实现；
+* 概念：将某个分支上基于**共同祖先**的所有提交的更改在另一个分支上重现一遍
 
-  将`c4`提交的更改以补丁的形式应用到`c3`提交上；
+* `merge` review
 
-* 概念：将某个分支上所有提交的更改在另一个分支上重现一遍。
+    ```
+    初始状态：
+    λ git log --oneline --decorate --all --graph
+    * 109caa5 (HEAD -> exp) exp ahead 2
+    * 9c01382 exp ahead 1
+    | * 9fc795e (master) master ahead 1
+    |/
+    * b2b2c94 master init
+    # 可以看到exp分支与master分支已经发生了分离，共同祖先为"b2b2c94"
+    
+    # 接下来执行merge操作
+    
+    $ git checkout master
+    $ git merge exp
+    
+    # 合并后状态
+    λ git log --oneline --decorate --all --graph
+    *   87f7647 (HEAD -> master) After merge
+    |\
+    | * 109caa5 (exp) exp ahead 2
+    | * 9c01382 exp ahead 1
+    * | 9fc795e master ahead 1
+    |/  
+    * b2b2c94 master init
+    # 将exp与master分支合并，在当前分支（master）创建新的commit(87f7647)，当前分支前进一次
+    ```
+
+* `rebase`
+
+  ```
+  # 初始状态
+  初始状态：
+  λ git log --oneline --decorate --all --graph
+  * 109caa5 (HEAD -> exp) exp ahead 2
+  * 9c01382 exp ahead 1
+  | * 9fc795e (master) master ahead 1
+  |/
+  * b2b2c94 master init
+  # 可以看到exp分支与master分支已经发生了分离，共同祖先为"b2b2c94"
+  # exp基于共同祖先有两次提交
+  # master基于共同祖先有一次提交
+  
+  # 开始rebase
+  $ git checkout exp
+  $ git rebase master
+  
+  # rebase后状态
+  λ git log --oneline --decorate --all --graph
+  * 7b2d348 (HEAD -> exp) exp ahead 2
+  * 69400fc exp ahead 1
+  * 9fc795e (master) master ahead 1
+  * b2b2c94 master init
+  # 可以看到当前log中完整保留了exp中的两次独立commit
+  # rebase过程中，diff时分次应用的————因为第一个diff出现了conflict，解决时发现仅应用了第一个commit补丁（解决后需要add添加到暂存区，然后git rebase --continue）
+  # 之前exp中的提交消失了，代之以另外两个commit
+  ```
 
 * 原理：基于如下图示描述
 
   ***首先找到要 整合的两个分支（当前所在分支与整合到的分支）的共同祖先，然后取得当前所在分支的每次提交引入的更改（diff），并把这些更改保存为临时文件，这之后将当前分支重置为要整合的分支，最后在该分支上依次引入之前保存的每个更改（diff）***
 
-  * 两个要整合的分支：当前所在分支与命令中rebase之后的参数指定的分支
-  * 共同祖先：要基于该共同祖先创建`diff`补丁
-  * 切换到要整合的分支：`rebase`操作包含一次隐含的分支切换操作；
-  * 完成`rebase`操作后，会再有一次隐含的分支切换操作，切换回执行`rebase`之前的分支
-  * 切换回的之前的分支目前会领先之前要`rebase`到的分支，就可以通过快进来合并了~~
+  * 两个要整合的分支：当前所在分支与命令中rebase参数指定的分支
+  * 共同祖先：要基于该共同祖先“开始”创建`diff`
+  * 切换到要整合到的分支：一次隐含的分支切换操作
+  * `rebase`后切换会原分支，会再有一次隐含的分支切换操作
+  * 原分支目前领先之前要整合到的分支，且可以通过fast-forward进行快进合并
 
-* *疑点*：
+* `rebase`过程中，如果`diff`应用于目标分支有冲突的话，会创建临时的无名分支；并切换到该分支，此时`rebase`操作终止，我们可以选择执行以下三条命令：
 
-  * 当前`git`实现中，如果将`diff`应用于目标分支时有冲突的话，会创建临时的无名分支；并切换到该分支，此时`rebase`操作终止，我们可以选择执行以下三条命令：
+  * `git rebase --continue`
 
-    * `git rebase --continue`
+    `When you have resolved this problem, run "git rebase --continue"`
 
-      `When you have resolved this problem, run "git rebase --continue"`
+    解决完冲突后，执行该命令即可继续完成`rebase`操作
 
-      解决完冲突后，执行该命令即可继续完成`rebase`操作
+    **解决冲突完成后，必须使用`git add`将所有修改添加到暂存区后才可以执行上述命令**
 
-      **解决冲突完成后，必须使用`git add`将所有修改添加到暂存区后才可以执行上述命令**
+  * `git rebase --skip`
 
-    * `git rebase --skip`
+    `If you prefer to skip this patch, run"git rebase --skip" instead`
 
-      `If you prefer to skip this patch, run"git rebase --skip" instead`
+    跳过冲突的补丁继续进行`rebase`
 
-      跳过冲突的补丁继续进行`rebase`
+  * `git rebase --abort`
 
-    * `git rebase --abort`
+    `To check ouot the original branch and stop rebaseing, run"git rebase --abort"`
 
-      `To check ouot the original branch and stop rebaseing, run"git rebase --abort"`
+    终止`rebase`操作并回退到`rebase`之前的状态
 
-      终止`rebase`操作并回退到`rebase`之前的状态
-
-* 示例：
-
-  ```
-  $ git checkout experiment
-  $ git rebase master
-  ```
-
-  图示：
+* `rebase`之前
 
   ![rebase操作之前](./image/rebase操作之前.jpg)
-
+  
 * ***注意***！！！
 
-  `git rebase master`的解释：将当前所在分支`experiment`基于与`master`的共同祖先，即`c2`的`diff`补丁运用于`master`分支上
+  `git rebase master`的解释：将当前所在分支`experiment`基于与`master`的共同祖先的多个commit的多个`diff`，应用于`master`
 
 * 优势：获得简洁的提交历史，提交结果毫无区别；
 
 * 用途示例：
 
-  * 远程分支：`origin/master`
-
-  * 跟踪分支：`master`；且与远程分支处于同步状态
-
-  * 需要合并到远程分支上的功能分支`iss53`
-
-    ```
-    $ git checkout iss53
-    $ git rebase master
-    $ git push
-    ```
-
-  * 推送以后，远程分支的管理员便可以只进行简单的快进合并就可以运用你开发的功能了~
+  ```
+$ git checkout iss53
+  $ git rebase master
+$ git push origin iss53
+  
+# 推送以后，远程分支的管理员便可以只进行简单的快进合并就可以运用你开发的功能了
+  ```
 
 ### 更有趣的变基操作 ###
 
@@ -1838,16 +1882,16 @@ git push origin new_br	# 会将new_br推送到origin中
   * `git rebase [base_branch][topic_branch]`
     * 不需要，事先切换到要被`rebase`的分支；
   * `git rebase --onto [base_branch] [branch1] [target_branch]`
-    * 将`target_branch`分支基于与`branch1`分支共同祖先的修改，在`base_branch`上重现；
+    * 将`target_branch`分支基于与`branch1`分支共同祖先的diff，在`base_branch`上重现；
 
-* 上述第三种操作
+* 上述第三条命令：
 
   * 适用情况：
 
     * 当在某个项目分支`branch1`进行项目开发时；
     * 想要修复某个bug时
     * 可以不切换到`master`分支；
-    * 而可以直接基于当前项目分支进行修改
+    * 而可以直接基于当前项目分支新建分支进行修改
     * 并将修改在不合入任何项目代码的情况下合入bug修复代码
 
   * 图示：
@@ -1856,16 +1900,34 @@ git push origin new_br	# 会将new_br推送到origin中
 
     ![rebase_onto操作之后](./image/rebase_onto操作之后.jpg)
 
-  * 这里产生两个新的提交并不准确；事实上只会产生一个提交；而不是$C8^{`}$与$C9^{`}$两个；
   * 将`client`基于`C3`提交的修改在`master`上重现
+
+*   在变基过程中合并提交
+
+    ```
+    git rebase -i master exp
+    进入编辑器会显示多条类似下面的信息
+    pick 9c01382 exp ahead 1
+    pick 109caa5 exp ahead 2
+    
+    只需要将第二行pick按照注释提示，修改为squash，保存退出
+    
+    # 最终rebase操作完成后，会提示用户重新键入新的commit注释信息
+    # 操作完成后状态：
+    λ git log --oneline --decorate --graph --all
+    * 27f1a22 (HEAD -> exp) exp ahead 1/2
+    * 9fc795e (master) master ahead 1
+    * b2b2c94 master init
+    # 27f1a22即为合并后的唯一提交
+    ```
 
 ### 变基操作的潜在危害 ###
 
-* **不要对已经存在于本地仓库之外的提交执行变基操作**
+* ***不要对已经存在于本地仓库之外的提交执行变基操作***
 
 * 实质：在执行变基操作时，实际上是抛弃了已有的某些提交，随后创建了新的对应提交。
 
-  	 	新提交与预案提交虽然内容上相似，但实际上它们是不同的提交；
+  	 	新提交与原提交虽然内容上相似，但实际上它们是不同的提交；
 
   将远程仓库中已上传的分支进行rebase后，如果有人基于被抛弃的提交进行开发；将会导致该开发者的开发没有了基础提交（或者说，其基础提交已经被废弃），从而导致困惑；
 
@@ -1906,10 +1968,6 @@ git push origin new_br	# 会将new_br推送到origin中
 
   `git remote show origin`——查看远程仓库`origin`的详细信息，其中就包含有哪些远程分支
 ***Git服务器***
-
-搭建Git以展开协作
-
-托管方法
 
 # 服务器上的Git #
 
