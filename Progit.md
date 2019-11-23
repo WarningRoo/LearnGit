@@ -46,13 +46,9 @@
 >
 >    ![分布式版本控制系统](./image/分布式版本控制系统.jpg)
 
+## Git与其他版本控制系统的差异 ##
 
-
-## 起步 ##
-
-### Git与其他版本控制系统的差异 ###
-
-#### 对待数据的方式 #####
+### 对待数据的方式 ####
 
 Git与其他版本控制系统的主要差异在于：**Git对待数据的方法**
 
@@ -105,11 +101,11 @@ Git与其他版本控制系统的主要差异在于：**Git对待数据的方法
 
      ​	version2——&a2/&b1
 
-#### 几乎所有操作都在本地执行 ####
+### 几乎所有操作都在本地执行 ###
 
 * Git绝大多数操作都只需要访问本地文件和资源，一般不需要来自网络上其他计算机的信息。
 
-#### Git保证完整性 ####
+### Git保证完整性 ###
 
 * Git使用**校验和**作为索引
 
@@ -125,11 +121,11 @@ Git与其他版本控制系统的主要差异在于：**Git对待数据的方法
     * tree：树对象内容（文件名/模式/类型/SHA-1）
     * commit：提交对象的内容（根树对象SHA-1/提交人/mail/提交注释）
 
-#### Git一般只添加数据 ####
+### Git一般只添加数据 ###
 
 * 如标题所说，“数据一旦commit到仓库，就不太可能会丢失了”
 
-### Git中，文件的三种状态 ###
+## Git中，文件的三种状态 ##
 
 * 在Git中，文件可以处于以下三种状态之一
 
@@ -191,15 +187,15 @@ Git与其他版本控制系统的主要差异在于：**Git对待数据的方法
 
 
 
-### Git命令行 ###
+## Git命令行 ##
 
 ***GUI模式***
 
 ***原生的命令行模式***
 
-### 安装Git ###
+## 安装Git ##
 
-#### 从源代码安装 ####
+### 从源代码安装 ###
 
 * 可以获得最新版本的Git
 
@@ -236,9 +232,9 @@ Git与其他版本控制系统的主要差异在于：**Git对待数据的方法
   > git clone git://git.kernel.org/pub/scm/git/git.git
   > ```
 
-### 基本配置 ###
+## 基本配置 ##
 
-#### Git配置文件概述 ####
+### Git配置文件概述 ###
 
 * `git config`工具配置的变量存储在三个不同的位置：
 
@@ -260,7 +256,7 @@ Git与其他版本控制系统的主要差异在于：**Git对待数据的方法
 
 * 使用对应选项进行的配置会写入到对应的配置文件中
 
-#### 用户信息 ####
+### 用户信息 ###
 
 ```
 # 进行当前用户的git配置
@@ -275,19 +271,19 @@ $ git config user.name "student_0"
 $ git config user.email student_0@chd.edu
 ```
 
-#### 文本编辑器 ####
+### 文本编辑器 ###
 
 ```
 $ git config --global core.editor vim
 ```
 
-#### diff工具 ####
+### diff工具 ###
 
 ```
 $ git config --global diff.tool vimdiff
 ```
 
-#### 检查配置信息 ####
+### 检查配置信息 ###
 
 ```
 查看所有system配置：
@@ -311,7 +307,7 @@ $ git config user.email
 johndoe@example.com
 ```
 
-#### 获取帮助 ####
+### 获取帮助 ###
 
 ```
 $ git help <verb>
@@ -1317,20 +1313,21 @@ $ git checkout req53
     >   1.  添加远程仓库
     >   2.  移除无效的远程仓库
     >   3.  管理不同的远程分支并定义它们是否被跟踪
+    >   4.  远程仓库常被用于多人协作
+    >   5.  一个本地仓库可以添加多个远程仓库（可以是多个无关仓库，但是目前看来没什么意义）
 
--   **上游分支**：本地分支，且该分支已关联了一个远程分支；
+-   **上游分支**：已关联远程分支的本地分支；
 
 -   **push**：将已关联的本地分支的内容推送到远程分支上
 
-    >   推送的对象是”本地分支的内容”
+    >   推送的对象是”本地分支”——事实上是将本地分支在远程仓库中与远程分支进行`merge`操作
     >
-    >   如果git push的分支没有关联的远程分支，则在远程仓库中新建同名分支
+    >   如果git push的分支没有关联的远程分支，则在远程仓库中新建同名分支，并在本地创建对应的远程分支（仍不会主动关联）
     >
-    >   并在本地创建对应的远程分支，当然，将本地该分支与远程分支关联
-
+    
 -   **fetch**：将git仓库中所有本地仓库中缺少的内容获取下来，更新分支（远程分支）等操作
 
--   **pull**：将git仓库中所有本地仓库中缺少的内容获取下来，并合并到对应的本地分支中
+-   **pull**：将git仓库中所有本地仓库中缺少的内容获取下来，并尝试合并到已关联的本地分支
 
 ### 查看远程仓库 ###
 
@@ -1343,37 +1340,33 @@ $ git checkout req53
 
 ### 检查远程仓库 ###
 
--   查看某一远程仓库的更多信息可以使用：`git remote show [remote-name]`命令
-
--   显示信息：
-
-    ```
-    $ git remote show origin
-    * remote origin
-      Fetch URL: https://github.com/schacon/simplegit-progit
-      Push  URL: https://github.com/schacon/simplegit-progit
-      HEAD branch: master						# 本地当前所处的分支
-      Remote branch:
-        master tracked							# 远程分支有哪些
-        dev-branch tracked						# 已跟踪的分支
-        issue-43 new(next fetch will store in remotes/origin)	# 远程仓库新增的分支
-        refs/remotes/origin/issue-11 stale (use 'git remote prune' to
-    remove)										# 已被远程仓库移除的分支
-      Local branch configured for 'git pull':   # 已关联用于pull的分支
-        master merges with remote master
-        dev-branch merges with remote dev-branch	# origin/dev-branch对应远程分支dev-branch
-      Local ref configured for 'git push':		# 已关联用于push的分支
-        master pushes to master (up to date)
-    # 上述信息会告诉我们：
-    # 1. 远程仓库origin中包含了哪些分支
-    # 2. 远程仓库origin中的哪些分支已于哪些本地分支关联
-    # 3. 当执行git push时，哪些本地分支会推送到哪些远程分支上
-    # 4. 当执行git pull时，哪些远程分支会被拉取到本地并与哪些本地分支合并
-    ```
+```
+$ git remote show origin
+* remote origin
+  Fetch URL: https://github.com/schacon/simplegit-progit
+  Push  URL: https://github.com/schacon/simplegit-progit
+  HEAD branch: master						# 本地当前所处的分支
+  Remote branch:							# 远程分支有哪些
+    master tracked
+    dev-branch tracked						# 已跟踪的分支
+    issue-43 new(next fetch will store in remotes/origin)	# 远程仓库新增的分支
+    refs/remotes/origin/issue-11 stale (use 'git remote prune' to
+remove)										# 已被远程仓库移除的分支
+  Local branch configured for 'git pull':   # 已关联用于pull的分支
+    master merges with remote master
+    dev-branch merges with remote dev-branch	# origin/dev-branch对应远程分支dev-branch
+  Local ref configured for 'git push':		# 已关联用于push的分支
+    master pushes to master (up to date)
+# 上述信息会告诉我们：
+# 1. 远程仓库origin中包含了哪些分支（有哪些远程分支）
+# 2. 远程仓库origin中的哪些分支已与本地分支关联
+# 3. 当执行git push时，哪些本地分支会推送到哪些远程分支上
+# 4. 当执行git pull时，哪些远程分支会被拉取到本地并与哪些本地分支合并
+```
 
 ### 添加远程仓库 ###
 
--   **克隆仓库`git clone`**：与添加远程仓库不同：
+-   **克隆仓库`git clone`**：与添加远程仓库不同
 
     -   克隆仓库会在当前目录新建一个目录作为远程克隆仓库的工作目录，并记录远程仓库中的所有信息
 
@@ -1383,7 +1376,7 @@ $ git checkout req53
 
         也就是说，一个本地仓库可以**添加多个远程仓库**，每个远程仓库不必相关。
 
-    -   **克隆仓库**会在本地创建远程对应的本地仓库，并创建本地master分支，将本地master与远程master分支关联
+    -   **克隆仓库**会在本地创建远程对应的本地仓库，并创建本地master分支，将本地master与远程master分支关联（默认只关联master）
 
 -   **添加远程仓库**：将本地仓库与远程服务器上的一个仓库**关联**起来；
 
@@ -1398,17 +1391,17 @@ $ git checkout req53
 ### 从远程仓库获取和拉取数据 ###
 
 -   `git fetch`与`git pull`的区别与关系
-    -   `git fetch`只会将远程仓库中的数据拉取到本地，并更新本地存储的远程仓库的数据
-    -   `git pull`在本地某个分支与远程仓库的分支关联的情况下（克隆仓库会执行默认关联），将远程分支中更新的内容拉取到本地并尝试与本地分支合并；
+    -   `git fetch`将远程仓库中的数据拉取到本地，并更新本地存储的远程仓库的数据
+    -   `git pull`在本地某个分支与远程仓库的分支关联的情况下（克隆仓库会执行默认关联master），将远程分支中更新的内容拉取到本地并尝试与本地分支合并
 
 ### 将数据推送到远程仓库 ###
 
 -   向远程仓库推送数据的基本单元是：**分支**
-    -   所以描述为：将本地某个分支推送到某个远程仓库
+    -   所以描述为：将本地某个分支推送到某个远程仓库，并与远程仓库中的关联分支合并
     -   `git push origh master`
 -   推送的前提：
     -   拥有origin远程仓库的写权限
-    -   上一次fetch后并合并后（或者上一次git pull后）没有人向该远程仓库中推送过数据
+    -   上一次fetch后并合并后（或者上一次`git pull`后）没有人向该远程仓库中推送过数据
 
 ### 删除和重命名远程仓库 ###
 
@@ -1429,11 +1422,11 @@ $ git checkout req53
 
 * **远程分支**：指向远程仓库的分支的指针，这些指针存在于本地且**无法移动**
 
-  * 远程分支（指针）无法被手动移动，但是会在与服务器远程通信时自动更新
+  * 远程分支（指针）无法直接移动，但是会在与服务器远程通信时自动更新
 
     像书签一样，提示你上一次连接服务器时远程仓库中每个分支的位置
 
-  * `(remote)/(branch)`
+  * 引用方法：`(remote)/(branch)`
 
 * 示例：
 
@@ -1498,12 +1491,18 @@ $ git checkout req53
   $ cd progit
   $ git init
   $ git remote add progit https://progit.git
-  $ git fetch
+  $ git fetch progit
   $ cd ..
+  
   # 1. 创建了仓库目录，名为progit
   # 2. 进入到progit，并执行git init初始化仓库
   # 3. 添加https://progit.git指定的远程仓库
   # 4. 执行git fetch拉取远程仓库的所有数据
+  
+  注意：
+  	这里并不等价，分步执行这些命令后，本地仓库仍未与远程仓库直接关联；可以进行以下操作（尚未验证的，不知道常规做法是怎样的）：
+  	1. 基于远程origin/master分支创建本地master分支
+  	2. 创建本地master分支（初次提交），将origin/master merge进入本地master分支
   ```
 
 ### 推送 ###
@@ -1518,11 +1517,13 @@ $ git checkout req53
   >
   >   `git push origin serverfix:kick_your_ass`
   >
-  >   `git push origin serverfix`
+  >   >   第三条命令：第一个`refs/heads/serverfix`代表的是本地仓库中的本地分支
+  >   >
+  >   >   ​						第二个`refs/heads/serverfix`代表的是远程仓库origin中的分支（对本地来说就是一个远程分支）
   >
   >   "推送本地的serverfix分支来更新远程仓库上的serverfix分支。"
   >
-  >   "要特别注意的一点是当抓取到新的远程跟踪分支时，本地不会主动生成一份可编辑的副本（拷贝）。换一句话说，这种情况下，不会有一个新的serverfix分支；指有一个不可以修改的origin/serverfix指针"
+  >   "要特别注意的一点是当抓取到新的远程跟踪分支时，本地不会主动生成一份可编辑的副本（拷贝）。换一句话说，这种情况下，不会有一个新的serverfix分支；只有一个不可以修改的origin/serverfix指针"
   >
   >   “可以运行`git merge origin/serverfix`将这些工作合并到当前所在的分支。如果想要在自己的serverfix分支上工作，可以将其建立在远程跟踪分支之上：`git branch serverfix origin/serverfix`”——基于远程分支`origin/serverfix`创建一个本地分支，并设置为跟踪分支
 
@@ -1535,12 +1536,15 @@ $ git checkout req53
   另外一种写法：
   $ git push origin serverfix:serverfix
   # 将serverfix推送到origin/serverfix上
+  
   换言之：可以将本地的不同名分支推送到远程分支上
   $ git push origin sf:serverfix
   # 将本地分支sf推送到origin/serverfix远程分支上
+  
   # 更或者，直接推送上游分支即可
   $ git push hello hmaster
-  # 会将该分支推送至远程仓库中，如果该分支在远程仓库不存在，则会在hello中创建hmaster分支，并将修改push到该同名分支hmaster中(但是仍然不会将该本地分支设置为远程仓库上同名分支的上游分支)
+  # 会将该分支推送至远程仓库(hello)中，如果该分支在远程仓库不存在，则会在hello中创建hmaster分支，并将修改push到该同名分支hmaster中(但是仍然不会将该本地分支设置为远程仓库上同名分支的上游分支)
+  
   $ git push hello hmaster:master
   # 这样才会将修改推送到hello/master上并合并
   ```
@@ -1551,9 +1555,9 @@ $ git checkout req53
 
           *   会在远程仓库中增加对应分支
 
-              `git push origin test_br`——新增分支test_br
+              `git push origin test_br`——远程仓库新增分支test_br
 
-              `git push origin test_br:kick`——新增分支kick
+              `git push origin test_br:kick`——远程仓库新增分支kick
 
           *   ***但是不会自动设置上游分支关系！！！***
 
@@ -1571,7 +1575,7 @@ $ git checkout req53
 
 * `git fetch origin`
 
-  * 协作者在他的本地仓库（已添加该远程仓库）执行该命令后会在其本地创建远程分支（`serverfix`）；但不会自动创建对应的跟踪分支（上游分支）
+  * 当在本地仓库中添加一个远程仓库后，`fetch`会拉去远程仓库中的分支信息，但不会自动创建本地分支与之对应。
   * 如果需要创建跟踪分支跟踪该分支，需要以下操作
 
 * `git checkout -b serverfix origin/serverfix`
@@ -1587,8 +1591,7 @@ $ git checkout req53
   * 上述命令执行后：
     * 可以通过`git push`将跟踪分支上的内容推送到对应的远程分支，而不需要使用命令`git push origin serverfix`
     * 可以通过`git pull`从远程分支上拉取数据并合并到跟踪分支，不需要再`git fetch origin`再`git merge origin/serverfix`合并到本地分支
-  * 以下命令并不会创建跟踪分支，只是把远程分支合并到当前分支
-
+  
 * `git merge origin/serverfix`
 
   * 不创建跟踪分支，仅仅将远程分支合并到当前分支。
@@ -1597,49 +1600,44 @@ $ git checkout req53
 
 * **跟踪分支（tracking branch）**：跟踪分支是与远程分支直接关联的本地分支，也称为**上游分支（upstream branch）**
 
-  * 在跟踪分支上，执行`git push`，将跟踪分支的内容推送到远程服务器上！！！
+  * 跟踪分支相关的一般操作：
 
-    * 一般流程：
+    1. `git pull`将远程分支上的内容拉取到本地并合并到跟踪分支上；
 
-      1. `git pull`将远程分支上的内容拉取到本地并合并到跟踪分支上；
+       或者，`git fetch orgin`，再执行`git merge xx/xx`合并到跟踪分支上；
 
-         或者，`git fetch orgin`，再执行`git merge xx/xx`合并到跟踪分支上；
+    2. `git push`将本地分支上的内容推送到远程分支——直接合并远程分支
 
-      2. `git push`将本地分支上的内容推送到远程分支——直接合并远程分支
-
-         远程分支的指针也会更新（`push`操作会与远程仓库通信）
+       远程分支的指针也会更新（`push`操作会与远程仓库通信）
 
   * 克隆仓库时，Git默认情况下会创建`origin/master`远程分支的跟踪分支
 
     * 问题一：克隆仓库时，会在本地创建哪些远程仓库上的分支的远程分支？——仅master
-    * 问题二：克隆仓库时，是否会将不创建远程分支的所有数据拉取到本地？——当然会
-    * 问题三：克隆仓库时，只会创建`master`跟踪分支吗？——是的
+  * 问题二：克隆仓库时，是否会将不创建远程分支的所有数据拉取到本地？——当然会
     * 事实：
-      1. Git默认创建远程分支`origin/master`
+      1. Git默认拉取远程仓库中的所有远程分支
       2. Git默认创建跟踪分支`master`跟踪`origin/master`
-      3. 可以选择性的设置其他跟踪分支——通过之前的那几条命令吗？还是有其他办法？
-      4. 可以选择性的设置不跟踪`master`分支
-
-* 创建跟踪分支
-
-  * `git branch serverfix origin/serverfix`
-
-  * `git checkout -b serverfix origin/serverfix`
-
-  * `git checkout --track origin/serverfix`
-
-    * 同上，简写，无法自行设置跟踪分支名
-
-  * `git checkout serverfix`
-
-    * 如果不存在本地分支`serverfix`：自动创建该分支并跟踪``origin/serverfix`
-  * 如果存在本地分支`serverfix`：自动跟踪`origin/serverfix`
+      3. 可以选择性的设置其他跟踪分支——`clone`后再设置？还是可以进行配置？
+      4. 可以选择性的设置不跟踪`master`分支——如何设置？
   
-* `git branch -u origin/serverfix`
-  
-    `git branch --set-upstream-to origin/serverfix`
+* 创建跟踪分支的方法
 
-    * 将当前本地分支设置成跟踪分支
+  1.  `git branch serverfix origin/serverfix`
+2.  ``git checkout -b serverfix origin/serverfix`
+  3.  `git checkout --track origin/serverfix`
+    *   1/2的简写，无法自行设置跟踪分支名
+  
+4.  `git checkout serverfix`
+  
+    *   如果不存在本地分支`serverfix`：自动创建该分支并跟踪``origin/serverfix`
+  
+    *   如果存在本地分支`serverfix`：自动跟踪`origin/serverfix`
+  
+* 将当前所在分支设置成跟踪分支
+  
+    1.  `git branch -u origin/serverfix`
+
+    2.  `git branch --set-upstream-to origin/serverfix`
 
 * 远程分支简写
 
@@ -1663,11 +1661,15 @@ $ git checkout req53
   ```
   * 领先n次
 
-    跟踪分支上有n次提交未合并（需要`push`到远程仓库）到远程分支上
+    跟踪分支上有n次提交未合并到远程分支上
+
+    （需要`git push origin xx`到远程仓库）
 
   * 落后n次
 
-    远程分支上有n次提交未合并（需要执行`git merge origin/xx`）到跟踪分支上
+    远程分支上有n次提交未合并到本地跟踪分支上
+
+    （需要执行`git merge origin/xx`或者`git pull origin xx`）
 
   * `git branch -vv`命令不会与远程仓库通信；一般操作方式为：
 
@@ -1677,21 +1679,23 @@ $ git checkout req53
 * 一些发现：
 
   * git允许我们直接切换到远程分支上，并进行修改、提交
-  * 但是我们所切换到的实际上是一个commit节点，并未对应任何本地分支，git也会有相应提示
-  * 遗留问题：
-    * git push origin origin/test_br，test_br为远程分支，这个操作究竟做了些什么？
-        * 现在已经不确定这个问题描述是否正确了，尴尬……
-  * git checkout origin/test_br后，进行修改、提交，如何在不关联上游分支的情况下，将该修改push到远程仓库？
   
+      但是我们所切换到的实际上是一个commit节点，并未对应任何本地分支，git也会有相应提示
+  
+  * `git push origin test_br/test_br`，这个操作究竟做了些什么？
+  
+      将本地分支test_br上的修改merge到远程分支test_br上
+  
+  * `git checkout origin/test_br`后，进行修改、提交，如何在不关联上游分支的情况下，将该修改push到远程仓库？
   
 
 ### 拉取 ###
 
 * `git fetch origin`
   * 该命令会拉取本地没有的远程所有更新更改数据，但不会更改工作目录
-  * 只会从服务器拉取数据，然后交给用户自己合并`git merge origin/xx`
+  * 只会从服务器拉取数据，然后由用户自行决定是否/如何合并(`git merge origin/xx`)
 * `git pull`
-  * 在跟踪分支上执行该命令，该命令拉取远程仓库中所有更新数据，并尝试将远程分支合并到跟踪分支；
+  * 在跟踪分支上执行，会拉取远程仓库中所有更新数据，并尝试将远程分支合并到当前跟踪分支上；
 
 ### 删除远程分支 ###
 
@@ -2572,6 +2576,22 @@ ssh-keygen
 *   分支/标签的本质：
 
     *   `.git/refs`目录下的一个命名为分支名或标签名的文件，其中存储了某个提交的SHA-1值
+
+*   `refs/`目录结构说明：
+
+    ```
+    $ tree .git/refs/
+    .git/refs/
+    ├── heads/				该目录直接存储本地分支
+    │   └── master				本地仓库唯一的本地分支
+    ├── remotes/			该目录以远程仓库名为子目录名存储对应远程仓库的引用信息
+    │   └── origin/				该目录存储对应远程仓库中的分支（远程分支）
+    │       ├── HEAD				远程仓库的HEAD
+    │       ├── fix_it				远程仓库中的fix_it分支
+    │       └── master				远程仓库中的master分支
+    └── tags/				该目录直接存储本地仓库中的标签
+        └── h					本地仓库中的标签h
+    ```
 
 *   引用/数据对象/树对象/提交对象之间的关系：
 
