@@ -3096,9 +3096,29 @@ git <verb> -h
 man git-<verb>
 ```
 
+# Git使用记录 #
 
+## git commit --amend 会重建commit对象 ##
 
+*   回放
 
+    *   完成<rebase>章节笔记，直接commit并push到远程仓库后发现有一些瑕疵需要修改
+    *   接着在本地修改并使用如下命令合并提交到上一次commit（已push到远程仓库中的commit）
+
+    ```
+    $ git commit --amend
+    ```
+
+    *   then，计划将该修改push到远程仓库，但出现了非"fast-forward"合并，进而无法直接push
+
+*   原因
+
+    *   `git commit --amend`操作会修改上一个commit，如果该commit对象已经被push到远程仓库中，那么这种操作是有风险的
+    *   如果该commit对象被其他协作者fetch到本地并基于该对象进行了开发，那么我们本地对该对象的修改将会引发类似于`rebase`操作修改已push的commit对象类似的问题
+
+*   总结
+
+    对于已push的commit对象，不要做类似`rebase`/`commit --amend`会修改commit对象的操作
 
 
 
