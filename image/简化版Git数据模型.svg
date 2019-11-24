@@ -1,0 +1,86 @@
+<svg width="550" height="350" xmlns="http://www.w3.org/2000/svg" class="st9">
+ <style type="text/css">
+  <![CDATA[
+		.st1 {fill:#a8d08d;stroke:#41719c;stroke-width:0.75}
+		.st2 {fill:#41719c;font-family:Calibri;font-size:1.5em}
+		.st3 {fill:#d8d8d8;stroke:#41719c;stroke-width:0.75}
+		.st4 {marker-end:url(#mrkr4-21);stroke:#5b9bd5;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st5 {fill:#5b9bd5;fill-opacity:1;stroke:#5b9bd5;stroke-opacity:1;stroke-width:0.28409090909091}
+		.st6 {fill:#ffffff;stroke:none;stroke-linecap:butt;stroke-width:7.2}
+		.st7 {fill:#4f87bb;font-family:Calibri;font-size:1.00001em}
+		.st8 {fill:#ffffff;stroke:none;stroke-linecap:butt}
+		.st9 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+ </style>
+ <defs>
+  <g id="lend4">
+   <path id="svg_1" d="m2,1l-2,-1l2,-1l0,2"/>
+  </g>
+ </defs>
+ <g>
+  <title>页-1</title>
+  <g id="shape1-1">
+   <title transform="translate(226.77200317382812,-467.7170104980469) ">矩形</title>
+   <desc transform="translate(226.77200317382812,-467.7170104980469) ">tree</desc>
+   <rect id="svg_3" class="st1" height="56.6929" width="113.386" y="70.86599" x="226.772003"/>
+   <text id="svg_4" class="st2" y="104.61299" x="268.352003">tree</text>
+  </g>
+  <g id="shape2-4">
+   <title transform="translate(391.1809997558594,-368.5039978027344) ">矩形.2</title>
+   <desc transform="translate(391.1809997558594,-368.5039978027344) ">tree</desc>
+   <rect id="svg_5" class="st1" height="56.6929" width="113.386" y="170.079002" x="391.181"/>
+   <text id="svg_6" class="st2" y="203.826002" x="432.761">tree</text>
+  </g>
+  <g id="shape3-7">
+   <title transform="translate(226.77200317382812,-368.5039978027344) ">矩形.3</title>
+   <desc transform="translate(226.77200317382812,-368.5039978027344) ">blob</desc>
+   <rect id="svg_7" class="st3" height="56.6929" width="113.386" y="170.079002" x="226.772003"/>
+   <text id="svg_8" class="st2" y="203.826002" x="267.192003">blob</text>
+  </g>
+  <g id="shape4-10">
+   <title transform="translate(62.36220169067383,-368.5039978027344) ">矩形.4</title>
+   <desc transform="translate(62.36220169067383,-368.5039978027344) ">blob</desc>
+   <rect id="svg_9" class="st3" height="56.6929" width="113.386" y="170.079002" x="62.362202"/>
+   <text id="svg_10" class="st2" y="203.826002" x="102.782202">blob</text>
+  </g>
+  <g id="shape5-13">
+   <title transform="translate(391.1809997558594,-269.2909851074219) ">矩形.5</title>
+   <desc transform="translate(391.1809997558594,-269.2909851074219) ">blob</desc>
+   <rect id="svg_11" class="st3" height="56.6929" width="113.386" y="269.292015" x="391.181"/>
+   <text id="svg_12" class="st2" y="303.039015" x="431.601">blob</text>
+  </g>
+  <g id="shape6-16">
+   <title transform="translate(226.77200317382812,-471.6260070800781) ">动态连接线</title>
+   <desc transform="translate(226.77200317382812,-471.6260070800781) ">README</desc>
+   <path id="svg_13" class="st4" d="m226.772003,123.653993l-101.25,43.64"/>
+   <rect id="svg_14" class="st6" height="14.4001" width="42.8203" y="139.664993" x="151.503703"/>
+   <text id="svg_15" class="st7" y="150.463993" x="151.502003">README</text>
+  </g>
+  <g id="shape7-24">
+   <title transform="translate(276.37799072265625,-467.7170104980469) ">动态连接线.7</title>
+   <desc transform="translate(276.37799072265625,-467.7170104980469) ">Rakefile</desc>
+   <path id="svg_16" class="st4" d="m283.467991,127.56299l0,35.48"/>
+   <rect id="svg_17" class="st8" height="14.4001" width="38.8304" y="141.61899" x="264.049391"/>
+   <text id="svg_18" class="st7" y="152.42299" x="264.047991">Rakefile</text>
+  </g>
+  <g id="shape8-31">
+   <title transform="translate(340.1570129394531,-471.6260070800781) ">动态连接线.8</title>
+   <desc transform="translate(340.1570129394531,-471.6260070800781) ">lib</desc>
+   <path id="svg_19" class="st4" d="m340.157013,123.653993l101.25,43.64"/>
+   <rect id="svg_20" class="st8" height="14.4001" width="11.8128" y="139.664993" x="388.108813"/>
+   <text id="svg_21" class="st7" y="150.463993" x="388.107013">lib</text>
+  </g>
+  <g id="shape9-38">
+   <title transform="translate(440.7869873046875,-368.5039978027344) ">动态连接线.9</title>
+   <desc transform="translate(440.7869873046875,-368.5039978027344) ">Simplegit.rb</desc>
+   <path id="svg_22" class="st4" d="m447.876987,226.776002l0,35.48"/>
+   <rect id="svg_23" class="st6" height="14.4001" width="58.823" y="240.832002" x="418.462187"/>
+   <text id="svg_24" class="st7" y="251.636002" x="418.466987">Simplegit.rb</text>
+  </g>
+ </g>
+ <g>
+  <title>background</title>
+  <rect stroke="null" fill="none" id="canvas_background" height="306.000002" width="520.999991" y="64.999998" x="50.000009"/>
+  <rect stroke="null" fill="none" id="svg_25" height="306.000002" width="520.999991" y="44.999998" x="30.000009"/>
+ </g>
+</svg>

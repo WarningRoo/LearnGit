@@ -1,0 +1,178 @@
+<svg width="550" height="430" xmlns="http://www.w3.org/2000/svg" class="st18">
+ <style type="text/css">
+  <![CDATA[
+		.st1 {visibility:visible}
+		.st2 {fill:none;filter:url(#filter_2);stroke:#5b9bd5;stroke-opacity:0.22}
+		.st3 {fill:#5b9bd5;filter:url(#filter_2);font-family:Calibri;font-size:1.5em;font-weight:bold;opacity:0.219608}
+		.st4 {fill:none;stroke:#000000;stroke-width:6}
+		.st5 {fill:#000000;font-family:Calibri;font-size:1.5em;font-weight:bold}
+		.st6 {fill:#5b9bd5;fill-opacity:0.22;filter:url(#filter_2);stroke:#5b9bd5;stroke-opacity:0.22}
+		.st7 {fill:#ffffff;stroke:#c7c8c8;stroke-width:0.25}
+		.st8 {fill:#000000;font-family:Calibri;font-size:1.00001em;font-weight:bold}
+		.st9 {fill:#f7cbac;stroke:#4f87bb;stroke-width:0.75}
+		.st10 {fill:#000000;font-family:Calibri;font-size:0.833336em}
+		.st11 {marker-end:url(#mrkr4-35);stroke:#5b9bd5;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st12 {fill:#5b9bd5;fill-opacity:1;stroke:#5b9bd5;stroke-opacity:1;stroke-width:0.28409090909091}
+		.st13 {fill:none;stroke:#002060;stroke-width:6}
+		.st14 {fill:none;stroke:none;stroke-width:0.25}
+		.st15 {fill:#000000;font-family:Calibri;font-size:1.00001em}
+		.st16 {fill:#5b9bd5;fill-opacity:0.25;filter:url(#filter_2);stroke:#5b9bd5;stroke-opacity:0.25}
+		.st17 {fill:#4f87bb;stroke:#40709c;stroke-width:0.75}
+		.st18 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+ </style>
+ <defs>
+  <g id="lend4">
+   <path id="svg_1" d="m3,2l-2,-1l2,-1l0,2"/>
+  </g>
+ </defs>
+
+ <g>
+  <title>页-1</title>
+  <g id="shape30-1">
+   <title transform="translate(1,1) translate(41.81100082397461,-419.52801513671875) ">矩形</title>
+   <desc transform="translate(1,1) translate(41.81100082397461,-419.52801513671875) ">git.ourcompany.com</desc>
+   <g class="st1" transform="matrix(1,0,0,1,0.345598,1.97279) " id="shadow30-2">
+    <rect id="svg_3" class="st2" height="133.228" width="453.543" y="43.518985" x="42.811001"/>
+    <text id="svg_4" class="st3" y="63.721985" x="192.091001">git.ourcompany.com</text>
+   </g>
+   <rect id="svg_5" class="st4" height="133.228" width="453.543" y="43.518985" x="42.811001"/>
+   <text id="svg_6" class="st5" y="63.721985" x="192.091001">git.ourcompany.com</text>
+  </g>
+  <g id="shape25-9">
+   <title transform="translate(1,1) translate(76.535400390625,-448.3890075683594) ">圆角矩形.25</title>
+   <desc transform="translate(1,1) translate(76.535400390625,-448.3890075683594) ">0b743</desc>
+   <g class="st1" transform="matrix(1,0,0,1,0.345598,1.97279) " id="shadow25-10">
+    <path id="svg_7" class="st6" d="m86.8854,147.890992l74.84,0a9.35418,9.35418 -180 0 0 9.35,-9.36l0,-9.64a9.35418,9.35418 -180 0 0 -9.35,-9.35l-74.84,0a9.35418,9.35418 -180 0 0 -9.35,9.35l0,9.64a9.35418,9.35418 -180 0 0 9.35,9.36z"/>
+   </g>
+   <path id="svg_8" class="st7" d="m86.8854,147.890992l74.84,0a9.35418,9.35418 -180 0 0 9.35,-9.36l0,-9.64a9.35418,9.35418 -180 0 0 -9.35,-9.35l-74.84,0a9.35418,9.35418 -180 0 0 -9.35,9.35l0,9.64a9.35418,9.35418 -180 0 0 9.35,9.36z"/>
+   <text id="svg_9" class="st8" y="137.310992" x="108.9254">0b743</text>
+  </g>
+  <g id="shape26-15">
+   <title transform="translate(1,1) translate(191.33900451660156,-448.3890075683594) ">圆角矩形.26</title>
+   <desc transform="translate(1,1) translate(191.33900451660156,-448.3890075683594) ">a6b4c</desc>
+   <g class="st1" transform="matrix(1,0,0,1,0.345598,1.97279) " id="shadow26-16">
+    <path id="svg_10" class="st6" d="m201.689005,147.890992l74.84,0a9.35418,9.35418 -180 0 0 9.35,-9.36l0,-9.64a9.35418,9.35418 -180 0 0 -9.35,-9.35l-74.84,0a9.35418,9.35418 -180 0 0 -9.35,9.35l0,9.64a9.35418,9.35418 -180 0 0 9.35,9.36z"/>
+   </g>
+   <path id="svg_11" class="st7" d="m201.689005,147.890992l74.84,0a9.35418,9.35418 -180 0 0 9.35,-9.36l0,-9.64a9.35418,9.35418 -180 0 0 -9.35,-9.35l-74.84,0a9.35418,9.35418 -180 0 0 -9.35,9.35l0,9.64a9.35418,9.35418 -180 0 0 9.35,9.36z"/>
+   <text id="svg_12" class="st8" y="137.310992" x="224.339005">a6b4c</text>
+  </g>
+  <g id="shape27-21">
+   <title transform="translate(1,1) translate(306.1419982910156,-448.3890075683594) ">圆角矩形.27</title>
+   <desc transform="translate(1,1) translate(306.1419982910156,-448.3890075683594) ">f4265</desc>
+   <g class="st1" transform="matrix(1,0,0,1,0.345598,1.97279) " id="shadow27-22">
+    <path id="svg_13" class="st6" d="m316.491998,147.890992l74.84,0a9.35418,9.35418 -180 0 0 9.35,-9.36l0,-9.64a9.35418,9.35418 -180 0 0 -9.35,-9.35l-74.84,0a9.35418,9.35418 -180 0 0 -9.35,9.35l0,9.64a9.35418,9.35418 -180 0 0 9.35,9.36z"/>
+   </g>
+   <path id="svg_14" class="st7" d="m316.491998,147.890992l74.84,0a9.35418,9.35418 -180 0 0 9.35,-9.36l0,-9.64a9.35418,9.35418 -180 0 0 -9.35,-9.35l-74.84,0a9.35418,9.35418 -180 0 0 -9.35,9.35l0,9.64a9.35418,9.35418 -180 0 0 9.35,9.36z"/>
+   <text id="svg_15" class="st8" y="137.310992" x="339.851998">f4265</text>
+  </g>
+  <g id="shape33-27">
+   <title transform="translate(1,1) translate(307.5589904785156,-490.4800109863281) ">矩形.33</title>
+   <desc transform="translate(1,1) translate(307.5589904785156,-490.4800109863281) ">master</desc>
+   <rect id="svg_16" class="st9" height="28.3465" width="93.5433" y="77.448989" x="308.55899"/>
+   <text id="svg_17" class="st10" y="94.619989" x="341.07899">master</text>
+  </g>
+  <g id="shape34-30">
+   <title transform="translate(1,1) translate(191.33900451660156,-455.47601318359375) ">动态连接线</title>
+   <path id="svg_18" class="st11" d="m192.339005,133.713987l-14.22,0"/>
+  </g>
+  <g id="shape40-36">
+   <title transform="translate(1,1) translate(306.1419982910156,-455.47601318359375) ">动态连接线.40</title>
+   <path id="svg_19" class="st11" d="m307.141998,133.713987l-14.22,0"/>
+  </g>
+  <g id="shape56-41">
+   <title transform="translate(1,1) translate(42.51969909667969,-205.51199340820312) ">矩形.56</title>
+   <desc transform="translate(1,1) translate(42.51969909667969,-205.51199340820312) ">My computer</desc>
+   <g class="st1" transform="matrix(1,0,0,1,0.345598,1.97279) " id="shadow56-42">
+    <rect id="svg_20" class="st2" height="177.165" width="453.543" y="213.598007" x="43.519699"/>
+    <text id="svg_21" class="st3" y="233.798007" x="219.689699">My computer</text>
+   </g>
+   <rect id="svg_22" class="st13" height="177.165" width="453.543" y="213.598007" x="43.519699"/>
+   <text id="svg_23" class="st5" y="233.798007" x="219.689699">My computer</text>
+  </g>
+  <g id="shape57-49">
+   <title transform="translate(1,1) translate(77.24410247802734,-264.1369934082031) ">圆角矩形.57</title>
+   <desc transform="translate(1,1) translate(77.24410247802734,-264.1369934082031) ">0b743</desc>
+   <g class="st1" transform="matrix(1,0,0,1,0.345598,1.97279) " id="shadow57-50">
+    <path id="svg_24" class="st6" d="m87.594102,332.143007l74.84,0a9.35418,9.35418 -180 0 0 9.35,-9.36l0,-9.64a9.35418,9.35418 -180 0 0 -9.35,-9.35l-74.84,0a9.35418,9.35418 -180 0 0 -9.35,9.35l0,9.64a9.35418,9.35418 -180 0 0 9.35,9.36z"/>
+   </g>
+   <path id="svg_25" class="st7" d="m87.594102,332.143007l74.84,0a9.35418,9.35418 -180 0 0 9.35,-9.36l0,-9.64a9.35418,9.35418 -180 0 0 -9.35,-9.35l-74.84,0a9.35418,9.35418 -180 0 0 -9.35,9.35l0,9.64a9.35418,9.35418 -180 0 0 9.35,9.36z"/>
+   <text id="svg_26" class="st8" y="321.563007" x="109.634102">0b743</text>
+  </g>
+  <g id="shape58-55">
+   <title transform="translate(1,1) translate(192.0469970703125,-264.1369934082031) ">圆角矩形.58</title>
+   <desc transform="translate(1,1) translate(192.0469970703125,-264.1369934082031) ">a6b4c</desc>
+   <g class="st1" transform="matrix(1,0,0,1,0.345598,1.97279) " id="shadow58-56">
+    <path id="svg_27" class="st6" d="m202.396997,332.143007l74.84,0a9.35418,9.35418 -180 0 0 9.35,-9.36l0,-9.64a9.35418,9.35418 -180 0 0 -9.35,-9.35l-74.84,0a9.35418,9.35418 -180 0 0 -9.35,9.35l0,9.64a9.35418,9.35418 -180 0 0 9.35,9.36z"/>
+   </g>
+   <path id="svg_28" class="st7" d="m202.396997,332.143007l74.84,0a9.35418,9.35418 -180 0 0 9.35,-9.36l0,-9.64a9.35418,9.35418 -180 0 0 -9.35,-9.35l-74.84,0a9.35418,9.35418 -180 0 0 -9.35,9.35l0,9.64a9.35418,9.35418 -180 0 0 9.35,9.36z"/>
+   <text id="svg_29" class="st8" y="321.563007" x="225.046997">a6b4c</text>
+  </g>
+  <g id="shape59-61">
+   <title transform="translate(1,1) translate(306.8500061035156,-264.1369934082031) ">圆角矩形.59</title>
+   <desc transform="translate(1,1) translate(306.8500061035156,-264.1369934082031) ">f4265</desc>
+   <g class="st1" transform="matrix(1,0,0,1,0.345598,1.97279) " id="shadow59-62">
+    <path id="svg_30" class="st6" d="m317.200006,332.143007l74.84,0a9.35418,9.35418 -180 0 0 9.35,-9.36l0,-9.64a9.35418,9.35418 -180 0 0 -9.35,-9.35l-74.84,0a9.35418,9.35418 -180 0 0 -9.35,9.35l0,9.64a9.35418,9.35418 -180 0 0 9.35,9.36z"/>
+   </g>
+   <path id="svg_31" class="st7" d="m317.200006,332.143007l74.84,0a9.35418,9.35418 -180 0 0 9.35,-9.36l0,-9.64a9.35418,9.35418 -180 0 0 -9.35,-9.35l-74.84,0a9.35418,9.35418 -180 0 0 -9.35,9.35l0,9.64a9.35418,9.35418 -180 0 0 9.35,9.36z"/>
+   <text id="svg_32" class="st8" y="321.563007" x="340.560006">f4265</text>
+  </g>
+  <g id="shape63-67">
+   <title transform="translate(1,1) translate(192.0469970703125,-271.2239990234375) ">动态连接线.63</title>
+   <path id="svg_33" class="st11" d="m193.046997,317.966001l-14.22,0"/>
+  </g>
+  <g id="shape67-72">
+   <title transform="translate(1,1) translate(306.8500061035156,-271.2239990234375) ">动态连接线.67</title>
+   <path id="svg_34" class="st11" d="m307.850006,317.966001l-14.22,0"/>
+  </g>
+  <g id="shape69-77">
+   <title transform="translate(1,1) translate(306.8500061035156,-313.7439880371094) ">矩形.62</title>
+   <desc transform="translate(1,1) translate(306.8500061035156,-313.7439880371094) ">Origin/master</desc>
+   <rect id="svg_35" class="st9" height="28.3465" width="93.5433" y="254.185012" x="307.850006"/>
+   <text id="svg_36" class="st10" y="271.356012" x="326.110006">Origin/master</text>
+  </g>
+  <g id="shape70-80">
+   <title transform="translate(1,1) translate(346.5350036621094,-313.7439880371094) ">动态连接线.70</title>
+   <path id="svg_37" class="st11" d="m354.625004,282.536012l0,14.22"/>
+  </g>
+  <g id="shape71-85">
+   <title transform="translate(1,1) translate(306.8500061035156,-219.89999389648438) ">矩形.71</title>
+   <desc transform="translate(1,1) translate(306.8500061035156,-219.89999389648438) ">master</desc>
+   <rect id="svg_38" class="st9" height="28.3465" width="93.5433" y="348.029006" x="307.850006"/>
+   <text id="svg_39" class="st10" y="365.200006" x="340.370006">master</text>
+  </g>
+  <g id="shape72-88">
+   <title transform="translate(1,1) translate(346.5350036621094,-248.24600219726562) ">动态连接线.72</title>
+   <path id="svg_40" class="st11" d="m354.625004,348.033998l0,-8.86"/>
+  </g>
+  <g id="shape73-93">
+   <title transform="translate(1,1) translate(372.40899658203125,-317.9169921875) ">工作表.73</title>
+   <desc transform="translate(1,1) translate(372.40899658203125,-317.9169921875) ">Remote branch</desc>
+   <rect id="svg_41" class="st14" height="20" width="152" y="258.359008" x="373.408997"/>
+   <text id="svg_42" class="st15" y="271.963008" x="411.898997">Remote branch</text>
+  </g>
+  <g id="shape74-96">
+   <title transform="translate(1,1) translate(368.5039978027344,-224.072998046875) ">工作表.74</title>
+   <desc transform="translate(1,1) translate(368.5039978027344,-224.072998046875) ">Local branch</desc>
+   <rect id="svg_43" class="st14" height="20" width="152" y="352.203002" x="369.503998"/>
+   <text id="svg_44" class="st15" y="365.807002" x="414.713998">Local branch</text>
+  </g>
+  <g transform="rotate(-91.10169982910156 -324.8739929199218,225.04400634765625) " id="shape75-99">
+   <title transform="translate(1,1) translate(-325.8739929199219,224.04400634765625) ">普通箭头</title>
+   <g class="st1" transform="matrix(1,0,0,1,-1.97907,0.307603) " id="shadow75-100">
+    <path id="svg_45" class="st16" d="m-324.873993,820.324006l11.34,-11.34l0,5.67l25.52,0l0,5.67l0,5.66l-25.52,0l0,5.67l-11.34,-11.33z"/>
+   </g>
+   <path id="svg_46" class="st17" d="m-324.873993,820.324006l11.34,-11.34l0,5.67l25.52,0l0,5.67l0,5.66l-25.52,0l0,5.67l-11.34,-11.33z"/>
+  </g>
+  <g id="shape76-104">
+   <title transform="translate(1,1) translate(269.2909851074219,-391.02398681640625) ">工作表.76</title>
+   <desc transform="translate(1,1) translate(269.2909851074219,-391.02398681640625) ">git clone janedoc@git.ourcompany.com:project.git</desc>
+   <rect id="svg_47" class="st14" height="20" width="288.169" y="185.252013" x="270.290985"/>
+   <text id="svg_48" class="st15" y="198.856013" x="290.330985">git clone janedoc@git.ourcompany.com:project.git</text>
+  </g>
+ </g>
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="432" width="552" y="-1" x="-1"/>
+ </g>
+</svg>
