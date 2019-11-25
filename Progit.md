@@ -2173,6 +2173,30 @@ cp -rf my_project/.git my_project.git
     >
     >   ***使用SSH保证安全性***：客户端与服务端**各自生成**一套私钥与公钥，并且互相交换公钥，即可实现两端数据的加密传输。
 
+*   如何设置SSH公钥免密登录
+
+    >   *   在客户端生成公钥/私钥对
+    >   *   将公钥发送至远程服务器，将公钥内容append到`~/.ssh/authorized_keys`中
+    >   *   使用PuTTY登录时选择对应的私钥远程连接即可无需密码直接登录
+    >
+    >   PS:
+    >
+    >   1.  puttygen生成的公钥文件格式为IETF SECSH格式，我这里在CentOS 6.9上测试，将该文件内容写入`authorized_keys`时，服务器端sshd无法识别之——这里可以直接直接拷贝puttygen界面上的一般公钥格式
+    >
+    >   2.  服务器端需要将git/.ssh目录的权限设置为600或者700——ssh工具检查较为严格，所以这一步时必须的
+    >
+    >   3.  `cat /tmp/id_rsa.john.pub >> /home/git/.ssh/authorized_keys`
+    >
+    >   4.  关于`/etc/ssh/sshd_config`配置文件：
+    >
+    >       RSAAuthentication yes	# 私钥认证
+    >
+    >       PubkeyAuthentication yes	# 公钥认证
+    >
+    >       AuthorizedKeysFile .ssh/authorized_keys	# 认证keys存放的文件名称
+    >
+    >   5.  上述设置完成后需重启sshd服务
+
 *   在客户端生成公钥发送给Git服务器管理员，Git管理员将该公钥添加到公钥列表（`~.ssh/authorized_keys`）中即可
 
 ```
@@ -2181,6 +2205,72 @@ $ ssh-keygen
 ```
 
 ## 配置服务器 ##
+
+1.  管理员在Git服务器上创建git账户，设置.ssh相关目录
+
+    ```
+    $ sudo adduser git
+    $ su git
+    $ cd
+    $ mkdir .ssh && chmod 700 .ssh
+    $ touch .ssh/authorized_keys && chmod 600 .ssh/authorized_keys
+    ```
+
+2.  协作者在自己的本地创建密钥对并将公钥发送给管理员
+
+3.  管理员将收到的公钥加入到认证公钥列表
+
+    ```
+    $ cat /tmp/id_rsa.john.pub >> ~/.ssh/authorized_keys
+    $ cat /tmp/id_rsa.josie.pub >> ~/.ssh/authorized_keys
+    $ cat /tmp/id_rsa.jessica.pub >> ~/.ssh/authorized_keys
+    ```
+
+4.  管理员初始化git仓库（空仓库）
+
+    ```
+    $ cd /opt/git
+    $ mkdir project.git
+    $ cd project.git
+    $ git init --bare
+    ```
+
+5.  任一协作者将项目的初始版本push到该服务器上
+
+    ```
+    # John's computer
+    $ cd myproject
+    $ git init
+    $ git add .
+    $ git commit -m 'initial commit'
+    $ git remote add origin git@gitserver:/opt/git/project.git
+    $ git push origin master
+    ```
+
+    *   ***这种初始化远程仓库的方法可以学习下***
+    *   这里访问远程仓库的方法使用了scp工具的语法user@server:directory
+
+6.  之后其他协作者就可以clone这个仓库进行协作开发了
+
+    ```
+    $ git clone git@gitserver:/opt/git/project.git
+    $ cd project
+    $ vim README
+    $ git commit -am 'fix for the README file'
+    $ git push origin master
+    ```
+
+7.  进一步控制权限，如果你不想某个协作者账户被盗后洗劫你的git服务器的话……
+
+    *   当前Git服务器上协作者具有完整的shell权限（没有必要且有风险，协作者只需要具有仓库的读写权限即可）——修改服务器git用户的默认shell为git-shell即可
+    *   当用户通过git用户登录服务器时会被拒绝 :-)
+
+    ```
+    $ which git-shell
+    $ sudo vim /etc/shells
+    # 将/usr/bin/git-shell添加到shells文件中
+    $ sudo chsh git /usr/bin/git-shell
+    ```
 
 ## Git守护进程 ##
 
@@ -2191,8 +2281,6 @@ $ ssh-keygen
 ## GitLab ##
 
 ## 第三方托管选择 ##
-
-
 
 
 
