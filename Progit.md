@@ -2550,9 +2550,94 @@ $ ssh-keygen
 
 ### 私有管理团队 ###
 
+*   场景：大型私有团队；整合-管理者工作流程；
+
+*   特点：小组基于特性协作，贡献统一由整合者整合进入主线
+    *   所有工作在***基于团队***的分支上完成
+    *   稍后由整合者拉在一起，合入`master`
+    
+*   图例：
+
+    ![私有管理团队工作流程.svg](./image/私有管理团队工作流程.svg)
+
+*   注意：在Jessica得知Josie已经将featureBee推送到远程仓库中时，进行了如下操作：
+
+    ```
+    $ git fetch origin
+    ...
+    From jessica@githost:simplegit
+    * [new branch] featureBee -> origin/featureBee
+    ！！！注意：这里并不是在Jessica本地仓库创建了featureBee作为跟踪分支，这里只是为了说明：远程仓库中新增了分支featureBee，远程分支名为origin/featureBee
+    ```
+
 ### 派生的公开项目 ###
 
+*   背景：Github使用这种方式；对目标项目没有push权限；
+
+*   特点：
+
+    *   开发人员一般没有权限直接更新项目分支，必须使用其他方法将工作知会维护者
+    *   许多托管软件支持这种方式
+
+*   拉取请求（pull request）
+
+    ```
+    $ git request-pull [-p] <start> <url> [<end>]
+    -p		Include patch text in the output.
+    <start>	Commit to start at. 即已在计划合入的仓库中的某个提交
+    <url>	The repository URL to be pulled from.
+    <end>	Commit to end at(defaults to HEAD).指定希望拉取的分支（提交）
+    示例：
+    $ git request-pull -p origin/master myfork new_idea
+    当前所在仓库为计划合入的远程仓库的clone，对应远程仓库为origin
+    计划合入的远程分支为：master
+    希望被拉取的仓库为：myfork
+    希望被拉取的分支为：new_idea（位于myfork）
+    ```
+
 ### 通过电子邮件接受补丁的公开项目 ###
+
+*   特点：工作流程类似于派生的公开项目，只是提交到项目的方式不同
+
+*   生成补丁
+
+    ```
+    $ git format-patch -M origin/master
+    0001-one-new-idea.patch
+    
+    # -M Git会查找文件重命名
+    # 如下所示，可以在*标注的两行之间添加任何描述信息
+    
+    $ cat 0001-one-new-idea.patch
+    From a5a3ab5ba8903d37f5bc85e094ab03209c0043dd Mon Sep 17 00:00:00 2001
+    From: phyque <terroristzheng@outlook.com>
+    Date: Fri, 6 Dec 2019 22:35:31 +0800
+    Subject: [PATCH] one new idea
+    
+    --- **************************************************************start
+     main.c | 1 +
+     1 file changed, 1 insertion(+)
+    
+    diff --git a/main.c b/main.c *************************************end
+    index f8e367a..6466cc3 100644
+    --- a/main.c
+    +++ b/main.c
+    @@ -12,6 +12,7 @@ int main(int argc, char *argv[])
+    
+            printf("master add oneline.\n");
+            printf("hit.\n");
+    +       printf("Add one new idea.\n");
+    
+            return 0;
+     }
+    --
+    2.24.0.windows.2
+    
+    ```
+
+*   通过配置imap发送patch邮件
+
+*   通过配置SMTP发送patch邮件
 
 ### 小结 ###
 
