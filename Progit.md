@@ -2787,7 +2787,472 @@ $ ssh-keygen
 
 ## 选择修订版本 ##
 
+### 单个修订版本 ###
+
+#### 简短的SHA-1 ####
+
+*   提供的SHA-1字符数量不少于4个，并且没有歧义
+
+*   `git show`命令
+
+    ```
+    git show xx
+    xx可以时SHA-1/分支/tag名，用于显示对应提交的信息
+    ```
+
+#### 分支引用 ####
+
+*   通常所使用的分支名即为分支引用，如`git show topic1`
+
+*   使用`git rev-parse`查看引用对应的SHA-1
+
+    ```
+    $ git rev-parse master
+    dd2126fc03f95dbb72dbaeea613dcd40ae4906ed
+    ```
+
+#### 引用日志 ####
+
+*   引用日志（reflog）：保存最近几个月HEAD和分支引用所指向的提交对象记录
+
+*   示例：
+
+    ```
+    λ git reflog
+    a5a3ab5 (HEAD -> new_idea, myfork/new_idea) HEAD@{0}: commit: one new idea
+    dd2126f (origin/master, origin/HEAD, master) HEAD@{1}: checkout: moving from master to new_idea
+    dd2126f (origin/master, origin/HEAD, master) HEAD@{2}: checkout: moving from new_idea to master
+    dd2126f (origin/master, origin/HEAD, master) HEAD@{3}: checkout: moving from master to new_idea
+    dd2126f (origin/master, origin/HEAD, master) HEAD@{4}: clone: from file://e:/repo/test_br.git
+    
+    # HEAD在5次前所指向的提交对象
+    $ git show HEAD@{5}
+    
+    # 查看master分支昨天指向的提交对象
+    $ git show master@{yesterday}
+    
+    # 使用git log -g选项查看类似reflog
+    $ git log -g
+    ```
+
+*   引用日志只存在于本地；
+
+*   引用日志类似于Git版的shell历史记录
+
+#### 祖先引用 ####
+
+*   符号（`^`）
+
+    ```
+    # 查看master的父提交
+    $ git show master^
+    
+    # 查看master的第二父提交
+    $ git show master^2
+    ```
+
+    
+
+*   符号（`~`）
+
+    ```
+    # 查看master的父提交
+    $ git show master~
+    
+    # 查看master的祖先提交
+    $ git show master~2
+    $ git show master~~
+    
+    # 查看HEAD的父提交的父提交的第二父提交
+    $ git show HEAD~2^2
+    ```
+
+### 多个修订版本 - 提交区间 ###
+
+>   解决“这个分支还有哪些提交尚未合并到主分支？”的问题
+
+#### 双点 ####
+
+```
+# 查看master缺失，但experiment中存在的提交有哪些？
+$ git log master..experiment
+
+# 查看experiment确时，但master中存在的提交有哪些？
+$ git log experiment..master
+
+# 查看即将推送到远端的内容
+$ git log origin/master..HEAD
+```
+
+*   当双点两端留空其中一边时，则留空这边默认为HEAD
+
+#### 多点 ####
+
+*   当需要针对两个以上分支进行类似双点的效果时
+*   这里的多点，事实上并不是用符号`.`，而是指定多个points
+*   关键：使用`^`或`--not`指定不希望提交被包含其中的分支——即指定要显示的提交没有包含在对应分支中
+
+```
+# 等价的三条命令
+$ git log refA..refB
+$ git log ^refA refB
+$ git log refB --not refA
+
+# 查看位于refA/refB，却不包含于refc引用的提交对象
+$ git log refA refB ^refC
+$ git log refA refB --not refC
+```
+
+>   这就构成了一个十分强大的修订查询系统，你可以通过它来查看你的分支里包含了哪些东西。
+
+#### 三点 ####
+
+*   选择出被两个引用之一包含，但又不被两者同时包含的提交
+
+```
+$ git log master...experiment
+F
+E
+D
+C
+# 其中F/E仅属于master分支
+# DC仅属于experiment分支
+
+$ git log --left-right master..experiment
+< F
+< E
+> D
+> C
+
+# < 表示只位于左边分支（即master）的提交对象
+# > 表示只位于右边分支（即experiment）的提交对象
+```
+
 ## 交互式暂存 ##
+
+*   场景：将文件的特定部分组合成提交
+
+    >   两种应用场景：
+    >
+    >   1.  当前工作区存在较多隶属于不同变更集的修改分别位于不同文件
+    >   2.  当前工作区存在较多隶属于不同变更集的修改分别位于同一个文件的不同部分
+
+*   为了确保每次提交都是逻辑上独立的变更集：
+
+    >   1.  针对上述1，可以使用`git add`同一变更集的修改，提交后，再次暂存下一个变更集修改；或者使用“交互式暂存”的方法分步暂存/提交
+    >   2.  针对上述2，只能使用“交互式暂存”的方法，针对文件中不同的修改部分分步暂存/提交
+
+*   命令：
+
+    ```
+    $ git status --short
+     M index.html
+     M main.c
+    
+    # interactive 交互式的; 人机对话的; 互动的
+    
+    $ git add --interactive
+    $ git add -i
+               staged     unstaged path
+      1:    unchanged        +2/-0 index.html
+      2:    unchanged        +2/-0 main.c
+    
+    *** Commands ***
+      1: status       2: update       3: revert       4: add untracked
+      5: patch        6: diff         7: quit         8: help
+    What now> help
+    status        - show paths with changes
+    update        - add working tree state to the staged set of changes
+    revert        - revert staged set of changes back to the HEAD version
+    patch         - pick hunks and update selectively
+    diff          - view diff between HEAD and index
+    add untracked - add contents of untracked files to the staged set of changes
+    
+    # 在What now>后键入命令首字母或命令前的序号都可以使用该命令
+    ```
+
+    *   命令帮助：
+
+        | 命令          | 解析                 |
+        | ------------- | -------------------- |
+        | status        | 显示当前暂存状态     |
+        | update        | 暂存文件             |
+        | revert        | 回退暂存             |
+        | patch         |                      |
+        | diff          | 查看已暂存的文件状态 |
+        | add untracked |                      |
+
+*   交互式暂存的操作方法
+
+    *   刚开始学习“交互式暂存”的时候，感觉有点奇怪，后来才发现是因为“操作方法”的改变导致的
+
+        ```
+        What now> 
+        # 在上述提示符后输入命令后进入对应命令的视图，如：
+        What now> 2
+        # 更新为如下命令提示符：
+        Update>> 
+        # 在命令提示符下，键入要操作的文件的编号，并回车，以完成操作
+        Update>> 2
+        Update>> 
+        # 不输入任何编号，直接回车，则退出对应命令视图完成操作
+        
+        # 上面介绍了一个完整的操作流程（现在感觉好多了:)）
+        ```
+
+### 暂存与取消暂存文件 ###
+
+*   暂存文件使用命令update，即u(2)
+
+    取消暂存文件使用命令revert，即r(3)
+
+    查看已暂存的内容的区别使用命令diff，即d(5)
+
+*   操作示例：
+
+    ```
+    E:\repo\work (new_idea -> myfork)
+    λ git status --short					# 初始状态
+     M index.html
+     M main.c
+    
+    E:\repo\work (new_idea -> myfork)
+    λ git add --interactive					# 进入交互式暂存界面
+               staged     unstaged path
+      1:    unchanged        +2/-0 index.html
+      2:    unchanged        +2/-0 main.c
+    
+    *** Commands ***
+      1: status       2: update       3: revert       4: add untracked
+      5: patch        6: diff         7: quit         8: help
+    What now> u								# 进入u(update)命令视图
+               staged     unstaged path
+      1:    unchanged        +2/-0 index.html
+      2:    unchanged        +2/-0 main.c
+    Update>> 1								# 暂存文件1
+               staged     unstaged path
+    * 1:    unchanged        +2/-0 index.html
+      2:    unchanged        +2/-0 main.c
+    Update>> 2								# 暂存文件2
+               staged     unstaged path
+    * 1:    unchanged        +2/-0 index.html
+    * 2:    unchanged        +2/-0 main.c
+    Update>>								# 退出交互式暂存
+    updated 2 paths
+    
+    *** Commands ***
+      1: status       2: update       3: revert       4: add untracked
+      5: patch        6: diff         7: quit         8: help
+    What now> s								# 查看当前状态
+               staged     unstaged path
+      1:        +2/-0      nothing index.html
+      2:        +2/-0      nothing main.c
+    
+    *** Commands ***
+      1: status       2: update       3: revert       4: add untracked
+      5: patch        6: diff         7: quit         8: help
+    What now> r								# 进入r(revert)命令视图
+               staged     unstaged path
+      1:        +2/-0      nothing index.html
+      2:        +2/-0      nothing main.c
+    Revert>> 2								# 回退文件2暂存状态
+               staged     unstaged path
+      1:        +2/-0      nothing index.html
+    * 2:        +2/-0      nothing main.c
+    Revert>>								# 直接回车退出r命令视图
+    reverted 1 path
+    
+    *** Commands ***
+      1: status       2: update       3: revert       4: add untracked
+      5: patch        6: diff         7: quit         8: help
+    What now> d								# 进入d(diff)命令视图
+               staged     unstaged path
+      1:        +2/-0      nothing index.html
+    Review diff>> 1							# 查看文件1已暂存的修改diff
+    diff --git a/index.html b/index.html
+    index 4ff14e9..5d77f1a 100644
+    --- a/index.html
+    +++ b/index.html
+    @@ -1,6 +1,8 @@
+     <html>
+            <head>
+    +               <title>Main Page</title>
+            </head>
+            <body>
+    +               <p>New Start</p>
+            </body>
+     </html>
+    *** Commands ***
+      1: status       2: update       3: revert       4: add untracked
+      5: patch        6: diff         7: quit         8: help
+    What now> quit							# 退出“交互式暂存
+    Bye.
+    
+    E:\repo\work (new_idea -> myfork)
+    λ git status --short					# 查看当前状态
+    M  index.html							# index.html被暂存
+     M main.c								# main.c被暂存，又被回退
+    
+    E:\repo\work (new_idea -> myfork)
+    λ
+    ```
+
+### 暂存补丁 ###
+
+*   暂存补丁使用命令patch——即p(5)
+
+    暂存补丁即暂存某个文件中的部分修改
+
+*   操作示例：
+
+    ```
+    E:\repo\work (new_idea -> myfork)
+    λ git status --short							# 初始状态
+     M index.html
+     M main.c
+    
+    E:\repo\work (new_idea -> myfork)
+    λ git add --interactive							# 进入交互式暂存模式
+               staged     unstaged path
+      1:    unchanged        +9/-0 index.html
+      2:    unchanged        +7/-0 main.c
+    
+    *** Commands ***
+      1: status       2: update       3: revert       4: add untracked
+      5: patch        6: diff         7: quit         8: help
+    What now> p										# 进入p(patch)命令视图
+               staged     unstaged path
+      1:    unchanged        +9/-0 index.html
+      2:    unchanged        +7/-0 main.c
+    Patch update>> 1								# 计划patch文件1
+               staged     unstaged path
+    * 1:    unchanged        +9/-0 index.html
+      2:    unchanged        +7/-0 main.c
+    Patch update>> 2								# 计划patch文件2
+               staged     unstaged path
+    * 1:    unchanged        +9/-0 index.html
+    * 2:    unchanged        +7/-0 main.c
+    Patch update>>									# 开始生成patch
+    diff --git a/index.html b/index.html
+    index 5d77f1a..0be92ed 100644
+    --- a/index.html
+    +++ b/index.html
+    @@ -6,3 +6,12 @@
+                    <p>New Start</p>
+            </body>
+     </html>
+    +
+    +<html>
+    +       <head>
+    +               <title>Main Page</title>
+    +       </head>
+    +       <body>
+    +               <p>New Start</p>
+    +       </body>
+    +</html>
+    (1/1) Stage this hunk [y,n,q,a,d,e,?]? y		# 暂存该部分修改
+    
+    diff --git a/main.c b/main.c
+    index a73cb22..f61f43b 100644
+    --- a/main.c
+    +++ b/main.c
+    @@ -1,5 +1,7 @@
+     #include <stdio.h>
+    
+    +extern void show(void);
+    +
+     void hit()
+     {
+            return;
+    (1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,?]? n	# 拒绝暂存该部分（声明）
+    @@ -18,3 +20,8 @@ int main(int argc, char *argv[])
+    
+            return 0;
+     }
+    +
+    +void show()
+    +{
+    +       printf("hello.\n");
+    +}
+    (2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,?]? y	# 暂存该部分（函数定义）
+    
+    *** Commands ***
+      1: status       2: update       3: revert       4: add untracked
+      5: patch        6: diff         7: quit         8: help
+    What now> s										# 查看当前暂存状态
+               staged     unstaged path
+      1:        +9/-0      nothing index.html
+      2:        +5/-0        +2/-0 main.c			# 发现这里暂存了5行新增，未暂存2行
+    
+    *** Commands ***
+      1: status       2: update       3: revert       4: add untracked
+      5: patch        6: diff         7: quit         8: help
+    What now> d									# 查看已暂存的修改，进入d视图
+               staged     unstaged path
+      1:        +9/-0      nothing index.html
+      2:        +5/-0        +2/-0 main.c
+    Review diff>> 2								# 显示文件2已暂存的修改
+    diff --git a/main.c b/main.c
+    index a73cb22..f978ab1 100644
+    --- a/main.c
+    +++ b/main.c
+    @@ -18,3 +18,8 @@ int main(int argc, char *argv[])
+    
+            return 0;
+     }
+    +
+    +void show()
+    +{
+    +       printf("hello.\n");
+    +}
+    *** Commands ***
+      1: status       2: update       3: revert       4: add untracked
+      5: patch        6: diff         7: quit         8: help
+    What now> quit
+    Bye.
+    
+    E:\repo\work (new_idea -> myfork)
+    λ git status --short				# 暂存后状态
+    M  index.html
+    MM main.c							# main.c部分被暂存
+    
+    E:\repo\work (new_idea -> myfork)
+    λ git diff --cached main.c			# 通过git diff命令查看暂存的修改内容
+    diff --git a/main.c b/main.c
+    index a73cb22..f978ab1 100644
+    --- a/main.c
+    +++ b/main.c
+    @@ -18,3 +18,8 @@ int main(int argc, char *argv[])
+    
+            return 0;
+     }
+    +
+    +void show()
+    +{
+    +       printf("hello.\n");
+    +}
+    
+    E:\repo\work (new_idea -> myfork)
+    λ
+    
+    # patch命令视图有中多选项，一般只使用y/n就足够了，下面列出所有命令，供后续查阅：
+    (1/1) Stage this hunk [y,n,q,a,d,e,?]? ?
+    y - stage this hunk
+    n - do not stage this hunk
+    q - quit; do not stage this hunk or any of the remaining ones
+    a - stage this hunk and all later hunks in the file
+    d - do not stage this hunk or any of the later hunks in the file
+    e - manually edit the current hunk
+    ? - print help
+    ```
+
+*   `git add -p`或`git add --patch`——直接进入上述patch工作模式
+
+*   `git reset --patch`——使用reset命令的补丁模式部分重置文件
+
+*   `git checkout --patch`——部分检出文件
+
+*   `git stash save --patch`——部分暂存文件
 
 ## 储藏与清理 ##
 
