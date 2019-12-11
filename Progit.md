@@ -690,17 +690,20 @@ nothing to commit, working directory clean
 
 * `git log`常用选项汇总
 
-  | 选项                | 描述                                                     |
-  | ------------------- | -------------------------------------------------------- |
-  | -p                  | 按一定格式显示每次提交引入的修改                         |
-  | --stat              | 显示每个提交被更改的文件的统计信息                       |
-  | **--shortstat**     | **只显示--stat输出中包含“已更改/新增/删除”行的统计信息** |
-  | **--name-only**     | **显示被更改的文件列表**                                 |
-  | **--name-status**   | **在上一个选项基础上显示“已更改/新增/删除”统计信息**     |
-  | **--abbrev-commit** | **只显示完整的SHA-1 40为校验码中的前几个字符**           |
-  | **--relative-date** | **显示相对日期而不是完整日期**                           |
-  | --graph             | 以ASCII图表形式显示                                      |
-  | --pretty            | 更换格式，oneline/short/full/fuller/format               |
+  | 选项                | 描述                                                         |
+  | ------------------- | ------------------------------------------------------------ |
+  | -p                  | 按一定格式显示每次提交引入的修改                             |
+  | --stat              | 显示每个提交被更改的文件的统计信息                           |
+  | **--shortstat**     | **只显示--stat输出中包含“已更改/新增/删除”行的统计信息**     |
+  | **--name-only**     | **显示被更改的文件列表**                                     |
+  | **--name-status**   | **在上一个选项基础上显示“已更改/新增/删除”统计信息**         |
+  | **--abbrev-commit** | **只显示完整的SHA-1 40为校验码中的前几个字符**（默认为7个字符） |
+  | **--relative-date** | **显示相对日期而不是完整日期**                               |
+  | --graph             | 以ASCII图表形式显示                                          |
+  | --pretty            | 更换格式，oneline/short/full/fuller/format                   |
+  | --oneline           |                                                              |
+  | --decorate          |                                                              |
+  | --all               |                                                              |
 
 * **过滤提交历史以显示**
 
@@ -1118,7 +1121,7 @@ $ git checkout req53
 
 * `fast-forward`：直接通过移动分支指针即可完成合并操作，不会产生新的提交的合并操作
 * 切换分支前请保证，当前`working copy`中不存在未提交的修改；保证暂存区中没有没有与要切换到的分支冲突的修改；
-* `git merge bra`的方向：将分支bra与当前所在分支合并:)
+* `git merge bra`的方向：将分支bra与当前所在分支合并，当前分支前进一个提交
 
 ### 基本的合并操作 ###
 
@@ -1523,7 +1526,13 @@ remove)										# 已被远程仓库移除的分支
   >
   >   "要特别注意的一点是当抓取到新的远程跟踪分支时，本地不会主动生成一份可编辑的副本（拷贝）。换一句话说，这种情况下，不会有一个新的serverfix分支；只有一个不可以修改的origin/serverfix指针"
   >
-  >   “可以运行`git merge origin/serverfix`将这些工作合并到当前所在的分支。如果想要在自己的serverfix分支上工作，可以将其建立在远程跟踪分支之上：`git branch serverfix origin/serverfix`”——基于远程分支`origin/serverfix`创建一个本地分支，并设置为跟踪分支
+  >   “可以运行`git merge origin/serverfix`将这些工作合并到当前所在的分支。如果想要在自己的serverfix分支上工作，可以将其建立在远程跟踪分支之上：
+  >
+  >   `git branch serverfix origin/serverfix`”
+  >
+  >   `git checkout -b serverfix origin/serverfix`
+  >
+  >   ——基于远程分支`origin/serverfix`创建一个本地分支，并设置为跟踪分支
 
   ```
   $ git push origin serverfix
@@ -1545,6 +1554,10 @@ remove)										# 已被远程仓库移除的分支
   
   $ git push hello hmaster:master
   # 这样才会将修改推送到hello/master上并合并
+  
+  # 在push的时候可以设置本地分支为对应推送目标远程分支的跟踪分支，只需要使用-u参数，如：
+  $ git push -u hello hmaster:master
+  # 将hmaster推送到远程仓库hello中与远程仓库中的master合并，并设置hmaster为origin/master的跟踪分支
   ```
 
   *   执行上述几个推送操作时：
@@ -1557,10 +1570,15 @@ remove)										# 已被远程仓库移除的分支
 
               `git push origin test_br:kick`——远程仓库新增分支kick
 
-          *   ***但是不会自动设置上游分支关系！！！***
+          *   ***但是不会自动设置上游分支关系！！！除非使用-u参数，如下所示：***
 
+              ```
+          git push -u origin hmaster
+              # 将hmaster推送到远程仓库并设置为本地hmaster为该远程分支的上游分支
+              ```
+      
       2.  当对应远程分支存在时
-
+      
           *   会执行合并操作，将推送的分支与远程分支直接合并
 
 * `push`的本质：将本地分支对应的commit链推送到远程分支上
@@ -1693,26 +1711,25 @@ remove)										# 已被远程仓库移除的分支
       2. Git默认创建跟踪分支`master`跟踪`origin/master`
       3. 可以选择性的设置其他跟踪分支——`clone`后再设置？还是可以进行配置？
       4. 可以选择性的设置不跟踪`master`分支——如何设置？
-  
+
 * 创建跟踪分支的方法
 
   1.  `git branch serverfix origin/serverfix`
-2.  ``git checkout -b serverfix origin/serverfix`
+
+  2.  `git checkout -b serverfix origin/serverfix`
+
   3.  `git checkout --track origin/serverfix`
+      *   1与2的简写，无法自行设置跟踪分支名
+  4.  `git checkout serverfix`
 
-    *   1/2的简写，无法自行设置跟踪分支名
+      *   如果不存在本地分支`serverfix`：自动创建该分支并跟踪``origin/serverfix`
 
-4.  `git checkout serverfix`
-  
-    *   如果不存在本地分支`serverfix`：自动创建该分支并跟踪``origin/serverfix`
-    
-    *   如果存在本地分支`serverfix`：自动跟踪`origin/serverfix`
+      *   如果存在本地分支`serverfix`：自动跟踪`origin/serverfix`
 
-* 将当前所在分支设置成跟踪分支
-  
-    1.  `git branch -u origin/serverfix`
+      *   将当前所在分支设置成跟踪分支
+          *   `git branch -u origin/serverfix`
 
-    2.  `git branch --set-upstream-to origin/serverfix`
+          *   `git branch --set-upstream-to origin/serverfix`
 
 * 远程分支简写
 
@@ -3183,7 +3200,7 @@ $ git log --left-right master..experiment
                staged     unstaged path
       1:        +9/-0      nothing index.html
       2:        +5/-0        +2/-0 main.c			# 发现这里暂存了5行新增，未暂存2行
-    
+
     *** Commands ***
       1: status       2: update       3: revert       4: add untracked
       5: patch        6: diff         7: quit         8: help
