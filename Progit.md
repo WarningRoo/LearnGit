@@ -3363,6 +3363,63 @@ $ git log --left-right master..experiment
 
 ## 签署工作 ##
 
+*   目标：验证获取自其他仓库的提交是否来自于可信来源
+*   Git提供几种通过GPG来签署和验证工作的方式
+
+### GPG介绍 ###
+
+```
+$ gpg --list-keys
+$ gpg --gen-key		# 生成密钥
+# 设置密钥以签署，Git默认使用该密钥来签署标签与提交
+$ gpg config --global user.signingkey 0A46826A
+```
+
+### 签署标签 ###
+
+```
+$ git tag -s v1.5 -m "my signed 1.5 tag"
+$ git show v1.5
+tag v1.5
+Tagger: Ben Straub <ben@straub.cc>
+Date: Sat May 3 20:29:41 2014 -0700
+my signed 1.5 tag
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+iQEcBAABAgAGBQJTZbQlAAoJEF0+sviABDDrZbQH/09PfE51KPVPlanr6q1v4/Ut
+LQxfojUWiLQdg2ESJItkcuweYg+kc3HCyFejeDIBw9dpXt00rY26p05qrpnG+85b
+hM1/PswpPLuBSr+oCIDj5GMC2r2iEKsfv2fJbNW8iWAXVLoWZRF8B0MfqX/YTMbm
+ecorc4iXzQu7tupRihslbNkfvfciMnSDeSvzCpWAHl7h8Wj6hhqePmLm9lAYqnKp
+8S5B/1SSQuEAjRZgI4IexpZoeKGVDptPHxLLS38fozsyi0QyDyzEgJxcJQVMXxVi
+RUysgqjcpT8+iQM1PblGfHR4XAhuOqN5Fx06PSaFZhqvWFezJ28/CLyX5q+oIVk=
+=EFTF
+-----END PGP SIGNATURE-----
+commit ca82a6dff817ec66f44342007202690a93763949
+Author: Scott Chacon <schacon@gee-mail.com>
+Date: Mon Mar 17 21:52:11 2008 -0700
+ changed the version number
+```
+
+### 验证标签 ###
+
+```
+# 前提是你已取得签署该标签的作者发布的公钥
+$ git tag -v v1.5
+```
+
+### 签署提交 ###
+
+```
+$ git commit -S	# 对要提交的提交对象进行签署
+$ git log --show-signature	# 显示并验证显示的提交的签名
+$ git merge --verify-signatures	# 检查并拒绝没有携带可信GPG签名的提交
+$ git merge -S	# 签署合并生成的提交
+```
+
+### 每个人必须签署 ###
+
+*   如果要使用签署，则必须保证所有协作者都使用之
+
 ## 搜索 ##
 
 *   需求：
