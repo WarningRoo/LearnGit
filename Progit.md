@@ -3365,6 +3365,112 @@ $ git log --left-right master..experiment
 
 ## 搜索 ##
 
+*   需求：
+    *   查找函数的调用处与定义处
+    *   某个方法的变更历史
+*   目标：快速地从数据库中浏览代码和提交
+
+### Git Grep ###
+
+*   功能：很方便地从提交历史或者工作目录中查找一个字符串或者正则表达式
+
+*   命令记录：
+
+    ```
+    λ git grep -n main			# 当前工作目录中查找“main”，并显示行号
+    main.c:10:int main(int argc, char *argv[])
+    
+    λ git grep -n --count main	# 当前工作目录中查找"main"，仅显示概要信息
+    main.c:1
+    
+    λ git grep -p hello			# 显示"hello"位于哪一个函数
+    main.c=void show()				# 属于show()函数
+    main.c: printf("hello.\n");		# 目标串所在行
+    
+    λ git grep -p printf		# 当串为函数名时，可以看到该函数被谁调用了
+    main.c=int main(int argc, char *argv[])
+    main.c: printf("First Bugfix.\n");
+    main.c: printf("Branch exp add oneline here.\n");
+    main.c: printf("Branch exp add another here.\n");
+    main.c: printf("master add oneline.\n");
+    main.c: printf("hit.\n");
+    main.c: printf("Add one new idea.\n");
+    main.c: printf("Second Bugfix.\n");
+    main.c=void show()
+    main.c: printf("hello.\n");
+    
+    --break	"Print an empty line between matches from different files"
+    --heading	"Show the filename above the matches in that file instead of at the start of each shown line."
+    -e	“The next parameter is the pattern. This option has to be used for patterns starting with - and should be used in scripts passing user input to grep. Multiple patterns are combined by or.”
+    
+    # 查找既包含h又包含e的行，从分支master中查找
+    λ git grep --break --heading -e h --and -e e master
+    master:index.html
+            <head>
+            </head>
+            <head>
+            </head>
+    
+    master:main.c
+    #include <stdio.h>
+    extern void show(void);
+            printf("Branch exp add oneline here.\n");
+            printf("Branch exp add another here.\n");
+            printf("hello.\n");
+    ```
+
+### Git日志搜索 ###
+
+*   功能：通过提交信息或者提交的diff查找到特定的提交
+
+    ​			解决某个对象是在什么时候引入的
+
+*   命令记录：
+
+    ```
+    λ git log -S main		# 查看字串是在哪一次提交引入或删除的（S与字符串之间也可以不加空格）
+    commit b2b2c94154f2f3636d9f2e660bce92494d49d2d4
+    Author: phyque <terroristzheng@outlook.com>
+    Date:   Sat Nov 23 19:49:22 2019 +0800
+    
+        master init
+    
+    git log -G"pattern"
+    λ git log -G"he..o"		# 查看符合正则表达式的修改是何时引入与删除的
+    commit fa49cfb6561b1a47caaeaac9ff45d45828f0211d (origin/master, origin/HEAD, myfork/new_idea, master)
+    Author: phyque <terroristzheng@outlook.com>
+    Date:   Thu Dec 12 22:19:17 2019 +0800
+    
+        holy shit
+    ```
+
+#### 行日志搜索 ####
+
+*   功能：查找代码中某一行或一个函数的历史
+
+*   命令记录：
+
+    ```
+    λ git log -L :show:main.c	# 查找main.c文件中showh函数的修改历史
+    commit fa49cfb6561b1a47caaeaac9ff45d45828f0211d (origin/master, origin/HEAD, myfork/new_idea, master)
+    Author: phyque <terroristzheng@outlook.com>
+    Date:   Thu Dec 12 22:19:17 2019 +0800
+    
+        holy shit
+    
+    diff --git a/main.c b/main.c
+    --- a/main.c
+    +++ b/main.c
+    @@ -3,0 +3,2 @@
+    +extern void show(void);
+    +
+    
+    其他命令格式：
+    git log -L 3,4:main.c	# 查看文件main.c 3/4行的修改历史
+    git log :<funcname>:<file>	# 查看file中funcname函数的修改历史
+    
+    ```
+
 ## 重写历史 ##
 
 ## 重置解密 ##
