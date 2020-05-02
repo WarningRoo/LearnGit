@@ -321,7 +321,7 @@ $ man git-<verb>
 
 ## 获取Git仓库 ##
 
-获取Git仓库的两种方法：
+初始化/获取Git仓库的两种方法：
 
 * ***从现有目录中初始化Git仓库***
 
@@ -381,7 +381,33 @@ $ man git-<verb>
   ```
 
   * 是`clone`而不是`checkout`：将libgit2项目的所有数据进行完整复制，而不是像svn一样checkout某一个版本
-  * 可用的传输协议：`https://协议`；`git://协议`；`SSH传输协议`
+  * 可用的传输协议：`https://协议`；`git://协议`；`SSH传输协议`1
+
+>Tip：
+>
+>*   在Github上新建空仓库后，如何将本地仓库内容上传/关联到Github仓库
+>
+>*   方法一：
+>
+>    Create a new repository on the command line
+>
+>    ```
+>    cd {Repo Directory}
+>    git init
+>    git add *
+>    git commit -m "first commit"
+>    git remote add origin https://github.com/xxxxx/xxxxx.git
+>    git push -u origin master
+>    ```
+>
+>*   方法二：
+>
+>    Push an existing repository from the command line
+>
+>    ```
+>    git remote add origin https://github.com/xxxxx/xxxxx.git
+>    git push -u origin master
+>    ```
 
 ## 在Git仓库中记录变更 ##
 
