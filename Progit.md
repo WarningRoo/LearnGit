@@ -374,14 +374,14 @@ $ man git-<verb>
 
   ```shell
   $ git clone [URL] [DIR]
-  
+
   # 以下命令从[URL]克隆libgit2项目到当前目录下的libgit2目录
   $ git clone https://github.com/libgit2/libgit2
-  
+
   # 以下命令从[URL]克隆libgit2项目到当前目录下的mylibgit目录
   $ git clone https://github.com/libgit2/libgit2 mylibgit
   ```
-  
+
   * 是`clone`而不是`checkout`：将libgit2项目的所有数据进行完整复制，而不是像svn一样checkout某一个版本
   * 可用的传输协议：`https://协议`；`git://协议`；`SSH传输协议`1
 
@@ -398,7 +398,7 @@ $ man git-<verb>
 >   git init
 >   git add *
 >   git commit -m "first commit"
->   
+>
 >   git remote add origin https://github.com/xxxxx/xxxxx.git
 >   git push -u origin master
 >   ```
@@ -528,16 +528,16 @@ nothing to commit, working directory clean
   ```shell
   # file(main.c) content commited
   first init.
-  
+
   # file(main.c) modified and staged
   first init.
   second modified.
-  
+
   # file(main.c) modified again but has not been staged
   first init.
   second modified.
   third modified.
-  
+
   说明：
   1. 此时，main.c已commited的内容为：
     "first init."
@@ -548,11 +548,11 @@ nothing to commit, working directory clean
     “first init.
     second modified.
     third modified."
-  
+
   结果：
   git diff显示的是：
   3与2的差别即+third modified.
-  
+
   git diff --staged显示的是：
   2与1的差别即：+second modified
   ```
@@ -784,17 +784,17 @@ nothing to commit, working directory clean
     $ git log --after=3.years # 输出3年以内的提交
     $ git log --since="2 years 1 day 3 minutes" # 输出2年1天3分钟以内的提交
     $ git log --until="10 years" # 输出10年以前的提交
-    
+
     $ git log --author=Scott # 输出作者字符串中包含"Scott"的提交
     $ git log --author="Scott Chacon" # 输出作者字符串包含“Scott Chacon"的提交
     $ git log --committer="shit" # 输出提交者中包含”shit“的提交
-    
+
     $ git log --grep="[1-10]. # 输出提交信息与正则表达式匹配的提交
     $ git log --Sshow_print # 输出“添加或删除字符串”与show_print匹配的提交
-    
+
     $ git log -- Rakefile # 输出对Rakefile文件相关操作的提交
     $ git log -- lib/ # 输出对lib/目录相关操作的提交
-    
+
     # 在Git项目历史中查看作者为gitster，从2008-08-01到2008-11-01这段时间内提交的t/目录下的没有被合并的提交
     $ git log --pretty="%h - %s" --author=gitster --since="2008-08-01" \
       --before="2008-11-01" --no-merges -- t/
@@ -818,7 +818,7 @@ nothing to commit, working directory clean
   $ git commit -m "git init"
   $ git commit -amend
   # 打开“提交信息”编辑，重新编辑后保存即可修改上一次提交的“提交信息”
-  
+
   # 功能二：
   $ git commit -m "git init"
   $ git add forgotten_file
@@ -836,7 +836,7 @@ nothing to commit, working directory clean
   $ git add file.c
   $ git reset HEAD file.c
   # 即可将已添加进暂存区中的修改撤销，但不会修改working copy中的内容
-  
+
   # 如下命令功能相同
   $ git restore --staged file.c
   ```
@@ -850,7 +850,7 @@ nothing to commit, working directory clean
   ```shell
   $ git checkout -- file.c
   # 将file.c的当前最新版本“检出”，即可撤销我们对file.c的修改
-  
+
   # 如下命令功能相同
   $ git restore file.c
   ```
@@ -889,15 +889,15 @@ nothing to commit, working directory clean
   tag v1.0										# 标签名
   Tagger: zz <terroristzheng@qq.com>				# 打标签者及邮箱
   Date:   Sun Sep 9 15:36:33 2018 +0800			# 标签创建时间
-  
+
   first tag haha!									# 标签创建信息
-  
+
   commit ca82a6dff817ec66f44342007202690a93763949	# 打标签时的分支的commit信息
   Author: Scott Chacon <schacon@gmail.com>
   Date:   Mon Mar 17 21:52:11 2008 -0700
-  
+
       changed the verison number
-  
+
   diff --git a/Rakefile b/Rakefile
   index a874b73..8f94139 100644
   --- a/Rakefile
@@ -1216,11 +1216,13 @@ $ git checkout req53
 
   * 合并，是真的合并吗？
 
-    所谓的合并(`merge`)事实上并非“合并”；而是将**一个分支**基于**共同祖先**的修改合并到另一个分支上；
+    所谓的合并(`merge`)事实上并非“合并”；而是将**一个分支**基于**共同祖先**的所有修改合并到另一个分支上；
 
-    合并的结果是：***当前所在分支向前移动一个提交；被并入的分支保持不变！！！***
+    合并的结果是：***当前所在分支向前移动一个提交，需要填写commit description；被并入的分支保持不变！！！***
 
     移动的该提交即为一个新的提交，该提交有两个父提交
+
+    * merge操作实际上是“拉取”操作:)，将目标分支修改拉到当前分支；git merge
 
 ### 基本的合并冲突处理 ###
 
@@ -1268,7 +1270,7 @@ $ git checkout req53
      >>>>>>> iss53:index.html
      # 上半部分：当前分支的文件冲突部位的内容————并入的目标分支
      # 下半部分：分支iss53分支的文件冲突部位的内容————要合并的分支
-     
+
      # 可以将“合并”看做是：将iss53的修改在HEAD（当前分支）重现（但并非重现）
      ```
 * ***在解决了每个冲突文件的所有冲突部分后，就可以执行`git add`来把每个文件标记为冲突已解决状态。在Git中，这可以通过把文件添加到暂存区来实现***
@@ -1437,7 +1439,7 @@ remove)										# 已被远程仓库移除的分支
   Local branch configured for 'git pull':   # 用于pull的分支
     master merges with remote master
     dev-branch merges with remote dev-branch # origin/dev-branch对应远程分支dev-branch
-    
+
   Local ref configured for 'git push':		# 用于push的分支
     master pushes to master (up to date)
 # 上述信息会告诉我们：
@@ -1482,26 +1484,26 @@ remove)										# 已被远程仓库移除的分支
 
 -   向远程仓库推送数据的基本单元是：**分支**
     - 所以描述为：将本地某个分支推送到某个远程仓库，并与远程仓库中的关联分支合并
-    
+
     - `git push origh master`
-    
+
       ```shell
       # 将本地testb分支推送到origin
       ## 不管testb是否在origin上有上游分支，都可以push
       ## 如果origin上没有同名分支则创建同名远程分支
       ## 如果origin上有同名分支则merge上去
       git push origin testb
-      
+
       # 将当前分支推送到origin
       ## 当前分支必须有对应的 upstream 分支，否则push报错
       ## 如果没有设置 upstream 分支，那么最好使用前一种方法或者设置upstream
       git push
-      
+
       # 一般情况下，master都会有对应的origin/master上游分支，所以可以在master分支上直接git push
       ```
-    
-      
-    
+
+
+
 -   推送的前提：
     -   拥有origin远程仓库的写权限
     -   上一次fetch后并合并后（或者上一次`git pull`后）没有人向该远程仓库中推送过数据
@@ -1509,13 +1511,13 @@ remove)										# 已被远程仓库移除的分支
 ### 删除和重命名远程仓库 ###
 
 -   `git remote rename pb paul`
-    
+
     - 重命名远程仓库
-    
+
     - 是否可以重命名本地分支呢？并且使得该分支跟随的远程分支不变？
-    
+
       我看你别作……
-    
+
 -   `git remote rm paul`
     -   删除远程仓库
     -   服务器地址变更时，参与者退出协作时
@@ -1601,12 +1603,12 @@ remove)										# 已被远程仓库移除的分支
   $ git remote add progit https://progit.git
   $ git fetch progit
   $ cd ..
-  
+
   # 1. 创建了仓库目录，名为progit
   # 2. 进入到progit，并执行git init初始化仓库
   # 3. 添加https://progit.git指定的远程仓库
   # 4. 执行git fetch拉取远程仓库的所有数据
-  
+
   注意：
     这里并不等价，分步执行这些命令后，本地仓库仍未与远程仓库直接关联；可以进行以下操作（尚未验证的，不知道常规做法是怎样的）：
     1. 基于远程origin/master分支创建本地master分支
@@ -1834,9 +1836,9 @@ remove)										# 已被远程仓库移除的分支
   2. `git checkout -b serverfix origin/serverfix`
 
   3.  `git checkout --track origin/serverfix`
-      
+
       *   1与2的简写，无法自行设置跟踪分支名
-      
+
   4.  `git checkout serverfix`
 
       * 如果不存在本地分支`serverfix`：自动创建该分支并跟踪``origin/serverfix`
@@ -1844,9 +1846,9 @@ remove)										# 已被远程仓库移除的分支
       * 如果存在本地分支`serverfix`：自动跟踪`origin/serverfix`
 
       * 将当前所在分支设置成跟踪分支：
-      
+
         1. `git branch -u origin/serverfix`
-      
+
         2. `git branch --set-upstream-to origin/serverfix`
         3. ``git branch --track origin/serverfix`
 
@@ -1898,7 +1900,7 @@ remove)										# 已被远程仓库移除的分支
       将本地分支test_br上的修改merge到远程分支test_br上
 
       所以，如果第二个test_br是其他分支，也是可以执行的:P
-  
+
   * `git checkout origin/test_br`后，进行修改、提交，如何在不关联上游分支的情况下，将该修改push到远程仓库？
 
 
@@ -1980,7 +1982,7 @@ git push origin new_br	# 会将new_br推送到origin中
 
 * `merge` review
 
-    ```
+    ```shell
     初始状态：
     λ git log --oneline --decorate --all --graph
     * 109caa5 (HEAD -> exp) exp ahead 2
@@ -2009,7 +2011,7 @@ git push origin new_br	# 会将new_br推送到origin中
 
 * `rebase`
 
-  ```
+  ```shell
   # 初始状态
   初始状态：
   λ git log --oneline --decorate --all --graph
@@ -2033,7 +2035,7 @@ git push origin new_br	# 会将new_br推送到origin中
   * 9fc795e (master) master ahead 1
   * b2b2c94 master init
   # 可以看到当前log中完整保留了exp中的两次独立commit
-  # rebase过程中，diff时分次应用的————因为第一个diff出现了conflict，解决时发现仅应用了第一个commit补丁（解决后需要add添加到暂存区，然后git rebase --continue）
+  # rebase过程中，diff是分次应用的————因为第一个diff出现了conflict，解决时发现仅应用了第一个commit补丁（解决后需要add添加到暂存区，然后git rebase --continue）
   # 之前exp中的提交消失了，代之以另外两个commit
   ```
 
@@ -2065,7 +2067,7 @@ git push origin new_br	# 会将new_br推送到origin中
 
   * `git rebase --abort`
 
-    `To check ouot the original branch and stop rebaseing, run"git rebase --abort"`
+    `To check out the original branch and stop rebaseing, run"git rebase --abort"`
 
     终止`rebase`操作并回退到`rebase`之前的状态
 
@@ -2073,7 +2075,7 @@ git push origin new_br	# 会将new_br推送到origin中
 
 * 用途示例：
 
-  ```
+  ```shell
   $ git checkout iss53
   $ git rebase master
   $ git push origin iss53
@@ -2111,14 +2113,15 @@ git push origin new_br	# 会将new_br推送到origin中
 
 *   在变基过程中合并提交
 
-  ```
+  ```shell
     git rebase -i master exp
     进入编辑器会显示多条类似下面的信息
     pick 9c01382 exp ahead 1
     pick 109caa5 exp ahead 2
-  
+
     只需要将第二行pick按照注释提示，修改为squash，保存退出
-  
+    （在emcas中，直接在第二行按下s键，然后C-c C-c make it happen.）
+
     # 最终rebase操作完成后，会提示用户重新键入新的commit注释信息
     # 操作完成后状态：
     λ git log --oneline --decorate --graph --all
@@ -2210,7 +2213,7 @@ git push origin new_br	# 会将new_br推送到origin中
     ```shell
     $ git clone --bare [repo_name] [dst_repo_name]
     $ cp -rf [repo_name]/.git [dst_repo_name]
-    
+
     $ ls
     progit_prj/  kernel/
     # 如上所示，有两个仓库，仓库中的内容就是我们之前一般见到的仓库内容即一个.git目录加上工作目录中包含的若干文件、目录
@@ -2362,7 +2365,7 @@ cp -rf my_project/.git my_project.git
   scp -r my_project.git user@git.example.com:/srv/git
   # 具有ssh权限的用户就可以通过以下命令clone你的仓库（使用scp语法）
   git clone user@git.example.com:/srv/git/my_project.git
-  
+
   # 初始化时将git仓库目录设置为用户组读/写权限
   # 从0创建一个裸仓库
   cd /srv/git/my_project.git
@@ -2456,7 +2459,7 @@ $ ssh-keygen
 
 5.  任一协作者将项目的初始版本push到该服务器上
 
-    ```
+    ```shell
     # John's computer
     $ cd myproject
     $ git init
@@ -2467,11 +2470,11 @@ $ ssh-keygen
     ```
 
     *   ***这种初始化远程仓库的方法可以学习下***
-    *   这里访问远程仓库的方法使用了scp工具的语法user@server:directory
+    *   这里访问远程仓库的方法使用了scp工具的语法`user@server:directory`
 
 6.  之后其他协作者就可以clone这个仓库进行协作开发了
 
-    ```
+    ```shell
     $ git clone git@gitserver:/opt/git/project.git
     $ cd project
     $ vim README
@@ -2484,7 +2487,7 @@ $ ssh-keygen
     *   当前Git服务器上协作者具有完整的shell权限（没有必要且有风险，协作者只需要具有仓库的读写权限即可）——修改服务器git用户的默认shell为git-shell即可
     *   当用户通过git用户登录服务器时会被拒绝 :-)
 
-    ```
+    ```shell
     $ which git-shell
     $ sudo vim /etc/shells
     # 将/usr/bin/git-shell添加到shells文件中
@@ -2613,7 +2616,7 @@ $ ssh-keygen
 
 *   空白错误检查
 
-    `git diff --check`——再暂存之前检查；无法检查已暂存的修改；
+    `git diff --check`——暂存之前检查；无法检查已暂存的修改；
 
     *   行尾空格与制表符
     *   行首空格与制表符混用
@@ -2629,19 +2632,19 @@ $ ssh-keygen
 
     ```
     修改摘要(<=50字符(25汉字))
-    
+
     更详细的解释文字。在大概 72 个字符的时候换行。
     某些情形下，“修改摘要”被当作电子邮件的标题，剩
     下的文本作为正文。分隔摘要与正文的空行是必须的
     （除非你完全省略正文）；如果你将两者混在一起，
     那么类似变基等工具无法正常工作。
-    
+
     空行接着更进一步的段落。
-    
+
      - 句号也是可以的。
-    
+
      - 使用 - 或 *，与描述文字间用空格分隔
-    
+
      - 不同段用空行分隔
     ```
 
@@ -2673,7 +2676,7 @@ $ ssh-keygen
     # 使用git commit -m "Title" -m "Description"
     Title会作为摘要部分
     Description会作为正文部分
-    
+
     # 使用不带参数的commit，在文本编辑器中操作
     ```
 
@@ -2724,59 +2727,106 @@ $ ssh-keygen
 
 *   拉取请求（pull request）
 
-    ```
+    ```shell
     $ git request-pull [-p] <start> <url> [<end>]
+
     -p		Include patch text in the output.
     <start>	Commit to start at. 即已在计划合入的仓库中的某个提交
     <url>	The repository URL to be pulled from.
     <end>	Commit to end at(defaults to HEAD).指定希望拉取的分支（提交）
     示例：
     $ git request-pull -p origin/master myfork new_idea
-    当前所在仓库为计划合入的远程仓库的clone，对应远程仓库为origin
-    计划合入的远程分支为：master
-    希望被拉取的仓库为：myfork
-    希望被拉取的分支为：new_idea（位于myfork）
+
+    # 也就是，我们期望自己的修改合入到 项目管理者 的origin/master分支
+    ## 当前所在仓库为计划合入的远程仓库的clone，
+    ## 对应远程仓库为origin
+    ## 计划合入的远程分支为：master
+
+    ## 希望被拉取的仓库为：myfork
+    ## 希望被拉取的分支为：new_idea（位于myfork）
+
+    # 实例！
+    ## 1. 实际上是生成一个pull-request请求，方便远程仓库管理者：
+    ##    a. 设置我的仓库为远程仓库（file:///home/queue/src/git/pr_test）
+    ##    b. 将我指定的分支（new_idea）合并到，我预期合并到的管理者的分支上（origin/master）
+    ## 2. 将生成的信息发给仓库管理者即可:P
+    ## 3. 一般不直接推送本地的master分支，而是新建分支完成feature，然后生成pr
+    ##    不这样做的话会有告警
+    queue@nuc13:~/src/git/pr_test$ git request-pull -p origin/master file:///home/queue/src/git/pr_test new_idea
+    The following changes since commit 2138f95f39b6d3265d11199513788d72d668989c:
+
+      issue2 (2024-09-27 20:55:26 +0800)
+
+    are available in the Git repository at:
+
+      file:///home/queue/src/git/pr_test new_idea
+
+    for you to fetch changes up to cfcb41a56690138ca9910cd81f68329c81391bc7:
+
+      branch in new_idea (2024-09-27 21:20:04 +0800)
+
+    ----------------------------------------------------------------
+    queue (2):
+          hot
+          branch in new_idea
+
+     main.cpp | 3 +++
+     1 file changed, 3 insertions(+)
+
+    diff --git a/main.cpp b/main.cpp
+    index b1feb79..0d284fd 100644
+    --- a/main.cpp
+    +++ b/main.cpp
+    @@ -14,3 +14,6 @@ void print() {
+     void print1() {
+       return;
+     }
+    +
+    +std::cout << "FUCK";
+    +std::cout << "FUCK another";
+
     ```
 
 ### 通过电子邮件接受补丁的公开项目 ###
 
 *   特点：工作流程类似于派生的公开项目，只是提交到项目的方式不同
 
-*   生成补丁
+* 生成补丁
 
-    ```
-    $ git format-patch -M origin/master
-    0001-one-new-idea.patch
+  ```shell
+  $ git format-patch -M origin/master
+  0001-one-new-idea.patch
 
-    # -M Git会查找文件重命名
-    # 如下所示，可以在*标注的两行之间添加任何描述信息
+  # -M Git会查找文件重命名
+  # 如下所示，可以在*标注的两行之间添加任何描述信息
+  # 实际上就是见该信息发送给仓库管理者请求apply patch
 
-    $ cat 0001-one-new-idea.patch
-    From a5a3ab5ba8903d37f5bc85e094ab03209c0043dd Mon Sep 17 00:00:00 2001
-    From: phyque <terroristzheng@outlook.com>
-    Date: Fri, 6 Dec 2019 22:35:31 +0800
-    Subject: [PATCH] one new idea
+  $ cat 0001-one-new-idea.patch
+  From a5a3ab5ba8903d37f5bc85e094ab03209c0043dd Mon Sep 17 00:00:00 2001
+  From: phyque <terroristzheng@outlook.com>
+  Date: Fri, 6 Dec 2019 22:35:31 +0800
+  Subject: [PATCH] one new idea
 
-    --- **************************************************************start
-     main.c | 1 +
-     1 file changed, 1 insertion(+)
+  --- **************************************************************start
+   main.c | 1 +
+   1 file changed, 1 insertion(+)
 
-    diff --git a/main.c b/main.c *************************************end
-    index f8e367a..6466cc3 100644
-    --- a/main.c
-    +++ b/main.c
-    @@ -12,6 +12,7 @@ int main(int argc, char *argv[])
+  diff --git a/main.c b/main.c *************************************end
+  index f8e367a..6466cc3 100644
+  --- a/main.c
+  +++ b/main.c
+  @@ -12,6 +12,7 @@ int main(int argc, char *argv[])
 
-        printf("master add oneline.\n");
-        printf("hit.\n");
-    +       printf("Add one new idea.\n");
+      printf("master add oneline.\n");
+      printf("hit.\n");
+  +       printf("Add one new idea.\n");
 
-        return 0;
-     }
-    --
-    2.24.0.windows.2
+      return 0;
+   }
+  --
+  2.24.0.windows.2
 
-    ```
+  ```
 
 *   通过配置imap发送patch邮件
 
@@ -2926,41 +2976,45 @@ $ ssh-keygen
 
 **服务器协议**
 
-# Git工具 #
+# Git工具
 
-## 选择修订版本 ##
+## 选择修订版本
 
-### 单个修订版本 ###
+  * Git支持以多种方式 **指定**
+    - 单个**提交**
+    - 一组**提交**
+    - 一定范围内的所有**提交**
+  * 本节即来描述这些方式
 
-#### 简短的SHA-1 ####
+### 指定单个修订版本的方式
+#### 使用完整的SHA-1
+#### 使用简短的SHA-1
 
-*   提供的SHA-1字符数量不少于4个，并且没有歧义
+* 提供的SHA-1字符数量不少于4个，并且没有歧义
+* `--abbrev-commit`参数可以让命令显示最简的SHA-1值
 
-*   `git show`命令
+#### 分支引用
 
-    ```
-    git show xx
-    xx可以时SHA-1/分支/tag名，用于显示对应提交的信息
-    ```
+* 通常所使用的分支名即为分支引用，如`git show topic1`
+  可以用来引用分支最顶端的commit
+  ```shell
+  # 指定完整/简写的SHA-1等价于指定分支/标签名
+  git show xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  git show topic1
+  ```
 
-#### 分支引用 ####
+* 使用`git rev-parse`查看引用对应的SHA-1
+  将引用名转换成实际的SHA-1
+  ```shell
+  $ git rev-parse master
+  dd2126fc03f95dbb72dbaeea613dcd40ae4906ed
+  ```
 
-*   通常所使用的分支名即为分支引用，如`git show topic1`
+#### 引用日志
 
-*   使用`git rev-parse`查看引用对应的SHA-1
-
-    ```
-    $ git rev-parse master
-    dd2126fc03f95dbb72dbaeea613dcd40ae4906ed
-    ```
-
-#### 引用日志 ####
-
-*   引用日志（reflog）：保存最近几个月HEAD和分支引用所指向的提交对象记录
-
-*   示例：
-
-    ```
+* 引用日志（reflog）：保存最近几个月HEAD和分支引用所指向的提交对象记录
+* 示例：
+    ```shell
     λ git reflog
     a5a3ab5 (HEAD -> new_idea, myfork/new_idea) HEAD@{0}: commit: one new idea
     dd2126f (origin/master, origin/HEAD, master) HEAD@{1}: checkout: moving from master to new_idea
@@ -2978,44 +3032,42 @@ $ ssh-keygen
     $ git log -g
     ```
 
-*   引用日志只存在于本地；
+* 引用日志只存在于本地；
 
-*   引用日志类似于Git版的shell历史记录
+* 引用日志类似于Git版的shell历史记录
 
-#### 祖先引用 ####
+#### 祖先引用
 
-*   符号（`^`）
+* 符号（`^`）
+  ```shell
+  # 查看master的父提交
+  $ git show master^
 
-    ```
-    # 查看master的父提交
-    $ git show master^
-    
-    # 查看master的第二父提交
-    $ git show master^2
-    ```
+  # 查看master的第二父提交
+  $ git show master^2
+  ```
 
+* 符号（`~`）
 
-
-*   符号（`~`）
-
-    ```
+    ```shell
     # 查看master的父提交
     $ git show master~
-    
+
     # 查看master的祖先提交
     $ git show master~2
     $ git show master~~
-    
+
     # 查看HEAD的父提交的父提交的第二父提交
     $ git show HEAD~2^2
     ```
 
-### 多个修订版本 - 提交区间 ###
+### 指定多个提交
 
->   解决“这个分支还有哪些提交尚未合并到主分支？”的问题
+  * 解决“这个分支还有哪些提交尚未合并到主分支？”的问题
 
-#### 双点 ####
+#### 双点
 
+~~~shell
 ```
 # 查看master缺失，但experiment中存在的提交有哪些？
 $ git log master..experiment
@@ -3026,16 +3078,34 @@ $ git log experiment..master
 # 查看即将推送到远端的内容
 $ git log origin/master..HEAD
 ```
+~~~
 
-*   当双点两端留空其中一边时，则留空这边默认为HEAD
+* 当双点两端留空其中一边时，则留空这边默认为HEAD
+* 如何记忆和理解呢？
+  类似于 `diff` 命令；
+  ```shell
+  # 查看的是src与dst的差异；
+  ## 从名字就可以看出，src是源，dst是目的；
+  ## diff结果中：
+  ## +行表示：src要变换成dst，需要添加的行
+  ## -行表示：src要变换成dst，需要删除的行
+  ## 相当于用dst-src得到的结果
+  diff -u src dst
 
-#### 多点 ####
+  # 那么对于 a..b
+  ## 可以理解为，b中多出的部分；
+  ## 那么如果，b的commit确实与a相同，甚至还比a落后呢？那就什么也不显示；
+  ## 所以不同于diff的是， git log a..b 不会显示“负”结果
+  ### 但是，但是，但是，git diff 与 diff 类似，会显示负结果；:P
+  ```
 
-*   当需要针对两个以上分支进行类似双点的效果时
-*   这里的多点，事实上并不是用符号`.`，而是指定多个points
-*   关键：使用`^`或`--not`指定不希望提交被包含其中的分支——即指定要显示的提交没有包含在对应分支中
+#### 多点
 
-```
+* 当需要针对两个以上分支进行类似双点的效果时，即判断某些commit在某个分支，而不在另外一个分支的情况；
+* 这里的多点，事实上并不是用符号`.`，而是指定多个判断对象（多余两个分支）
+* 关键：使用`^`或`--not`指定不希望提交被包含其中的分支——即指定要显示的提交没有包含在对应分支中
+
+```shell
 # 等价的三条命令
 $ git log refA..refB
 $ git log ^refA refB
@@ -3046,13 +3116,14 @@ $ git log refA refB ^refC
 $ git log refA refB --not refC
 ```
 
->   这就构成了一个十分强大的修订查询系统，你可以通过它来查看你的分支里包含了哪些东西。
+> 这就构成了一个十分强大的修订查询系统，你可以通过它来查看你的分支里包含了哪些东西。
 
-#### 三点 ####
+#### 三点
 
-*   选择出被两个引用之一包含，但又不被两者同时包含的提交
+* 选择出被两个引用之一包含，但又不被两者同时包含的提交
+  提取出两个引用各自独有的commit，也就是取两个引用的补集的并集
 
-```
+```shell
 $ git log master...experiment
 F
 E
@@ -3071,59 +3142,60 @@ $ git log --left-right master..experiment
 # > 表示只位于右边分支（即experiment）的提交对象
 ```
 
-## 交互式暂存 ##
+## 交互式暂存
 
-*   场景：将文件的特定部分组合成提交
+* 场景：将文件的特定部分组合成提交
+  > 两种应用场景：
+  > 1. 当前工作区存在较多隶属于不同变更集的修改分别位于不同文件
+  > 2. 当前工作区存在较多隶属于不同变更集的修改分别位于同一个文件的不同部分
 
-    >   两种应用场景：
-    >
-    >   1.  当前工作区存在较多隶属于不同变更集的修改分别位于不同文件
-    >   2.  当前工作区存在较多隶属于不同变更集的修改分别位于同一个文件的不同部分
+* 为了确保每次提交都是逻辑上独立的变更集：
+  > 1. 针对上述1，可以使用`git add`同一变更集的修改，提交后，再次暂存下一个变更集修改；或者使用“交互式暂存”的方法分步暂存/提交
+  > 2. 针对上述2，只能使用“交互式暂存”的方法，针对文件中不同的修改部分分步暂存/提交
 
-*   为了确保每次提交都是逻辑上独立的变更集：
+* 命令：
 
-    >   1.  针对上述1，可以使用`git add`同一变更集的修改，提交后，再次暂存下一个变更集修改；或者使用“交互式暂存”的方法分步暂存/提交
-    >   2.  针对上述2，只能使用“交互式暂存”的方法，针对文件中不同的修改部分分步暂存/提交
+  ```shell
+  $ git status -s
+  M index.html
+  M main.c
 
-*   命令：
+  # interactive 交互式的; 人机对话的; 互动的
 
-    ```
-    $ git status --short
-     M index.html
-     M main.c
+  $ git add --interactive
+  $ git add -i
+  贡献统一由整合者整合进入主线
+  所有工作在基于团队的分支上完成
+  staged     unstaged path
+  1:    unchanged        +2/-0 index.html
+  2:    unchanged        +2/-0 main.c*** Commands ***
+  1: status
+  2: update
+  3: revert
+  4: add untracked
+  5: patch
+  6: diff
+  7: quit
+  8: help What now> help
+  status        - show paths with changes
+  update        - add working tree state to the staged set of changes
+  revert        - revert staged set of changes back to the HEAD version
+  patch         - pick hunks and update selectively
+  diff          - view diff between HEAD and index
+  add untracked - add contents of untracked files to the staged set of changes
+  # 在What now>后键入命令首字母或命令前的序号都可以使用该命令
+  ```
 
-    # interactive 交互式的; 人机对话的; 互动的
+  *   命令帮助：
 
-    $ git add --interactive
-    $ git add -i
-           staged     unstaged path
-      1:    unchanged        +2/-0 index.html
-      2:    unchanged        +2/-0 main.c
-
-    *** Commands ***
-      1: status       2: update       3: revert       4: add untracked
-      5: patch        6: diff         7: quit         8: help
-    What now> help
-    status        - show paths with changes
-    update        - add working tree state to the staged set of changes
-    revert        - revert staged set of changes back to the HEAD version
-    patch         - pick hunks and update selectively
-    diff          - view diff between HEAD and index
-    add untracked - add contents of untracked files to the staged set of changes
-
-    # 在What now>后键入命令首字母或命令前的序号都可以使用该命令
-    ```
-
-    *   命令帮助：
-
-    | 命令          | 解析                 |
-    | ------------- | -------------------- |
-    | status        | 显示当前暂存状态     |
-    | update        | 暂存文件             |
-    | revert        | 回退暂存             |
-    | patch         |                      |
-    | diff          | 查看已暂存的文件状态 |
-    | add untracked |                      |
+  | 命令          | 解析                 |
+  | ------------- | -------------------- |
+  | status        | 显示当前暂存状态     |
+  | update        | 暂存文件             |
+  | revert        | 回退暂存             |
+  | patch         |                      |
+  | diff          | 查看已暂存的文件状态 |
+  | add untracked |                      |
 
 *   交互式暂存的操作方法
 
@@ -3139,7 +3211,7 @@ $ git log --left-right master..experiment
     Update>> 2
     Update>>
     # 不输入任何编号，直接回车，则退出对应命令视图完成操作
-    
+
     # 上面介绍了一个完整的操作流程（现在感觉好多了:)）
     ```
 
@@ -3153,18 +3225,18 @@ $ git log --left-right master..experiment
 
 *   操作示例：
 
-    ```
+    ```shell
     E:\repo\work (new_idea -> myfork)
     λ git status --short					# 初始状态
      M index.html
      M main.c
-    
+
     E:\repo\work (new_idea -> myfork)
     λ git add --interactive					# 进入交互式暂存界面
            staged     unstaged path
       1:    unchanged        +2/-0 index.html
       2:    unchanged        +2/-0 main.c
-    
+
     *** Commands ***
       1: status       2: update       3: revert       4: add untracked
       5: patch        6: diff         7: quit         8: help
@@ -3182,7 +3254,7 @@ $ git log --left-right master..experiment
     * 2:    unchanged        +2/-0 main.c
     Update>>								# 退出交互式暂存
     updated 2 paths
-    
+
     *** Commands ***
       1: status       2: update       3: revert       4: add untracked
       5: patch        6: diff         7: quit         8: help
@@ -3190,7 +3262,7 @@ $ git log --left-right master..experiment
            staged     unstaged path
       1:        +2/-0      nothing index.html
       2:        +2/-0      nothing main.c
-    
+
     *** Commands ***
       1: status       2: update       3: revert       4: add untracked
       5: patch        6: diff         7: quit         8: help
@@ -3204,7 +3276,7 @@ $ git log --left-right master..experiment
     * 2:        +2/-0      nothing main.c
     Revert>>								# 直接回车退出r命令视图
     reverted 1 path
-    
+
     *** Commands ***
       1: status       2: update       3: revert       4: add untracked
       5: patch        6: diff         7: quit         8: help
@@ -3230,12 +3302,12 @@ $ git log --left-right master..experiment
       5: patch        6: diff         7: quit         8: help
     What now> quit							# 退出“交互式暂存
     Bye.
-    
+
     E:\repo\work (new_idea -> myfork)
     λ git status --short					# 查看当前状态
     M  index.html							# index.html被暂存
      M main.c								# main.c被暂存，又被回退
-    
+
     E:\repo\work (new_idea -> myfork)
     λ
     ```
@@ -3246,148 +3318,150 @@ $ git log --left-right master..experiment
 
     暂存补丁即暂存某个文件中的部分修改
 
-*   操作示例：
+* 操作示例：
 
-    ```
-    E:\repo\work (new_idea -> myfork)
-    λ git status --short							# 初始状态
-     M index.html
-     M main.c
+  ```
+  E:\repo\work (new_idea -> myfork)
+  λ git status --short							# 初始状态
+   M index.html
+   M main.c
 
-    E:\repo\work (new_idea -> myfork)
-    λ git add --interactive							# 进入交互式暂存模式
-           staged     unstaged path
-      1:    unchanged        +9/-0 index.html
-      2:    unchanged        +7/-0 main.c
+  E:\repo\work (new_idea -> myfork)
+  λ git add --interactive							# 进入交互式暂存模式
+         staged     unstaged path
+    1:    unchanged        +9/-0 index.html
+    2:    unchanged        +7/-0 main.c
 
-    *** Commands ***
-      1: status       2: update       3: revert       4: add untracked
-      5: patch        6: diff         7: quit         8: help
-    What now> p										# 进入p(patch)命令视图
-           staged     unstaged path
-      1:    unchanged        +9/-0 index.html
-      2:    unchanged        +7/-0 main.c
-    Patch update>> 1								# 计划patch文件1
-           staged     unstaged path
-    * 1:    unchanged        +9/-0 index.html
-      2:    unchanged        +7/-0 main.c
-    Patch update>> 2								# 计划patch文件2
-           staged     unstaged path
-    * 1:    unchanged        +9/-0 index.html
-    * 2:    unchanged        +7/-0 main.c
-    Patch update>>									# 开始生成patch
-    diff --git a/index.html b/index.html
-    index 5d77f1a..0be92ed 100644
-    --- a/index.html
-    +++ b/index.html
-    @@ -6,3 +6,12 @@
-            <p>New Start</p>
-        </body>
-     </html>
-    +
-    +<html>
-    +       <head>
-    +               <title>Main Page</title>
-    +       </head>
-    +       <body>
-    +               <p>New Start</p>
-    +       </body>
-    +</html>
-    (1/1) Stage this hunk [y,n,q,a,d,e,?]? y		# 暂存该部分修改
+  *** Commands ***
+    1: status       2: update       3: revert       4: add untracked
+    5: patch        6: diff         7: quit         8: help
+  What now> p										# 进入p(patch)命令视图
+         staged     unstaged path
+    1:    unchanged        +9/-0 index.html
+    2:    unchanged        +7/-0 main.c
+  Patch update>> 1								# 计划patch文件1
+         staged     unstaged path
+  * 1:    unchanged        +9/-0 index.html
+    2:    unchanged        +7/-0 main.c
+  Patch update>> 2								# 计划patch文件2
+         staged     unstaged path
+  * 1:    unchanged        +9/-0 index.html
+  * 2:    unchanged        +7/-0 main.c
+  Patch update>>									# 开始生成patch
+  diff --git a/index.html b/index.html
+  index 5d77f1a..0be92ed 100644
+  --- a/index.html
+  +++ b/index.html
+  @@ -6,3 +6,12 @@
+          <p>New Start</p>
+      </body>
+   </html>
+  +
+  +<html>
+  +       <head>
+  +               <title>Main Page</title>
+  +       </head>
+  +       <body>
+  +               <p>New Start</p>
+  +       </body>
+  +</html>
+  (1/1) Stage this hunk [y,n,q,a,d,e,?]? y		# 暂存该部分修改
 
-    diff --git a/main.c b/main.c
-    index a73cb22..f61f43b 100644
-    --- a/main.c
-    +++ b/main.c
-    @@ -1,5 +1,7 @@
-     #include <stdio.h>
+  diff --git a/main.c b/main.c
+  index a73cb22..f61f43b 100644
+  --- a/main.c
+  +++ b/main.c
+  @@ -1,5 +1,7 @@
+   #include <stdio.h>
 
-    +extern void show(void);
-    +
-     void hit()
-     {
-        return;
-    (1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,?]? n	# 拒绝暂存该部分（声明）
-    @@ -18,3 +20,8 @@ int main(int argc, char *argv[])
+  +extern void show(void);
+  +
+   void hit()
+   {
+      return;
+  (1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,?]? n	# 拒绝暂存该部分（声明）
+  @@ -18,3 +20,8 @@ int main(int argc, char *argv[])
 
-        return 0;
-     }
-    +
-    +void show()
-    +{
-    +       printf("hello.\n");
-    +}
-    (2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,?]? y	# 暂存该部分（函数定义）
+      return 0;
+   }
+  +
+  +void show()
+  +{
+  +       printf("hello.\n");
+  +}
+  (2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,?]? y	# 暂存该部分（函数定义）
 
-    *** Commands ***
-      1: status       2: update       3: revert       4: add untracked
-      5: patch        6: diff         7: quit         8: help
-    What now> s										# 查看当前暂存状态
-           staged     unstaged path
-      1:        +9/-0      nothing index.html
-      2:        +5/-0        +2/-0 main.c			# 发现这里暂存了5行新增，未暂存2行
+  *** Commands ***
+    1: status       2: update       3: revert       4: add untracked
+    5: patch        6: diff         7: quit         8: help
+  What now> s										# 查看当前暂存状态
+         staged     unstaged path
+    1:        +9/-0      nothing index.html
+    2:        +5/-0        +2/-0 main.c			# 发现这里暂存了5行新增，未暂存2行
 
-    *** Commands ***
-      1: status       2: update       3: revert       4: add untracked
-      5: patch        6: diff         7: quit         8: help
-    What now> d									# 查看已暂存的修改，进入d视图
-           staged     unstaged path
-      1:        +9/-0      nothing index.html
-      2:        +5/-0        +2/-0 main.c
-    Review diff>> 2								# 显示文件2已暂存的修改
-    diff --git a/main.c b/main.c
-    index a73cb22..f978ab1 100644
-    --- a/main.c
-    +++ b/main.c
-    @@ -18,3 +18,8 @@ int main(int argc, char *argv[])
+  *** Commands ***
+    1: status       2: update       3: revert       4: add untracked
+    5: patch        6: diff         7: quit         8: help
+  What now> d									# 查看已暂存的修改，进入d视图
+         staged     unstaged path
+    1:        +9/-0      nothing index.html
+    2:        +5/-0        +2/-0 main.c
+  Review diff>> 2								# 显示文件2已暂存的修改
+  diff --git a/main.c b/main.c
+  index a73cb22..f978ab1 100644贡献统一由整合者整合进入主线
 
-        return 0;
-     }
-    +
-    +void show()
-    +{
-    +       printf("hello.\n");
-    +}
-    *** Commands ***
-      1: status       2: update       3: revert       4: add untracked
-      5: patch        6: diff         7: quit         8: help
-    What now> quit
-    Bye.
+  所有工作在基于团队的分支上完成
+  --- a/main.c
+  +++ b/main.c
+  @@ -18,3 +18,8 @@ int main(int argc, char *argv[])
 
-    E:\repo\work (new_idea -> myfork)
-    λ git status --short				# 暂存后状态
-    M  index.html
-    MM main.c							# main.c部分被暂存
+      return 0;
+   }
+  +
+  +void show()
+  +{
+  +       printf("hello.\n");
+  +}
+  *** Commands ***
+    1: status       2: update       3: revert       4: add untracked
+    5: patch        6: diff         7: quit         8: help
+  What now> quit
+  Bye.
 
-    E:\repo\work (new_idea -> myfork)
-    λ git diff --cached main.c			# 通过git diff命令查看暂存的修改内容
-    diff --git a/main.c b/main.c
-    index a73cb22..f978ab1 100644
-    --- a/main.c
-    +++ b/main.c
-    @@ -18,3 +18,8 @@ int main(int argc, char *argv[])
+  E:\repo\work (new_idea -> myfork)
+  λ git status --short				# 暂存后状态
+  M  index.html
+  MM main.c							# main.c部分被暂存
 
-        return 0;
-     }
-    +
-    +void show()
-    +{
-    +       printf("hello.\n");
-    +}
+  E:\repo\work (new_idea -> myfork)
+  λ git diff --cached main.c			# 通过git diff命令查看暂存的修改内容
+  diff --git a/main.c b/main.c
+  index a73cb22..f978ab1 100644
+  --- a/main.c
+  +++ b/main.c
+  @@ -18,3 +18,8 @@ int main(int argc, char *argv[])
 
-    E:\repo\work (new_idea -> myfork)
-    λ
+      return 0;
+   }
+  +
+  +void show()
+  +{
+  +       printf("hello.\n");
+  +}
 
-    # patch命令视图有中多选项，一般只使用y/n就足够了，下面列出所有命令，供后续查阅：
-    (1/1) Stage this hunk [y,n,q,a,d,e,?]? ?
-    y - stage this hunk
-    n - do not stage this hunk
-    q - quit; do not stage this hunk or any of the remaining ones
-    a - stage this hunk and all later hunks in the file
-    d - do not stage this hunk or any of the later hunks in the file
-    e - manually edit the current hunk
-    ? - print help
-    ```
+  E:\repo\work (new_idea -> myfork)
+  λ
+
+  # patch命令视图有中多选项，一般只使用y/n就足够了，下面列出所有命令，供后续查阅：
+  (1/1) Stage this hunk [y,n,q,a,d,e,?]? ?
+  y - stage this hunk
+  n - do not stage this hunk
+  q - quit; do not stage this hunk or any of the remaining ones
+  a - stage this hunk and all later hunks in the file
+  d - do not stage this hunk or any of the later hunks in the file
+  e - manually edit the current hunk
+  ? - print help
+  ```
 
 *   `git add -p`或`git add --patch`——直接进入上述patch工作模式
 
@@ -3562,14 +3636,14 @@ $ git merge -S	# 签署合并生成的提交
     ```
     λ git grep -n main			# 当前工作目录中查找“main”，并显示行号
     main.c:10:int main(int argc, char *argv[])
-    
+
     λ git grep -n --count main	# 当前工作目录中查找"main"，仅显示概要信息
     main.c:1
-    
+
     λ git grep -p hello			# 显示"hello"位于哪一个函数
     main.c=void show()				# 属于show()函数
     main.c: printf("hello.\n");		# 目标串所在行
-    
+
     λ git grep -p printf		# 当串为函数名时，可以看到该函数被谁调用了
     main.c=int main(int argc, char *argv[])
     main.c: printf("First Bugfix.\n");
@@ -3581,11 +3655,11 @@ $ git merge -S	# 签署合并生成的提交
     main.c: printf("Second Bugfix.\n");
     main.c=void show()
     main.c: printf("hello.\n");
-    
+
     --break	"Print an empty line between matches from different files"
     --heading	"Show the filename above the matches in that file instead of at the start of each shown line."
     -e	“The next parameter is the pattern. This option has to be used for patterns starting with - and should be used in scripts passing user input to grep. Multiple patterns are combined by or.”
-    
+
     # 查找既包含h又包含e的行，从分支master中查找
     λ git grep --break --heading -e h --and -e e master
     master:index.html
@@ -3593,7 +3667,7 @@ $ git merge -S	# 签署合并生成的提交
         </head>
         <head>
         </head>
-    
+
     master:main.c
     #include <stdio.h>
     extern void show(void);
@@ -3615,15 +3689,15 @@ $ git merge -S	# 签署合并生成的提交
     commit b2b2c94154f2f3636d9f2e660bce92494d49d2d4
     Author: phyque <terroristzheng@outlook.com>
     Date:   Sat Nov 23 19:49:22 2019 +0800
-    
+
     master init
-    
+
     git log -G"pattern"
     λ git log -G"he..o"		# 查看符合正则表达式的修改是何时引入与删除的
     commit fa49cfb6561b1a47caaeaac9ff45d45828f0211d (origin/master, origin/HEAD, myfork/new_idea, master)
     Author: phyque <terroristzheng@outlook.com>
     Date:   Thu Dec 12 22:19:17 2019 +0800
-    
+
     holy shit
     ```
 
@@ -3638,20 +3712,20 @@ $ git merge -S	# 签署合并生成的提交
     commit fa49cfb6561b1a47caaeaac9ff45d45828f0211d (origin/master, origin/HEAD, myfork/new_idea, master)
     Author: phyque <terroristzheng@outlook.com>
     Date:   Thu Dec 12 22:19:17 2019 +0800
-    
+
     holy shit
-    
+
     diff --git a/main.c b/main.c
     --- a/main.c
     +++ b/main.c
     @@ -3,0 +3,2 @@
     +extern void show(void);
     +
-    
+
     其他命令格式：
     git log -L 3,4:main.c	# 查看文件main.c 3/4行的修改历史
     git log :<funcname>:<file>	# 查看file中funcname函数的修改历史
-    
+
     ```
 
 ## 重写历史 ##
@@ -3758,36 +3832,48 @@ $ git merge -S	# 签署合并生成的提交
 *   底层命令（plumbing command）
 *   高层命令（porcelain command）
 *   `.git/目录`
-    *   `config`——项目特有的配置选项
-    *   `description`——仅供GitWeb程序使用
-    *   `hooks/`——包含客户端/服务端的钩子脚本（hook scripts）
-    *   `info/`——包含一个全局性排除（global exclude）文件，用以放置那些不希望被记录在`.gitignore`中的忽略模式（ignored patterns）
-    *   `HEAD`——目前被checkout的分支
-    *   `objects/`——存储所有数据内容
-    *   `refs/`——存储指向数据（分支）的提交对象的指针
-    *   `index`——保存暂存区信息
+
+    | 目录        | 描述                                                         |
+    | ----------- | ------------------------------------------------------------ |
+    | config      | 项目配置                                                     |
+    | description | 仅供GitWeb程序使用                                           |
+    | hooks/      | 包含客户端/服务端的钩子脚本（hook scripts）                  |
+    | info/       | 包含一个全局性排除（global exclude）文件，用以放置那些不希望被记录在`.gitignore`中的忽略模式（ignored patterns） |
+    | HEAD        | 目前被checkout的分支                                         |
+    | objects/    | 存储所有数据内容                                             |
+    | refs/       | 存储指向数据（分支）的提交对象的指针                         |
+    | index       | 保存暂存区信息                                               |
+
+
 
 ## Git对象 ##
 
-*   Git的核心部分是一个简单的**键值对数据库（key-value data store）**
+* Git的核心部分是一个简单的**键值对数据库（key-value data store）**
 
-    *   向该数据库插入任意类型的内容，Git会返回一个键，通过该键可以在任意时刻再次检索（retrieve）该内容
+  *   向该数据库插入任意类型的内容，Git会返回一个键，通过该键可以在任意时刻再次检索（retrieve）该内容
 
-    *   重要的3条命令：
+  *   重要的3条命令：
 
-    *   `git hash-object -w test.txt`——返回SHA-1值
-    *   `git cat-file -p HASH_VALUE`——根据SHA-1值打印内容
-    *   `git cat-file -t HASH_VALUE`——查看SHA-1值对应的对象类型
-    *   `git ls-files --stage`——查看暂存区信息
+  * `git hash-object -w test.txt`——返回SHA-1值
+
+    将test.txt压缩保存到.git/objects/目录下（生成一个blob对象）
+
+    返回上升的blob对象的SHA-1值
+
+  * `git cat-file -p HASH_VALUE`——根据SHA-1值打印内容
+
+    根据SHA-1查找到目标对象并还原打印出来
+
+  * `git cat-file -t HASH_VALUE`——查看SHA-1值对应的对象类型
 
 *   演示：
 
-    ```
+    ```shell
     $ git hash-object -w test.txt
     8d6a8d555b676314f611a64bc9b0ce1e20bda51b
     $ git cat-file -p 8d6a8d555b676314f611a64bc9b0ce1e20bda51b
     0123456789abcdef
-    
+
     # modify test.txt
     $ git hash-object -w test.txt
     50f546b995d133a24030835c1c9a17c40a63193b
@@ -3795,19 +3881,19 @@ $ git merge -S	# 签署合并生成的提交
     0123456789abcdef
     0123456789abcdef
     0123456789abcdef
-    
+
     # recover the first version of test.txt
     $ git cat-file -p 50f546b995d133a24030835c1c9a17c40a63193b > test.txt
     $ cat test.txt
     0123456789abcdef
-    
+
     # reciver the 2nd version of test.txt
     $ git cat-file -p 50f546b995d133a24030835c1c9a17c40a63193b > test.txt
     $ cat test.txt
     0123456789abcdef
     0123456789abcdef
     0123456789abcdef
-    
+
     # Check the type of the file with SHA-1 value
     $ git cat-file -t 50f546b995d133a24030835c1c9a17c40a63193b
     blob
@@ -3854,7 +3940,7 @@ $ git merge -S	# 签署合并生成的提交
     *   创建***根树对象***，更新其中SHA-1信息/文件名等信息
     *   创建***提交对象***，指向***根树对象***
 
-    ```
+    ```shell
     # git init(empty)	obj-0
     # echo 123 > test	obj-0
     # git add test		obj-1,blob-1
@@ -3874,7 +3960,7 @@ $ git merge -S	# 签署合并生成的提交
 
 *   格式（`git cat-file -p a20b164`）：
 
-    ```
+    ```shell
     tree 2536799ba8f8d4826705cc0022fbf7be731f0939
     parent af9921d230777325da0ac959953205c7770ff5a9
     author sloth <terroristzheng@outllok.com> 1573388259 +0800
@@ -3907,7 +3993,7 @@ $ git merge -S	# 签署合并生成的提交
 
 *   暂存区(index)
 
-    *   保存当前最新的快照中所有数据对象的引用/模式/文件名信息——提交时依据暂存区中”当前分支的最新信息“创建根树对象及提交对象
+    *   保存当前最新的快照中所有数据对象的引用/模式/文件名信息——提交时依据暂存区中**”当前分支的最新信息“**创建根树对象及提交对象
 
     ```
     $ git ls-files --stage
@@ -3943,30 +4029,27 @@ $ git merge -S	# 签署合并生成的提交
 
 ## Git引用 ##
 
-*   本质：（refrences，缩写refs）在Git中引用就是.git/refs中的文件，文件中存储了某个提交的SHA-1值；
+*   本质：（refrences，缩写refs）在Git中引用就是`.git/refs`中的文件，文件中存储了某个提交的`SHA-1`值；分支/标签/远程分支的本质事实上就是某个提交的引用（有意义的名字）
 
-*   为什需要引用？
+* 为什需要引用？
 
-    *   提交的SHA-1值不方便记忆，且没有任何意义——需要给提交起个名字，代表该提交
-
-*   分支/标签的本质：
-
-    *   `.git/refs`目录下的一个命名为分支名或标签名的文件，其中存储了某个提交的SHA-1值
+  *   提交的SHA-1值不方便记忆，且没有任何意义——需要给提交起个名字，代表该提交
+  *   分支/远程分支/标签都需要一个方便记忆有意义的名字
 
 *   `refs/`目录结构说明：
 
-    ```
+    ```shell
     $ tree .git/refs/
     .git/refs/
-    ├── heads/				该目录直接存储本地分支
-    │   └── master				本地仓库唯一的本地分支
-    ├── remotes/			该目录以远程仓库名为子目录名存储对应远程仓库的引用信息
-    │   └── origin/				该目录存储对应远程仓库中的分支（远程分支）
-    │       ├── HEAD				远程仓库的HEAD
-    │       ├── fix_it				远程仓库中的fix_it分支
-    │       └── master				远程仓库中的master分支
-    └── tags/				该目录直接存储本地仓库中的标签
-    └── h					本地仓库中的标签h
+    ├── heads/		该目录直接存储本地分支
+    │   └── master	本地仓库唯一的本地分支
+    ├── remotes/	该目录以远程仓库名为子目录名存储对应远程仓库的引用信息
+    │   └── origin/	该目录存储对应远程仓库中的分支（远程分支）
+    │       ├── HEAD	远程仓库的HEAD
+    │       ├── fix_it	远程仓库中的fix_it分支
+    │       └── master	远程仓库中的master分支
+    └── tags/			该目录直接存储本地仓库中的标签
+        └── h			本地仓库中的标签h
     ```
 
 *   引用/数据对象/树对象/提交对象之间的关系：
@@ -3975,10 +4058,12 @@ $ git merge -S	# 签署合并生成的提交
 
 *   创建引用的动作：
 
-    ```
+    ```shell
+    # 创建了一个test分支
     echo "aca40694f7b00df67121541f7a0a5778a6c6c469" > .git/refs/heads/test
-    创建了一个test分支
+
     git update-ref refs/heads/test aca40694f7b00df67121541f7a0a5778a6c6c469
+
     # 根据当前所在提交创建一个分支
     git branch test
     git checkout -b test
@@ -4017,7 +4102,7 @@ $ git merge -S	# 签署合并生成的提交
     # 新增一个轻量级标签
     $ git tag v1.0
     $ git update-ref refs/tags/v1.0 aca40694f7b00df67121541f7a0a5778a6c6c469
-    
+
     # 新增一个附注标签并查看相关内容
     $ git tag v1.1 -m "test tag"
     $ cat .git/refs/tags/v1.1
@@ -4027,7 +4112,7 @@ $ git merge -S	# 签署合并生成的提交
     type commit
     tag h
     tagger phyque <zz@chd.edu.cn> 1574003410 +0800
-    
+
     holy shit
     # 上述标签对象指向的是一个提交对象：aca40694f7b00df67121541f7a0a5778a6c6c469
     # 标签可以指向任意对象：blob/tree/commit
@@ -4041,7 +4126,7 @@ $ git merge -S	# 签署合并生成的提交
     *   标签引用
     *   远程引用（remote reference）
 
-*   定义：Git记录的最近一次推送操作时每一个分支所对应的值，保存再refs/remote目录下
+*   定义：Git记录的最近一次推送操作时每一个分支所对应的值，位于`refs/remote`目录下
 
     ```
     $ ls .git\refs\remotes\origin\
