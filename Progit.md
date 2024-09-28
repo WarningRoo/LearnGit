@@ -1,8 +1,8 @@
 [TOC]
 
-# 起步 #
+# 起步
 
-## 关于版本控制 ##
+## 关于版本控制
 
 *定义*
 
@@ -44,9 +44,9 @@
 >
 >    ![分布式版本控制系统](./image/分布式版本控制系统.svg)
 
-## Git与其他版本控制系统的差异 ##
+## Git与其他版本控制系统的差异
 
-### 对待数据的方式 ####
+### 对待数据的方式
 
 Git与其他版本控制系统的主要差异在于：**Git对待数据的方法**
 
@@ -99,11 +99,11 @@ Git与其他版本控制系统的主要差异在于：**Git对待数据的方法
 
      ​	version2——&a2/&b1
 
-### 几乎所有操作都在本地执行 ###
+### 几乎所有操作都在本地执行
 
 * Git绝大多数操作都只需要访问本地文件和资源，一般不需要来自网络上其他计算机的信息。
 
-### Git保证完整性 ###
+### Git保证完整性
 
 * Git使用**校验和**作为索引
 
@@ -119,11 +119,11 @@ Git与其他版本控制系统的主要差异在于：**Git对待数据的方法
     * tree：树对象内容（文件名/模式/类型/SHA-1）
     * commit：提交对象的内容（根树对象SHA-1/提交人/mail/提交注释）
 
-### Git一般只添加数据 ###
+### Git一般只添加数据
 
 * ***数据一旦commit到仓库，就不太可能会丢失了***
 
-## Git中，文件的三种状态 ##
+## Git中，文件的三种状态
 
 * 在Git中，文件所处的状态概述：
 
@@ -187,15 +187,15 @@ Git与其他版本控制系统的主要差异在于：**Git对待数据的方法
   >
   > ![Git基本工作流](./image/Git基本工作流2.svg)
 
-## Git命令行 ##
+## Git命令行
 
 ***GUI模式***
 
 ***原生的命令行模式***
 
-## 安装Git ##
+## 安装Git
 
-### 从源代码安装 ###
+### 从源代码安装
 
 * 可以获得最新版本的Git
 
@@ -232,9 +232,9 @@ Git与其他版本控制系统的主要差异在于：**Git对待数据的方法
   > git clone git://git.kernel.org/pub/scm/git/git.git
   > ```
 
-## 基本配置 ##
+## 基本配置
 
-### Git配置文件概述 ###
+### Git配置文件概述
 
 * `git config`工具配置的变量存储在三个不同的位置：
 
@@ -256,7 +256,7 @@ Git与其他版本控制系统的主要差异在于：**Git对待数据的方法
 
 * 使用对应选项进行的配置会写入到对应的配置文件中
 
-### 用户信息 ###
+### 用户信息
 
 ```shell
 # 进行全局git配置
@@ -273,19 +273,19 @@ $ git config user.name "student_0"
 $ git config user.email student_0@chd.edu
 ```
 
-### 文本编辑器 ###
+### 文本编辑器
 
 ```shell
 $ git config --global core.editor vim
 ```
 
-### diff工具 ###
+### diff工具
 
 ```shell
 $ git config --global diff.tool vimdiff
 ```
 
-### 检查配置信息 ###
+### 检查配置信息
 
 ```shell
 查看所有system配置：
@@ -309,7 +309,7 @@ $ git config user.email
 johndoe@example.com
 ```
 
-### 获取帮助 ###
+### 获取帮助
 
 ```shell
 $ git help <verb>
@@ -317,9 +317,9 @@ $ git <verb> --help
 $ man git-<verb>
 ```
 
-# Git基础 #
+# Git基础
 
-## 获取Git仓库 ##
+## 获取Git仓库
 
 初始化/获取Git仓库的两种方法：
 
@@ -412,7 +412,7 @@ $ man git-<verb>
 >   git push -u origin master
 >   ```
 
-## 在Git仓库中记录变更 ##
+## 在Git仓库中记录变更
 
 * ***当项目到达某个需要记录的状态时向仓库提交这些变更的快照***
 
@@ -425,7 +425,7 @@ $ man git-<verb>
 
   ![文件状态的生命周期](./image/Git基本工作流2.svg)
 
-### 查看文件状态：`git status` ###
+### 查看文件状态：`git status`
 
 ```shell
 $ git status
@@ -464,7 +464,7 @@ nothing to commit, working directory clean
      * `A_ lib/git.rb`：lib/git.rb文件时新添加文件，已被暂存（经过`git add`暂存）
      * `?? LICENCE.md`：LICENCE.md文件尚未跟踪
 
-### 开始跟踪新文件：`git add` ###
+### 开始跟踪新文件：`git add`
 
 * `git add`的两个作用
   1. **开始跟踪新文件**（本小节）
@@ -472,13 +472,13 @@ nothing to commit, working directory clean
 * `git add`命令接收一个文件或目录的路径名作为参数
 * **`git add`的参数为目录，则会递归地将目录下的所有文件add到暂存区中**
 
-### 暂存已修改的文件 ###
+### 暂存已修改的文件
 
 * `git add`
   * 上一小节中提到的**将修改添加到暂存区**或者说**创建新blob对象并暂存**功能
 * `git add`的是当前文件，执行`git add`操作之后再对文件进行的修改，必须再次执行`git add`才可以将其暂存到暂存区；
 
-### 忽略规则文件：`.gitignore` ###
+### 忽略规则文件：`.gitignore`
 
 * `.gitignore`文件中与模式匹配的文件将会被git自动排除在跟踪列之外，且不会显示在“未跟踪”列表中。
 
@@ -509,7 +509,7 @@ nothing to commit, working directory clean
   >
   > doc/**/*.pdf	# 忽略doc/目录下的所有pdf文件，包括更深层目录中的pdf文件
 
-### 查看已暂存和已修改的变更：`git diff` ###
+### 查看已暂存和已修改的变更：`git diff`
 
 * `git diff`命令
 
@@ -557,7 +557,7 @@ nothing to commit, working directory clean
   2与1的差别即：+second modified
   ```
 
-### 提交变更：`git commit` ###
+### 提交变更：`git commit`
 
 * `git commit`
 
@@ -600,7 +600,7 @@ nothing to commit, working directory clean
   # 显示提交到了哪一个分支
   ```
 
-### 移除文件 ###
+### 移除文件
 
 * *要从Git中移除某个文件，你需要把它先从已跟踪文件列表中移除（确切地说，是从暂存区中移除），然后再提交。*
 
@@ -656,7 +656,7 @@ nothing to commit, working directory clean
 
 * `git rm`可以使用通配符
 
-### 移动文件 ###
+### 移动文件
 
 * 重命名文件后，`git`记录了什么？
 
@@ -686,7 +686,7 @@ nothing to commit, working directory clean
   >
   > R_ sr.c -> new.c（***也就是说，git识别到了这次重命名，即使我们分多步进行操作！！！***）
 
-## 查看提交历史 ##
+## 查看提交历史
 
 * `git log`
 
@@ -800,9 +800,9 @@ nothing to commit, working directory clean
       --before="2008-11-01" --no-merges -- t/
     ```
 
-## 撤销操作 ##
+## 撤销操作
 
-### 修改提交信息 ###
+### 修改提交信息
 
 * `git commit --amend`
 
@@ -826,7 +826,7 @@ nothing to commit, working directory clean
   # 打开“提交信息”编辑，重新编辑后保存；最近一次add的文件修改也会被合并到上一次提交，并允许你修改一次“提交信息”
   ```
 
-### 撤销已暂存的文件 ###
+### 撤销已暂存的文件
 
 * 将已暂存的修改撤销“add"操作，恢复到***已修改（未提交）***的状态
 
@@ -841,7 +841,7 @@ nothing to commit, working directory clean
   $ git restore --staged file.c
   ```
 
-### 撤销对文件的修改 ###
+### 撤销对文件的修改
 
 * 对`working copy`中的某个文件修改后，尚未提交；此时如果想要撤销这些尚未暂存的修改。
 
@@ -861,15 +861,15 @@ nothing to commit, working directory clean
 
   原由是：`git reset`功能强大，多用于修改commit历史，且较为复杂存在误操作丢失修改的风险；而专门新增了restore命令用来回退已暂存或以修改的内容；
 
-## 远程仓库的使用 ##
+## 远程仓库的使用
 
 *   已移动到下一章节
 
-## 标记 ##
+## 标记
 
 * **将某个特定的历史版本标记为重要版本的方法**
 
-### 列举标签 ###
+### 列举标签
 
 * `git tag`
   * 按字典序列出所有标签，顺序与标签创建顺序、重要性无关
@@ -877,7 +877,7 @@ nothing to commit, working directory clean
 * `git tag -l "pattern"`
   * 列出符合模式的tag
 
-### 显示标签的详细信息 ###
+### 显示标签的详细信息
 
 * `git show tag_name`
 
@@ -913,7 +913,7 @@ nothing to commit, working directory clean
        s.summary   =   "A simple gem for using Git in Ruby code."
   ```
 
-### 标签分类 ###
+### 标签分类
 
 * **轻量标签（`light-weight tag`）**：
   * 更像一个不变的分支，是一个指向某次提交的指针
@@ -922,7 +922,7 @@ nothing to commit, working directory clean
   * git会计算其**校验和**，包含**标记者（tagger）的名字**、**邮箱地址**、**标签的创建时间**、**标记消息**
   * 还可以使用`GNU Privacy Guard（GPG）`对标签进行签名和验证
 
-### 创建注释标签 ###
+### 创建注释标签
 
 * `git tag -a tag_name`
 
@@ -934,17 +934,17 @@ nothing to commit, working directory clean
   v1.4
   ```
 
-### 创建轻量标签 ###
+### 创建轻量标签
 
 * `git tag tag_name`
   * 使用`git show tag_name`显示注释标签信息时，只会显示对应的提交信息
 
-### 补加标签 ###
+### 补加标签
 
 * 对之前的某个commit打标签
 * `git tag -a tag_name <对应提交的校验和>`
 
-### 共享标签 ###
+### 共享标签
 
 * `git push`命令默认不会将本地仓库中的标签上传到服务器上
 * `git push  origin [tag_name]`
@@ -952,7 +952,7 @@ nothing to commit, working directory clean
 * `git push origin --tags`
   * 将本地所有tag推送到远程origin服务器中
 
-### 检出标签 ###
+### 检出标签
 
 * 标签无法检出，可以通过在该标签上创建分支，并检出分支的方法，间接检出标签
 
@@ -963,7 +963,7 @@ nothing to commit, working directory clean
   Switched to a new branch 'tag_branch'
   ```
 
-## Git命令别名 ##
+## Git命令别名
 
 * 可以通过`git config --global alias.xx xxxxx`来创建xxxxx的别名xx
 
@@ -990,7 +990,7 @@ nothing to commit, working directory clean
     以后就可以使用git visual来直接调用该工具了！！！
     ```
 
-# Git分支 #
+# Git分支
 
 *   Git分支模型：Git的杀手级特征
 
@@ -998,9 +998,9 @@ nothing to commit, working directory clean
 
     Git鼓励在工作流中频繁使用分支与合并操作
 
-## 分支机制简述 ##
+## 分支机制简述
 
-### Git是如何存储数据的 ###
+### Git是如何存储数据的
 
 * 采用**快照**的方式，而不是**存储差异**的方式
 
@@ -1104,7 +1104,7 @@ nothing to commit, working directory clean
 
 * ***我们如何知道我们当前所处的分支呢？Git使用HEAD指针指向当前你所在的分支。***
 
-### 创建新分支 ###
+### 创建新分支
 
 * 实质：“*当你创建新分支时，Git会创建一个可移动的新指针供你使用*”
 
@@ -1132,7 +1132,7 @@ nothing to commit, working directory clean
 - 可通过 `log.decorate` 配置缺省值
 - 显示log信息时，显示分支信息（有哪些分支指向了哪些commit对象，当前HEAD分支指向了哪里即当前所处分支）
 
-### 切换分支 ###
+### 切换分支
 
 * 切换分支的真正含义：
   * HEAD指针指向要切换的分支所指向的提交对象
@@ -1154,7 +1154,7 @@ nothing to commit, working directory clean
   * 在切换分支时，保证clean
   * 储藏、修订提交
 
-## 基本的分支与合并操作 ##
+## 基本的分支与合并操作
 
 * 流程阐述
 
@@ -1174,7 +1174,7 @@ nothing to commit, working directory clean
 
   *   切换到之前的需求开发分支
 
-### 基本的分支操作 ###
+### 基本的分支操作
 
 ```shell
 $ git checkout -b req53
@@ -1200,7 +1200,7 @@ $ git checkout req53
 * 切换分支前请保证，当前`working copy`中不存在未提交的修改；保证暂存区中没有没有与要切换到的分支冲突的修改；
 * `git merge bra`的方向：将分支bra与当前所在分支合并，当前分支前进一个提交
 
-### 基本的合并操作 ###
+### 基本的合并操作
 
 * **三方合并**
 
@@ -1224,7 +1224,7 @@ $ git checkout req53
 
     * merge操作实际上是“拉取”操作:)，将目标分支修改拉到当前分支；git merge
 
-### 基本的合并冲突处理 ###
+### 基本的合并冲突处理
 
 * `git merge`冲突后的输出：
 
@@ -1283,7 +1283,7 @@ $ git checkout req53
   opendiff/kdiff3/tkdiff/xxdiff/meld/tortoisemerge/gvimdiff/diffuse/diffmerge...
   ```
 
-## 分支管理 ##
+## 分支管理
 
 * 分支创建：`git branch xxx`
 
@@ -1317,11 +1317,11 @@ $ git checkout req53
     >
     > *   可以通过`-D`选项强制删除：`git branch -D xxx`
 
-## 与分支有关的工作流 ##
+## 与分支有关的工作流
 
 * 可以借鉴的`Git`的常用工作流程
 
-### 长期分支 ###
+### 长期分支
 
 * 简述：**拥有稳定的（这里的稳定不是指代码稳定）、长期的一条`commit`链；稳定的`master`分支位于链的后端，功能、代码稳定的位置；不稳定的测试版本、新需求版本指向链的较前端；**
 
@@ -1351,7 +1351,7 @@ $ git checkout req53
 
 * proposed（提议）与pu（proposed updates，提议的更新）也常被用作不同稳定性的分支的名称
 
-### 主题分支 ###
+### 主题分支
 
 * 概述：**短期的、用于实现某一特定功能及其相关工作的分支**
 
@@ -1378,7 +1378,7 @@ $ git checkout req53
 
 * 以上不管是长期分支还是主题分支都是***本地分支***
 
-## 远程仓库的使用 ##
+## 远程仓库的使用
 
 -   ***有些概念，诸如：远程分支、push、fetch等，理解后将有助于我们理解整个工作流程***
 
@@ -1412,7 +1412,7 @@ $ git checkout req53
 
 -   **pull**：将git仓库中所有本地仓库中缺少的内容获取下来，并尝试合并到已关联的本地分支
 
-### 查看远程仓库 ###
+### 查看远程仓库
 
 -   `origin`：一个默认的远程仓库；这是本地git给克隆服务器取的默认名称；
 -   `git remote`：显示git存储的所有远程仓库
@@ -1421,7 +1421,7 @@ $ git checkout req53
     -   `push`路径
     -   `fetch`路径
 
-### 检查远程仓库 ###
+### 检查远程仓库
 
 ```shell
 $ git remote show origin
@@ -1450,7 +1450,7 @@ remove)										# 已被远程仓库移除的分支
 # 4. 当执行git pull时，哪些远程分支会被拉取到本地并与哪些本地分支合并（曾经pull过 或者 设置了上游分支，则显示至此）
 ```
 
-### 添加远程仓库 ###
+### 添加远程仓库
 
 -   **克隆仓库`git clone`**：与添加远程仓库不同
 
@@ -1474,13 +1474,13 @@ remove)										# 已被远程仓库移除的分支
 
     -   可以通过`pb/master`来访问该分支
 
-### 从远程仓库获取和拉取数据 ###
+### 从远程仓库获取和拉取数据
 
 -   `git fetch`与`git pull`的区别与关系
     -   `git fetch`将远程仓库中的数据拉取到本地，并更新本地存储的远程仓库的数据
     -   `git pull`在本地某个分支与远程仓库的分支关联的情况下（克隆仓库会执行默认关联master），将远程分支中更新的内容拉取到本地并尝试与本地分支合并
 
-### 将数据推送到远程仓库 ###
+### 将数据推送到远程仓库
 
 -   向远程仓库推送数据的基本单元是：**分支**
     - 所以描述为：将本地某个分支推送到某个远程仓库，并与远程仓库中的关联分支合并
@@ -1508,7 +1508,7 @@ remove)										# 已被远程仓库移除的分支
     -   拥有origin远程仓库的写权限
     -   上一次fetch后并合并后（或者上一次`git pull`后）没有人向该远程仓库中推送过数据
 
-### 删除和重命名远程仓库 ###
+### 删除和重命名远程仓库
 
 -   `git remote rename pb paul`
 
@@ -1522,9 +1522,9 @@ remove)										# 已被远程仓库移除的分支
     -   删除远程仓库
     -   服务器地址变更时，参与者退出协作时
 
-## 远程分支 ##
+## 远程分支
 
-### 信息汇总 ###
+### 信息汇总
 
 * **远程引用**
 
@@ -1615,7 +1615,7 @@ remove)										# 已被远程仓库移除的分支
     2. 创建本地master分支（初次提交），将origin/master merge进入本地master分支
   ```
 
-### 推送 ###
+### 推送
 
 * 将某个分支推送到远程仓库`git push (remote) (branch)`
 
@@ -1805,7 +1805,7 @@ remove)										# 已被远程仓库移除的分支
 
   * 不创建跟踪分支，仅仅将远程分支合并到当前分支。
 
-### 跟踪分支 ###
+### 跟踪分支
 
 * **跟踪分支（tracking branch）**：跟踪分支是与远程分支直接关联的本地分支，也称为**上游分支（upstream branch）**
 
@@ -1904,7 +1904,7 @@ remove)										# 已被远程仓库移除的分支
   * `git checkout origin/test_br`后，进行修改、提交，如何在不关联上游分支的情况下，将该修改push到远程仓库？
 
 
-### 拉取 ###
+### 拉取
 
 * `git fetch origin`
   * 该命令会拉取本地没有的远程所有更新更改数据，但不会更改工作目录
@@ -1912,7 +1912,7 @@ remove)										# 已被远程仓库移除的分支
 * `git pull`
   * 在跟踪分支上执行，会拉取远程仓库中所有更新数据，并尝试将远程分支合并到当前跟踪分支上；
 
-### 删除远程分支 ###
+### 删除远程分支
 
 * 删除远程分支：
 
@@ -1930,7 +1930,7 @@ remove)										# 已被远程仓库移除的分支
 
   * 问题三：本地跟踪分支将不能跟踪远程分支，Git会做什么样的处理？
 
-### 遗留问题 ###
+### 遗留问题
 
 *   detached head问题
 *   fatal: refusing to merge unrelated histories
@@ -1946,7 +1946,7 @@ git push origin new_br	# 会将new_br推送到origin中
 # 如何设置跟踪分支的push/pull属性？
 ```
 
-### 添加了无关的远程仓库 ###
+### 添加了无关的远程仓库
 
 *   背景：本地通过`git init`初始化了一个仓库，再通过`git remote add xx xxxx`添加了一个远程仓库
 
@@ -1958,7 +1958,7 @@ git push origin new_br	# 会将new_br推送到origin中
 
     类似的，还可以使用其他命令，只要是基于远程分支新建分支的命令都可以，但是无法先创建再关联
 
-## 变基 ##
+## 变基
 
 * "在Git中整合来自不同分支的修改主要有两种方法：`merge`以及`rebase`"
 
@@ -1976,7 +1976,7 @@ git push origin new_br	# 会将new_br推送到origin中
 
   解答：一次变基操作可能产生多个提交，产生提交的次数取决于rebase时所在分支在***共同祖先***之后提交的次数；由此可以得出，git的变基操作会生成每次commit基于前一次commit的diff文件，并依次应用在目标分支上
 
-### 基本的变基操作 ###
+### 基本的变基操作
 
 * 概念：将某个分支上基于**共同祖先**的所有提交的更改在另一个分支上重现一遍
 
@@ -2082,7 +2082,7 @@ git push origin new_br	# 会将new_br推送到origin中
   推送以后，远程分支的管理员便可以只进行简单的快进合并就可以运用你开发的功能了
   ```
 
-### 更有趣的变基操作 ###
+### 更有趣的变基操作
 
 * 变基的三种操作
 
@@ -2131,7 +2131,7 @@ git push origin new_br	# 会将new_br推送到origin中
     # 27f1a22即为合并后的唯一提交
   ```
 
-### 变基操作的潜在危害 ###
+### 变基操作的潜在危害
 
 * ***不要对已经存在于本地仓库之外的提交执行变基操作***
 
@@ -2143,11 +2143,11 @@ git push origin new_br	# 会将new_br推送到origin中
 
 * 具体的变基操作的危害，涉及较多对远程分支的操作，这里暂不列举示例；
 
-### 只在需要的时候执行变基操作 ###
+### 只在需要的时候执行变基操作
 
 * 提供了一种解决上述危害的方法；暂不深究、列举
 
-### 变基操作与合并操作的对比 ###
+### 变基操作与合并操作的对比
 
 * 两种观点
   1. 提交历史是对实际发生过的事件的记录，不应被随意篡改（即进行`rebase`操作）
@@ -2156,7 +2156,7 @@ git push origin new_br	# 会将new_br推送到origin中
   1. 对本地尚未推送的更改进行变基操作，从而简化提交历史；
   2. 但绝不能对任何已经推送到服务器的更改进行变基操作；
 
-## 问题记录 ##
+## 问题记录
 
 * `git clone`命令会将远程服务器仓库中所有的分支都在本地创建远程分支吗？
 
@@ -2179,9 +2179,9 @@ git push origin new_br	# 会将new_br推送到origin中
   `git remote show origin`——查看远程仓库`origin`的详细信息，其中就包含有哪些远程分支
 ***Git服务器***
 
-# 服务器上的Git #
+# 服务器上的Git
 
-## Git服务器 ##
+## Git服务器
 
 * 为什么需要一个远程仓库？
 
@@ -2229,11 +2229,11 @@ git push origin new_br	# 会将new_br推送到origin中
     # 看起来，一般裸仓库的命名格式是：xxx.git
     ```
 
-## 协议 ##
+## 协议
 
 * Git可以使用4种协议：*本地协议*、*HTTP协议*、*SSH协议*、*Git协议*
 
-### 本地协议 ###
+### 本地协议
 
 * 最基本的传输协议，这种协议中，远程仓库就是磁盘上的另一个目录而已
 
@@ -2277,7 +2277,7 @@ git push origin new_br	# 会将new_br推送到origin中
   * 挂载远程磁盘的访问速度较慢，只有在本地文件系统数据访问时，速度较快
   * 本地协议不能保护仓库免遭意外损坏。每个用户都对仓库目录拥有完全的权限，这样一来就无法阻止意外改变或删除仓库
 
-### HTTP协议 ###
+### HTTP协议
 
 * 非智能HTTP协议
 
@@ -2314,7 +2314,7 @@ git push origin new_br	# 会将new_br推送到origin中
   * 服务较难搭建，除此之外，都优于其他协议
   * 开启身份验证后，提供用户名密码信息要比SSH一劳永逸的方式更加便捷；
 
-### SSH协议 ###
+### SSH协议
 
 * 使用方式：
 
@@ -2334,7 +2334,7 @@ git push origin new_br	# 会将new_br推送到origin中
 
   * 不能实现对仓库的匿名访问，必须具有SSH访问权限
 
-### Git协议 ###
+### Git协议
 
 * Git自带的特殊的守护进程，监听9418端口；不提供身份验证方式
 * 需要在仓库中创建git-deamon-export-ok文件
@@ -2345,9 +2345,9 @@ git push origin new_br	# 会将new_br推送到origin中
   * 缺少身份验证机制，一般不会作为仓库的唯一访问方式，通常选用SSH与HTTP作为搭配使用，前者用来提供给外部只读访问，后者提供给少数开发人员推送；
   * 难以配置
 
-## 在服务器上搭建Git ##
+## 在服务器上搭建Git
 
-### 将仓库导出为裸仓库 ###
+### 将仓库导出为裸仓库
 
 *   裸仓库的命名惯例：以`.git`结尾的目录
 
@@ -2356,7 +2356,7 @@ git clone --bare my_project my_project.git
 cp -rf my_project/.git my_project.git
 ```
 
-### 将裸仓库放置在服务器上 ###
+### 将裸仓库放置在服务器上
 
 * 将仓库拷贝到服务器`/srv/git/`目录下
 
@@ -2373,7 +2373,7 @@ cp -rf my_project/.git my_project.git
   ```
 
 
-### 小型团队配置 ###
+### 小型团队配置
 
 * 已有一台协作者都可以SSH访问的服务器时，之前的配置足以满足使用git的需求
 * “如果需要团队里的每个人都对仓库具有写权限，又不能给每个人在服务器上建立账户，那么唯一的办法就只能是SSH链接”
@@ -2381,7 +2381,7 @@ cp -rf my_project/.git my_project.git
     * 在服务器上建立一个git账户，让每个需要写权限的人发送SSH公钥，写入到`~/.ssh/authorized_keys`文件中——不会影响git记录真正的提交者信息
     * SSH服务器通过某个LDAP服务或通过其他集中授权机制进行授权
 
-## 生成个人的SSH公钥 ##
+## 生成个人的SSH公钥
 
 *   关于SSH公钥与私钥
 
@@ -2426,7 +2426,7 @@ cp -rf my_project/.git my_project.git
 $ ssh-keygen
 ```
 
-## 配置服务器 ##
+## 配置服务器
 
 1.  管理员在Git服务器上创建git账户，设置.ssh相关目录
 
@@ -2494,19 +2494,18 @@ $ ssh-keygen
     $ sudo chsh git /usr/bin/git-shell
     ```
 
-## Git守护进程 ##
+## Git守护进程
 
-## smart HTTP ##
+## smart HTTP
 
-## GitWeb ##
+## GitWeb
 
-## GitLab ##
+## GitLab
 
-## 第三方托管选择 ##
+## 第三方托管选择
 
 
-
-# 分布式Git #
+# 分布式Git
 
 *   Where are we ?
     *   搭建好一个远程Git仓库（为协作者提供远程仓库访问）
@@ -2516,12 +2515,12 @@ $ ssh-keygen
     *   如何为一个项目贡献代码？最佳实践是什么？
     *   如何管理有众多开发者贡献的项目？
 
-## 分布式工作流 ##
+## 分布式工作流
 
 *   集中式版本控制系统（CVCS）：开发者类似于连接在**集线器**上的**节点**
 *   分布式版本控制系统（DVCS）：每个开发者同时扮演着**集线器**与**节点**的角色
 
-### 集中式工作流 ###
+### 集中式工作流
 
 *   描述：
 
@@ -2539,7 +2538,7 @@ $ ssh-keygen
 
     ![集中式工作流](./image/集中式工作流.svg)
 
-### 集成管理者工作流 ###
+### 集成管理者工作流
 
 *   描述：
 
@@ -2570,7 +2569,7 @@ $ ssh-keygen
 
 *   GitHub和GitLab等集线器式(hub-based)工具最常用的工作流程——fork出的仓库与原仓库没有依赖；维护者可以随时拉取你的修改；你也可以随时进行开发而无需等待维护者处理完成pull request
 
-### 司令官与副官工作流 ###
+### 司令官与副官工作流
 
 *   描述：
 
@@ -2591,7 +2590,7 @@ $ ssh-keygen
 
 *   并不常用，只有当项目极为庞大复杂，或者需要多级别管理时，才会体现出优势。
 
-## 为项目做贡献 ##
+## 为项目做贡献
 
 *   为项目做贡献的方式，由三大因素所决定：
 
@@ -2612,7 +2611,7 @@ $ ssh-keygen
 
     >   仓库写权限；仓库以何种方式接受贡献？是否存在贡献规范？
 
-### 提交准则 ###
+### 提交准则
 
 *   空白错误检查
 
@@ -2680,7 +2679,7 @@ $ ssh-keygen
     # 使用不带参数的commit，在文本编辑器中操作
     ```
 
-### 私有小型团队 ###
+### 私有小型团队
 
 *   场景：少量开发者参与的私有项目，任何开发者都具有仓库的推送权限
 
@@ -2694,7 +2693,7 @@ $ ssh-keygen
 
     ![一个简单的多人Git工作流程的通常事件顺序.vsdx](./image/一个简单的多人Git工作流程的通常事件顺序.svg)
 
-### 私有管理团队 ###
+### 私有管理团队
 
 *   场景：大型私有团队；整合-管理者工作流程；
 
@@ -2716,7 +2715,7 @@ $ ssh-keygen
     ！！！注意：这里并不是在Jessica本地仓库创建了featureBee作为跟踪分支，这里只是为了说明：远程仓库中新增了分支featureBee，远程分支名为origin/featureBee
     ```
 
-### 派生的公开项目 ###
+### 派生的公开项目
 
 *   背景：Github使用这种方式；对目标项目没有push权限；
 
@@ -2787,7 +2786,7 @@ $ ssh-keygen
 
     ```
 
-### 通过电子邮件接受补丁的公开项目 ###
+### 通过电子邮件接受补丁的公开项目
 
 *   特点：工作流程类似于派生的公开项目，只是提交到项目的方式不同
 
@@ -2832,37 +2831,37 @@ $ ssh-keygen
 
 *   通过配置SMTP发送patch邮件
 
-### 小结 ###
+### 小结
 
-## 维护项目 ##
+## 维护项目
 
-### 使用主题分支 ###
+### 使用主题分支
 
-### 应用来自电子邮件的补丁 ###
+### 应用来自电子邮件的补丁
 
-### 检出远程分支 ###
+### 检出远程分支
 
-### 确定引入内容 ###
+### 确定引入内容
 
-### 整合所贡献的工作结果 ###
+### 整合所贡献的工作结果
 
-#### 合并工作流 ####
+#### 合并工作流
 
-#### 大型合并工作流 ####
+#### 大型合并工作流
 
-#### 变基与拣选工作流 ####
+#### 变基与拣选工作流
 
-#### rerere ####
+#### rerere
 
-### 为发布版打标签 ###
+### 为发布版打标签
 
-### 生成构建编号 ###
+### 生成构建编号
 
-### 准备发布 ###
+### 准备发布
 
-### 简报 ###
+### 简报
 
-## 小结 ##
+## 小结
 
 ***GitHub托管服务以及工具的用法***
 
@@ -2878,55 +2877,55 @@ $ ssh-keygen
 
 
 
-# GitHub #
+# GitHub
 
-## 账号设置与配置 ##
+## 账号设置与配置
 
-### SSH访问 ###
+### SSH访问
 
-### 头像 ###
+### 头像
 
-### 电子邮件地址 ###
+### 电子邮件地址
 
-### 双因素身份验证 ###
+### 双因素身份验证
 
-## 为项目做贡献 ##
+## 为项目做贡献
 
-### 派生项目 ###
+### 派生项目
 
-### GitHub流程 ###
+### GitHub流程
 
-### 拉取请求的高级用法 ###
+### 拉取请求的高级用法
 
-### Markdown ###
+### Markdown
 
-## 项目维护 ##
+## 项目维护
 
-### 创建新仓库 ###
+### 创建新仓库
 
-### 添加协作人员 ###
+### 添加协作人员
 
-### 管理拉取请求 ###
+### 管理拉取请求
 
-### 提醒和通知 ###
+### 提醒和通知
 
-### 特殊文件 ###
+### 特殊文件
 
-### 项目管理 ###
+### 项目管理
 
-## 组织管理 ##
+## 组织管理
 
-### 组织的基本操作 ###
+### 组织的基本操作
 
-### 团队 ###
+### 团队
 
-### 审计日志 ###
+### 审计日志
 
-## GitHub脚本化 ##
+## GitHub脚本化
 
-### 钩子系统 ###
+### 钩子系统
 
-### GitHub API ###
+### GitHub API
 
 ***Git的高级命令***
 
@@ -2977,43 +2976,62 @@ $ ssh-keygen
 **服务器协议**
 
 # Git工具
-
+---
 ## 选择修订版本
-
   * Git支持以多种方式 **指定**
     - 单个**提交**
     - 一组**提交**
     - 一定范围内的所有**提交**
   * 本节即来描述这些方式
 
-### 指定单个修订版本的方式
-#### 使用完整的SHA-1
-#### 使用简短的SHA-1
+  * 选择单个修订版本（所谓修订版本，实际上是commit对象）
+    + 使用完整的SHA-1值指定
+    + 使用简短的SHA-1值指定
+    + 使用分支引用
+    + 使用祖先引用（~与^）
+  * 选择多个修订版本
+    + 双点：选择两个commit节点（a..b），指定b多于a的commit修订
+    + 三点：
 
-* 提供的SHA-1字符数量不少于4个，并且没有歧义
-* `--abbrev-commit`参数可以让命令显示最简的SHA-1值
+---
+  * 使用简短的SHA-1值指定
+    + 不能少于4个，>=4时，git才认为给定的是一个SHA-1值的简写
+    + `git log --abbrev-commit`可以使log使用最短SHA-1值显示
 
-#### 分支引用
+  * 使用分支引用
+    + 通常所使用的分支名即为分支引用，如`git show topic1`
+      可以用来引用分支最顶端的commit
+      ```shell
+      # 指定完整/简写的SHA-1等价于指定分支/标签名
+      git show xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+      git show topic1
+      ```
 
-* 通常所使用的分支名即为分支引用，如`git show topic1`
-  可以用来引用分支最顶端的commit
-  ```shell
-  # 指定完整/简写的SHA-1等价于指定分支/标签名
-  git show xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  git show topic1
-  ```
+    + 使用`git rev-parse`查看引用对应的SHA-1
+      ```shell
+      $ git rev-parse master
+      dd2126fc03f95dbb72dbaeea613dcd40ae4906ed
+      ```
 
-* 使用`git rev-parse`查看引用对应的SHA-1
-  将引用名转换成实际的SHA-1
-  ```shell
-  $ git rev-parse master
-  dd2126fc03f95dbb72dbaeea613dcd40ae4906ed
-  ```
+  * 使用祖先引用
+    ```shell
+    # 查看master的父提交
+    $ git show master^
+    $ git show master~
 
-#### 引用日志
+    # 查看master的第二父提交
+    $ git show master^2
+    $ git show master~2
+    $ git show master~~
 
-* 引用日志（reflog）：保存最近几个月HEAD和分支引用所指向的提交对象记录
-* 示例：
+    # 查看HEAD的父提交的父提交的第二父提交
+    $ git show HEAD~2^2
+    ```
+
+### 引用日志
+
+  * 引用日志（reflog）：保存最近几个月HEAD和分支引用所指向的提交对象记录
+  * 示例：
     ```shell
     λ git reflog
     a5a3ab5 (HEAD -> new_idea, myfork/new_idea) HEAD@{0}: commit: one new idea
@@ -3032,34 +3050,10 @@ $ ssh-keygen
     $ git log -g
     ```
 
-* 引用日志只存在于本地；
+  * 引用日志只存在于本地；
 
-* 引用日志类似于Git版的shell历史记录
+  * 引用日志类似于Git版的shell历史记录
 
-#### 祖先引用
-
-* 符号（`^`）
-  ```shell
-  # 查看master的父提交
-  $ git show master^
-
-  # 查看master的第二父提交
-  $ git show master^2
-  ```
-
-* 符号（`~`）
-
-    ```shell
-    # 查看master的父提交
-    $ git show master~
-
-    # 查看master的祖先提交
-    $ git show master~2
-    $ git show master~~
-
-    # 查看HEAD的父提交的父提交的第二父提交
-    $ git show HEAD~2^2
-    ```
 
 ### 指定多个提交
 
@@ -3067,163 +3061,136 @@ $ ssh-keygen
 
 #### 双点
 
-~~~shell
-```
-# 查看master缺失，但experiment中存在的提交有哪些？
-$ git log master..experiment
-
-# 查看experiment确时，但master中存在的提交有哪些？
-$ git log experiment..master
-
-# 查看即将推送到远端的内容
-$ git log origin/master..HEAD
-```
-~~~
-
-* 当双点两端留空其中一边时，则留空这边默认为HEAD
-* 如何记忆和理解呢？
-  类似于 `diff` 命令；
   ```shell
-  # 查看的是src与dst的差异；
-  ## 从名字就可以看出，src是源，dst是目的；
-  ## diff结果中：
-  ## +行表示：src要变换成dst，需要添加的行
-  ## -行表示：src要变换成dst，需要删除的行
-  ## 相当于用dst-src得到的结果
-  diff -u src dst
+  # 查看master缺失，但experiment中存在的提交有哪些？
+  $ git log master..experiment
 
-  # 那么对于 a..b
-  ## 可以理解为，b中多出的部分；
-  ## 那么如果，b的commit确实与a相同，甚至还比a落后呢？那就什么也不显示；
-  ## 所以不同于diff的是， git log a..b 不会显示“负”结果
-  ### 但是，但是，但是，git diff 与 diff 类似，会显示负结果；:P
+  # 查看experiment缺失，但master中存在的提交有哪些？
+  $ git log experiment..master
+
+  # 查看即将推送到远端的内容
+  $ git log origin/master..HEAD
   ```
+
+  * 当双点两端留空其中一边时，则留空这边默认为HEAD
+
+  * 如何记忆和理解呢？
+    类似于 `diff` 命令；
+    ```shell
+    # 查看的是src与dst的差异；
+    ## 从名字就可以看出，src是源，dst是目的；
+    ## diff结果中：
+    ## +行表示：src要变换成dst，需要添加的行
+    ## -行表示：src要变换成dst，需要删除的行
+    ## 相当于用src..dst得到的结果；也相当于做了一个减法（dst-src）
+    diff -u src dst
+
+    # 那么对于 a..b
+    ## 可以理解为：b中多出的部分；
+    ## 那么如果，b的commit确实与a相同，甚至还比a落后呢？那就什么也不显示；
+    ## 所以不同于diff的是， git log a..b 不会显示“负”结果
+    ### 但是，但是，但是，git diff 与 diff 类似，会显示负结果；:P
+    ```
 
 #### 多点
 
-* 当需要针对两个以上分支进行类似双点的效果时，即判断某些commit在某个分支，而不在另外一个分支的情况；
-* 这里的多点，事实上并不是用符号`.`，而是指定多个判断对象（多余两个分支）
-* 关键：使用`^`或`--not`指定不希望提交被包含其中的分支——即指定要显示的提交没有包含在对应分支中
+  * 当需要针对两个以上分支进行类似双点的效果时，即判断某些commit在某个分支，而不在另外一个分支的情况；
+  * 这里的多点，事实上并不是用符号`.`，而是指定多个判断对象（多于两个分支）
+  * 关键：使用`^`或`--not`指定不希望提交被包含其中的分支——即指定要显示的提交没有包含在对应分支中
 
-```shell
-# 等价的三条命令
-$ git log refA..refB
-$ git log ^refA refB
-$ git log refB --not refA
+    ```shell
+    # 显示n个commit链上所有commit的并集
+    $ git log commit1 commit2 commit3 ...
 
-# 查看位于refA/refB，却不包含于refc引用的提交对象
-$ git log refA refB ^refC
-$ git log refA refB --not refC
-```
+    # 显示commit1链上，排除commit2与commit3之外剩余的commit
+    $ git log commit1 ^commit2 ^commit3
 
-> 这就构成了一个十分强大的修订查询系统，你可以通过它来查看你的分支里包含了哪些东西。
+    # 等价的三条命令
+    $ git log refA..refB
+    $ git log ^refA refB
+    $ git log refB --not refA
+
+    # 查看位于refA/refB，却不包含于refc引用的提交对象
+    $ git log refA refB ^refC
+    $ git log refA refB --not refC
+    ```
+
+    > 这就构成了一个十分强大的修订查询系统，你可以通过它来查看你的分支里包含了哪些东西。
 
 #### 三点
 
-* 选择出被两个引用之一包含，但又不被两者同时包含的提交
-  提取出两个引用各自独有的commit，也就是取两个引用的补集的并集
+  * 选择出被两个commit之一包含，但又不被两者同时包含的提交；
 
-```shell
-$ git log master...experiment
-F
-E
-D
-C
-# 其中F/E仅属于master分支
-# DC仅属于experiment分支
+    ```shell
+    $ git log master...experiment
+    F
+    E
+    D
+    C
+    # 其中F/E仅属于master分支
+    # DC仅属于experiment分支
 
-$ git log --left-right master..experiment
-< F
-< E
-> D
-> C
+    $ git log --left-right master..experiment
+    < F
+    < E
+    > D
+    > C
 
-# < 表示只位于左边分支（即master）的提交对象
-# > 表示只位于右边分支（即experiment）的提交对象
-```
+    # < 表示只位于左边分支（即master）的提交对象
+    # > 表示只位于右边分支（即experiment）的提交对象
+    ```
 
 ## 交互式暂存
+---
+  * 场景：将文件的特定部分组合成提交
+    > 两种应用场景：
+    > 1. 当前工作区存在较多隶属于不同变更集的修改分别位于不同文件
+    > 2. 当前工作区存在较多隶属于不同变更集的修改分别位于同一个文件的不同部分
 
-* 场景：将文件的特定部分组合成提交
-  > 两种应用场景：
-  > 1. 当前工作区存在较多隶属于不同变更集的修改分别位于不同文件
-  > 2. 当前工作区存在较多隶属于不同变更集的修改分别位于同一个文件的不同部分
+  * 为了确保每次提交都是逻辑上独立的变更集：
+    > 1. 针对上述1，可以使用`git add`同一变更集的修改，提交后，再次暂存下一个变更集修改；或者使用“交互式暂存”的方法分步暂存/提交
+    > 2. 针对上述2，**只能使用**“交互式暂存”的方法，针对文件中不同的修改部分分步暂存/提交
 
-* 为了确保每次提交都是逻辑上独立的变更集：
-  > 1. 针对上述1，可以使用`git add`同一变更集的修改，提交后，再次暂存下一个变更集修改；或者使用“交互式暂存”的方法分步暂存/提交
-  > 2. 针对上述2，只能使用“交互式暂存”的方法，针对文件中不同的修改部分分步暂存/提交
+  * 命令帮助：
 
-* 命令：
+    | 命令          | 解析                 |
+    |---------------|----------------------|
+    | status        | 显示当前暂存状态     |
+    | update        | 暂存文件             |
+    | revert        | 回退暂存             |
+    | patch         | 暂存文件的部分内容   |
+    | diff          | 查看已暂存的文件状态 |
+    | add untracked | 新增跟踪文件         |
 
-  ```shell
-  $ git status -s
-  M index.html
-  M main.c
+  * 交互式暂存的操作方法
+    + 这里没有具体示例的描述，只描述大概的操作逻辑如下：
+      ```
+      What now>
+      # 在上述提示符后输入命令后进入对应命令的视图，如：
+      What now> 2
+      # 更新为如下命令提示符：
+      Update>>
+      # 在命令提示符下，键入要操作的文件的编号，并回车，以完成操作
+      Update>> 2
+      Update>>
+      # 不输入任何编号，直接回车，则退出对应命令视图完成操作
+      # 上面介绍了一个完整的操作流程（现在感觉好多了:)）
+      ```
+    + 输入命令
+      ——> 按照提示输入编号选择
+      ——> 什么都不输入，退出命令
+      ——> 下一条命令
+      ——> ...
+      ...
+      ——> quit即可，刚刚暂存的内容都已经正确暂存了
 
-  # interactive 交互式的; 人机对话的; 互动的
+### 暂存与取消暂存文件
 
-  $ git add --interactive
-  $ git add -i
-  贡献统一由整合者整合进入主线
-  所有工作在基于团队的分支上完成
-  staged     unstaged path
-  1:    unchanged        +2/-0 index.html
-  2:    unchanged        +2/-0 main.c*** Commands ***
-  1: status
-  2: update
-  3: revert
-  4: add untracked
-  5: patch
-  6: diff
-  7: quit
-  8: help What now> help
-  status        - show paths with changes
-  update        - add working tree state to the staged set of changes
-  revert        - revert staged set of changes back to the HEAD version
-  patch         - pick hunks and update selectively
-  diff          - view diff between HEAD and index
-  add untracked - add contents of untracked files to the staged set of changes
-  # 在What now>后键入命令首字母或命令前的序号都可以使用该命令
-  ```
-
-  *   命令帮助：
-
-  | 命令          | 解析                 |
-  | ------------- | -------------------- |
-  | status        | 显示当前暂存状态     |
-  | update        | 暂存文件             |
-  | revert        | 回退暂存             |
-  | patch         |                      |
-  | diff          | 查看已暂存的文件状态 |
-  | add untracked |                      |
-
-*   交互式暂存的操作方法
-
-    *   刚开始学习“交互式暂存”的时候，感觉有点奇怪，后来才发现是因为“操作方法”的改变导致的
-
-    ```
-    What now>
-    # 在上述提示符后输入命令后进入对应命令的视图，如：
-    What now> 2
-    # 更新为如下命令提示符：
-    Update>>
-    # 在命令提示符下，键入要操作的文件的编号，并回车，以完成操作
-    Update>> 2
-    Update>>
-    # 不输入任何编号，直接回车，则退出对应命令视图完成操作
-
-    # 上面介绍了一个完整的操作流程（现在感觉好多了:)）
-    ```
-
-### 暂存与取消暂存文件 ###
-
-*   暂存文件使用命令update，即u(2)
-
+  * 暂存文件使用命令update，即u(2)
     取消暂存文件使用命令revert，即r(3)
-
     查看已暂存的内容的区别使用命令diff，即d(5)
 
-*   操作示例：
+  * 操作示例：
 
     ```shell
     E:\repo\work (new_idea -> myfork)
@@ -3312,10 +3279,9 @@ $ git log --left-right master..experiment
     λ
     ```
 
-### 暂存补丁 ###
+### 暂存补丁
 
 *   暂存补丁使用命令patch——即p(5)
-
     暂存补丁即暂存某个文件中的部分修改
 
 * 操作示例：
@@ -3463,110 +3429,144 @@ $ git log --left-right master..experiment
   ? - print help
   ```
 
-*   `git add -p`或`git add --patch`——直接进入上述patch工作模式
+  * `git add -p`或`git add --patch`
+    直接进入上述patch工作模式
 
-*   `git reset --patch`——使用reset命令的补丁模式部分重置文件
+  * `git reset --patch`
+    使用reset命令的补丁模式部分重置文件
 
-*   `git checkout --patch`——部分检出文件
+  * `git checkout --patch`
+    部分检出文件
 
-*   `git stash save --patch`——部分暂存文件
+  * `git stash save --patch`
+    部分贮藏文件
 
-## 储藏与清理 ##
+## 贮藏与清理
+---
+  * 贮藏的使用场景
+    > 有时，当你在项目的一部分上已经工作一段时间后，所有东西都进入了混乱的状态，而这时你想要切换到另一个分支做一点别的事情。问题是，你不想仅仅因为过会儿回到这一点而为做了一半的工作创建一次提交。针对这个问题的答案是`git stash`命令
+    > 贮藏会处理工作目录的脏的状态——即***跟踪文件的修改***与***暂存的改动***——然后将未完成的修改保存到一个栈上，而你可以在任何时候重新应用这些改动。
 
-*   Why "stash"
+  * 注意：`stash`会将未暂存的改动与已暂存的改动全部贮藏起来
 
-    >   有时，当你在项目的一部分上已经工作一段时间后，所有东西都进入了混乱的状态，而这时你想要切换到另一个分支做一点别的事情。问题是，你不想仅仅因为过会儿回到这一点而为做了一半的工作创建一次提交。针对这个问题的答案是`git stash`命令
-    >
-    >   储藏会处理工作目录的脏的状态——即***跟踪文件的修改***与***暂存的改动***——然后将未完成的修改保存到一个栈上，而你可以在任何时候重新应用这些改动。
+### 储藏工作
+  * 命令记录：
+    | Commands                          | Descriptionss                                      |
+    | --------------------------------- | -------------------------------------------------- |
+    | git stash                         | 贮藏当前工作目录以及暂存区中的修改                 |
+    | ~~git stash save~~                | ~~贮藏当前工作目录及暂存区中的修改~~               |
+    | git stash push                    | 贮藏当前工作目录及暂存区中的修改                   |
+    | git stash list                    | 显示当前已贮藏的内容                               |
+    | git stash apply stash@{n}         | 在当前所在分支应用编号为n的贮藏                    |
+    | git stash apply stash@{n} --index | 恢复贮藏的同时，暂存之前已暂存的修改               |
+    | git stash drop stash@{n}          | 被应用的贮藏不会自动从栈中移除，该命令用于移除贮藏 |
+    | git stash pop stash@{n}           | 应用于当前分支并移除目标贮藏                       |
 
-*   注意：`stash`会将未暂存的改动与已暂存的改动全部储藏起来
+  * WIP：Work In Progress，半成品，正在制作中
 
-### 储藏工作 ###
+  * 应用贮藏时并不要求
+    1. 干净的工作目录
+    2. 与贮藏时位于***相同的分支（贮藏时所在的分支）***
+    但是，由上述原因导致的冲突需要自行手动解决
 
-*   命令记录：
+  * 贮藏的一般流程与命令：
+    * 当前工作目录中有进行到一半的工作
+    * 临时需要新建bugfix分支修复紧急bug，但又不打算将未完成的工作进行一次提交
+    * 运行`git stash push`贮藏当前所作的工作
+    * 切换到bugfix分支进行工作直至工作完成
+    * 现在继续之前未完成的工作——一般操作是切换回原先贮藏操作时所在的分支
+    * 应用贮藏：`git stash apply stash@{0}`
+    * 继续进行未完成的工作
 
-    ```
-    git stash
-    git stash save	# 储藏当前工作目录及暂存区中的修改
-    git stash list	# 显示当前已储藏的内容
-    git stash apply	stash@{n}	# 在当前所在分支应用编号为n的储藏
-    git stash apply stash@{n} --index	# 恢复储藏时已暂存的修改
-    git stash drop stash@{n}	# 被应用的储藏不会自动从栈中移除，该命令用于移除储藏
-    git stash pop stash@{n}	# 应用于当前分支并移除目标储藏
-    ```
+  * 操作示例：
+  ```shell
+$ git status -s
+ M main.cpp
+$ git stash push
+Saved working directory and index state WIP on master: 2138f95 issue2
 
-*   WIP：Work In Progress，半成品，正在制作中
+$ git status -s
+$ git branch
+* master
+$ git checkout -b bugfix
+Switched to a new branch 'bugfix'
+$ "do bugfix here"
 
-*   应用储藏时并不要求***干净的工作目录***与***同一个分支（储藏时所在的分支）***——可以在一个分支上保存储藏，然后在另一个分支应用，如果发生冲突则需自行解决。
+$ git checkout master
+Switched to branch 'master'
+Your branch is up to date with 'origin/master'.
 
-*   储藏的一般流程与命令：
+# 应用stash
+$ git stash apply stash@{0}
+On branch master
+Your branch is up to date with 'origin/master'.
 
-    *   当前工作目录中有进行到一半的工作
-    *   临时需要新建bugfix分支修复紧急bug，但又不打算将未完成的工作进行一次提交
-    *   运行`git stash save`储藏当前所作的工作
-    *   切换到bugfix分支进行工作直至工作完成
-    *   现在继续之前未完成的工作——一般操作是切换回原先储藏操作时所在的分支
-    *   应用储藏：`git stash apply stash@{0}`
-    *   继续进行未完成的工作
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+    modified:   main.cpp
 
-### 创造性的储藏 ###
+no changes added to commit (use "git add" and/or "git commit -a")
+$ git status -s
+ M main.cpp
+  ```
 
-*   储藏的变种一：只储藏未暂存的修改
+### 贮藏的一些漂亮的用法
 
-    *   `git stash --keep-index`
-    *   不要储藏任何已通过`git add`命令暂存的东西
+  * 贮藏的变种一：保留以暂存的修改内容
+    + `git stash --keep-index`
+    + 贮藏已经暂存的修改，但是不要删除它们，保留在暂存区；
 
-*   储藏的变种二：储藏未跟踪文件
+  * 贮藏的变种二：贮藏未跟踪文件
+    + `git stash --include-untracked`
+      `git stash -u`
+    + 默认情况下贮藏操作只针对已跟踪的文件，指定该选项后，Git会贮藏任何未跟踪的文件（依然不包含`.gitignore`中设置忽略的文件）
+    + 使用`-u`选项时，被`.gitignore`设置忽略的文件依然不会被贮藏
+    + 要包含 `.gitignore` 设置忽略的文件的话，使用 `-all` 或 `-a` 选项
 
-    *   `git stash --include-untracked`
+  * 贮藏的变种三：交互式贮藏（选择性贮藏）
+    * `git stash --patch`
+    * 类似于交互式暂存，`--patch`选项会进入一个交互式界面供你选择要贮藏的内容
 
-    `git stash -u`
+### 从贮藏创建一个分支
 
-    *   默认情况下储藏操作只针对已跟踪的文件，指定该选项后，Git会储藏任何未跟踪的文件（依然不包含`.gitignore`中设置忽略的文件）
+  * 应用贮藏时，可能会出现众多合并冲突，如果想要干净/轻松的方式应用贮藏，则可以直接由贮藏时所在的提交对象创建一个分支应用贮藏
+  * `git stash branch br_name [选项]`
+  * ***注意：贮藏时会记录当时所在的那个提交，这里的br_name分支将会基于该提交进行创建***
 
-    使用`-u`选项时，被`.gitignore`设置忽略的文件依然不会被储藏
+### 清理工作目录
+  * `git clean`工具
+    + 命令记录：
+      ```
+      # 删除所有未跟踪的文件
+      git clean
 
-*   储藏的变种三：交互式储藏（选择性储藏）
+      # 强制移除，包含空的子目录
+      git clean -f -d
 
-    *   `git stash --patch`
-    *   类似于交互式暂存，`--patch`选项会进入一个交互式界面供你选择要储藏的内容
+      # 测试clean，查看执行命令将会删除哪些文件
+      git clean -n
 
-### 从储藏创建一个分支 ###
+      # 移除包括.gitignore忽略的文件在内的所有未跟踪文件
+      git clean -x
 
-*   应用储藏时，可能会出现众多合并冲突，如果想要干净/轻松的方式应用储藏，则可以直接由储藏时所在的提交对象创建一个分支应用储藏
-*   `git stash branch br_name [选项]`
-*   注意：储藏时会记录当时所在的那个提交，这里的br_name分支将会基于该提交进行创建
+      # 交互式的询问是否删除某个文件
+      git clean -i
+      ```
 
-### 清理工作目录 ###
+    + 移除工作目录中未被跟踪且未被忽略的文件（不包括`.gitignore`设置忽略的文件，除非使用-x选项）
+    + 移除工作目录中由合并或外部工具生成的东西，或为了运行一个干净的构建而移除之前构建的残留
+    + 危险命令，没有办法找回删除的内容
 
-*   `git clean`工具
+  * 更聪明的选择：`git stash --all`
+    + 默认移除包括空目录/已被`.gitignore`忽略的文件在内的所有文件
 
-    *   命令记录：
-
-    ```
-    git clean
-    git clean -f -d	# 强制移除，包含空的子目录
-    git clean -n	# 测试clean，查看执行命令将会删除哪些文件
-    git clean -x	# 移除包括.gitignore忽略的文件在内的所有未跟踪文件
-    git clean -i	# 交互式的询问是否删除某个文件
-    ```
-
-    *   移除工作目录中未被跟踪且未被忽略的文件（不包括`.gitignore`设置忽略的文件，除非使用-x选项）
-
-    *   移除工作目录中由合并或外部工具生成的东西，或为了运行一个干净的构建而移除之前构建的残留
-
-    *   危险命令，没有办法找回删除的内容
-
-*   更聪明的选择：`git stash --all`
-
-    *   默认移除包括空目录/已被`.gitignore`忽略的文件在内的所有文件
-
-## 签署工作 ##
+## 签署工作
 
 *   目标：验证获取自其他仓库的提交是否来自于可信来源
 *   Git提供几种通过GPG来签署和验证工作的方式
 
-### GPG介绍 ###
+### GPG介绍
 
 ```
 $ gpg --list-keys
@@ -3575,7 +3575,7 @@ $ gpg --gen-key		# 生成密钥
 $ gpg config --global user.signingkey 0A46826A
 ```
 
-### 签署标签 ###
+### 签署标签
 
 ```
 $ git tag -s v1.5 -m "my signed 1.5 tag"
@@ -3600,14 +3600,14 @@ Date: Mon Mar 17 21:52:11 2008 -0700
  changed the version number
 ```
 
-### 验证标签 ###
+### 验证标签
 
 ```
 # 前提是你已取得签署该标签的作者发布的公钥
 $ git tag -v v1.5
 ```
 
-### 签署提交 ###
+### 签署提交
 
 ```
 $ git commit -S	# 对要提交的提交对象进行签署
@@ -3616,22 +3616,22 @@ $ git merge --verify-signatures	# 检查并拒绝没有携带可信GPG签名的�
 $ git merge -S	# 签署合并生成的提交
 ```
 
-### 每个人必须签署 ###
+### 每个人必须签署
 
-*   如果要使用签署，则必须保证所有协作者都使用之
+  * 如果要使用签署，则必须保证所有协作者都使用之
 
-## 搜索 ##
+## 搜索
 
-*   需求：
-    *   查找函数的调用处与定义处
-    *   某个方法的变更历史
-*   目标：快速地从数据库中浏览代码和提交
+  * 需求：
+    * 查找函数的调用处与定义处
+    * 某个方法的变更历史
+  * 目标：快速地从数据库中浏览代码和提交
 
-### Git Grep ###
+### Git Grep
 
-*   功能：很方便地从提交历史或者工作目录中查找一个字符串或者正则表达式
+  * 功能：很方便地从提交历史或者工作目录中查找一个字符串或者正则表达式
 
-*   命令记录：
+  * 命令记录：
 
     ```
     λ git grep -n main			# 当前工作目录中查找“main”，并显示行号
@@ -3676,13 +3676,12 @@ $ git merge -S	# 签署合并生成的提交
         printf("hello.\n");
     ```
 
-### Git日志搜索 ###
+### Git日志搜索
 
-*   功能：通过提交信息或者提交的diff查找到特定的提交
+  * 功能：通过提交信息或者提交的diff查找到特定的提交
+    解决某个对象是在什么时候引入的
 
-    ​			解决某个对象是在什么时候引入的
-
-*   命令记录：
+  * 命令记录：
 
     ```
     λ git log -S main		# 查看字串是在哪一次提交引入或删除的（S与字符串之间也可以不加空格）
@@ -3701,7 +3700,7 @@ $ git merge -S	# 签署合并生成的提交
     holy shit
     ```
 
-#### 行日志搜索 ####
+#### 行日志搜索
 
 *   功能：查找代码中某一行或一个函数的历史
 
@@ -3728,160 +3727,311 @@ $ git merge -S	# 签署合并生成的提交
 
     ```
 
-## 重写历史 ##
+## 重写历史
 
-### 修改最后一次提交 ###
+### 修改最后一次提交
 
-### 修改多个提交信息 ###
+### 修改多个提交信息
 
-### 重新排序提交 ###
+### 重新排序提交
 
-### 压缩提交 ###
+### 压缩提交
 
-### 拆分提交 ###
+### 拆分提交
 
-### 核武器级选项：filter-branch ###
+### 核武器级选项：filter-branch
 
-#### 从每一个提交移除一个文件 ####
+#### 从每一个提交移除一个文件
 
-#### 使一个子目录作为新的根目录 ###
+#### 使一个子目录作为新的根目录
 
-#### 全局修改邮箱地址 ####
+#### 全局修改邮箱地址
 
-## 重置解密 ##
+## 重置解密
 
-### 三棵树 ###
+### 三棵树
 
-#### HEAD ####
+#### HEAD
 
-#### 索引 ####
+#### 索引
 
-#### 工作目录 ####
+#### 工作目录
 
-### 工作流程 ###
+### 工作流程
 
-### 重置的作用 ###
+### 重置的作用
 
-#### 第1步：移动HEAD ####
+#### 第1步：移动HEAD
 
-#### 第2步：更新索引 ####
+#### 第2步：更新索引
 
-#### 第3步：更新工作目录（--hard） ####
+#### 第3步：更新工作目录（--hard）
 
-#### 回顾 ####
+#### 回顾
 
-### 通过路径来重置 ###
+### 通过路径来重置
 
-### 压缩 ###
+### 压缩
 
-### 检出 ###
+### 检出
 
-#### 不带路径 ####
+#### 不带路径
 
-#### 带路径 ####
+#### 带路径
 
-### 总结 ###
+### 总结
 
-## 高级合并 ##
+## 高级合并
 
-## Rerere ##
+## Rerere
 
-## 使用Git调试 ##
+## 使用Git调试
 
-## 子模块 ##
+## 子模块（submodules）
+---
+  > Git submodule 允许我们将一个Git仓库作为另一个Git仓库的子目录。
+  > 它能让你将另一个仓库克隆到自己的项目中，同时还保持提交的独立。
 
-## 打包 ##
+### 开始使用子模块
+  * 为当前仓库添加子模块
+    `git submodule add URL [path/to/module]`
+    + 缺省情况下将子模块安置在当前目录下 与子模块仓库同名的目录下
+      可以指定 `path/to/module` 设置其他情况
+    + 缺省情况下，URL不可以是 `file://`，这种协议下，仓库上传以后别人无法使用，没有意义；
+      可以增加配置：`protocol.file.allow=always`，本地测试没关系:P
+    + `submodule add`动作会做什么？
+      - 该动作会直接clone子模块到指定目录；
+      - 新增 `.gitmodules` 文件（如果没有的话）
+      - 在 `.gitmodules` 中新增子模块的表项（属于仓库的一部分，会上传）
+      - 在 `.git/config` 中添加子模块的表项（属于`--local`配置，不会上传）
+    + 旧版本的Git，会在子模块目录下创建对应的`.git`；
+      新版本的Git，将项目所有子模块的`.git`都放置在了主项目 `.git/modules/xx` 位置
+    + 示例：
+      ```shell
+$ git submodule add file:///home/queue/src/git/sub.git
+Cloning into '/home/queue/src/git/test/sub'...
+remote: Enumerating objects: 17, done.
+remote: Counting objects: 100% (17/17), done.
+remote: Compressing objects: 100% (16/16), done.
+remote: Total 17 (delta 8), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (17/17), done.
+Resolving deltas: 100% (8/8), done.
 
-## 替换 ##
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
 
-## 凭证存储 ##
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+    new file:   .gitmodules
+    new file:   sub
 
-## 总结 ##
+# 可以看到新增了.gitmodules文件以及对应的子模块表项
+$ git diff --staged .gitmodules
+diff --git a/.gitmodules b/.gitmodules
+new file mode 100644
+index 0000000..14f6355
+--- /dev/null
++++ b/.gitmodules
+@@ -0,0 +1,3 @@
++[submodule "sub"]
++       path = sub
++       url = file:///home/queue/src/git/sub.git
 
-# 自定义Git #
+# 可以看到在.git/config中添加了子模块表项
+$ git config --local --list
+...
+submodule.sub.url=file:///home/queue/src/git/sub.git
+submodule.sub.active=true
 
-## 配置Git ##
+# 可以看到，暂存区中新增了一个类型为160000的项
+$ git ls-files --stage
+100644 14f6355c5aec8e20e263e03d4c60d362e762c71e 0	.gitmodules
+100644 1394ce82a6799a1f5a895782014aed1fabc9d99f 0	main.c
+160000 f4d326b6df853cf8d5a17c2db776052cc400e115 0	sub
 
-## Git属性 ##
+# 可以看到，上面提交对象中的sub项的内容实际上是子模块add时所处的 commit的SHA-1
+$ cd sub/
+$ git log --oneline --all
+f4d326b (HEAD -> master, origin/master, origin/HEAD) shit
+89d4c12 newwwwwwwwwwwww
+7191b75 FOOOOOOOOOOOOOOOOOOOOO
+8aac9c6 make some change
+f373351 Init libkick.so module here.
+      ```
+    + 子模块在父项目中的本质是什么？
+      是树对象中的一个entry，类型为commit，只不过是指向了子模块的一个提交；
+      之前我们只知道，树对象中可以保存数据对象和其他树对象，没想到还可以保存commit对象；
+      注意！！！
+      ***submodule update 时就是根据这个commit对象checkout子模块的；***
+      所以我们看到，子模块经常处于detach状态
+      所以，当我们在父项目提交时，如果子模块做了修改（位于某个不同之前的commit），那么就会将新的commit提交上去，相当于将子模块冻结于此；
+      ```shell
+      # 当前位于master分支
+      $ git branch
+      * master
 
-## Git钩子 ##
+      # 找到master->commit->root_tree根树对象
+      queue@nuc13:~/src/git/test$ git cat-file -t master^{tree}
+      tree
 
-## 使用强制策略的一个例子 ##
+      # 查看根树对象的内容，发现居然指向了一个commit对象
+      $ git cat-file -p master^{tree}
+      100644 blob 14f6355c5aec8e20e263e03d4c60d362e762c71e	.gitmodules
+      100644 blob 1394ce82a6799a1f5a895782014aed1fabc9d99f	main.c
+      160000 commit f4d326b6df853cf8d5a17c2db776052cc400e115	sub
+      ```
 
-## 总结 ##
+### 克隆含有子模块的项目
 
-# Git与其他系统 #
+  * 直接克隆包含子模块的项目，默认情况下，并不会自动检出子模块，所以需要如下两条命令；
 
-## 作为客户端的Git ##
-
-## 迁移到Git ##
-
-## 总结 ##
-
-# Git内部原理 #
-
-*   本质：内容寻址（content-addressable）文件系统，并在此之上提供了一个版本控制系统的用户界面。
-*   "Git is fundamentally a content-addressable filesystem with a VCS user interface written on top of it."
-*   三个方面：
-    *   内容寻址文件系统
-    *   传输机制
-    *   版本库管理任务
-
-## 底层命令和高层命令 ##
-
-*   底层命令（plumbing command）
-*   高层命令（porcelain command）
-*   `.git/目录`
-
-    | 目录        | 描述                                                         |
-    | ----------- | ------------------------------------------------------------ |
-    | config      | 项目配置                                                     |
-    | description | 仅供GitWeb程序使用                                           |
-    | hooks/      | 包含客户端/服务端的钩子脚本（hook scripts）                  |
-    | info/       | 包含一个全局性排除（global exclude）文件，用以放置那些不希望被记录在`.gitignore`中的忽略模式（ignored patterns） |
-    | HEAD        | 目前被checkout的分支                                         |
-    | objects/    | 存储所有数据内容                                             |
-    | refs/       | 存储指向数据（分支）的提交对象的指针                         |
-    | index       | 保存暂存区信息                                               |
-
-
-
-## Git对象 ##
-
-* Git的核心部分是一个简单的**键值对数据库（key-value data store）**
-
-  *   向该数据库插入任意类型的内容，Git会返回一个键，通过该键可以在任意时刻再次检索（retrieve）该内容
-
-  *   重要的3条命令：
-
-  * `git hash-object -w test.txt`——返回SHA-1值
-
-    将test.txt压缩保存到.git/objects/目录下（生成一个blob对象）
-
-    返回上升的blob对象的SHA-1值
-
-  * `git cat-file -p HASH_VALUE`——根据SHA-1值打印内容
-
-    根据SHA-1查找到目标对象并还原打印出来
-
-  * `git cat-file -t HASH_VALUE`——查看SHA-1值对应的对象类型
-
-*   演示：
-
+  * `git submodule init`
+    + 将 `.gitmodules` 中的子模块信息写入到 `.git/config` 中；
+    + 使用diff工具比较，执行`git submodule init`前后只发现了这个差异：
     ```shell
+    $ diff -r before/ with_sub/
+    diff -r before/.git/config with_sub/.git/config
+    11a12,14
+      > [submodule "sub"]
+      >   active = true
+      >   url = file:///home/queue/src/git/sub.git
+    ```
+
+  * `git submodule update`
+    + 在父项目 `.git/modules/`目录下创建子模块的 `.git` 目录（命名为子模块仓库名）
+    + 将子模块检出到对应的目录
+    + 下面示例中，前面显示的.git/config差异是init之后的差异，偷懒没有重新备份:P
+    ```shell
+    queue@nuc13:~/src/git$ diff -r before/ with_sub/
+    diff -r before/.git/config with_sub/.git/config
+    11a12,14
+    > [submodule "sub"]
+    >   active = true
+    >   url = file:///home/queue/src/git/sub.git
+    Only in with_sub/.git: modules
+    Only in with_sub/sub: .git
+    Only in with_sub/sub: .gitignore
+    Only in with_sub/sub: kick.c
+    Only in with_sub/sub: Makefile
+    ```
+
+  * 其他命令：
+    ```shell
+    # 克隆父项目的时候，直接将所有子模块克隆并检出
+    $ git clone --recurse-submoduels 父项目URL
+
+    # 将init与update合并为一步
+    $ git submodule update --init
+
+    # 如果有嵌套的子模块的话
+    $ git submodule update --init --recursive
+    ```
+
+### 在包含子模块的项目上工作
+#### 从子模块的远端拉取上游修改
+#### 从项目远端拉取上游修改
+#### 发布子模块改动
+#### 合并子模块改动
+### Tips
+#### foreach
+#### Useful Aliases
+### 子模块的问题
+#### 切换分支
+#### 从子目录切换到子模块
+
+## 打包
+
+## 替换
+
+## 凭证存储
+
+## 总结
+
+# 自定义Git
+
+## 配置Git
+
+## Git属性
+
+## Git钩子
+
+## 使用强制策略的一个例子
+
+## 总结
+
+# Git与其他系统
+
+## 作为客户端的Git
+
+## 迁移到Git
+
+## 总结
+
+# Git内部原理
+
+* 本质：内容寻址（content-addressable）文件系统，并在此之上提供了一个版本控制系统的用户界面。
+* "Git is fundamentally a content-addressable filesystem with a VCS user interface written on top of it."
+* 三个方面：
+  * 内容寻址文件系统
+  * 传输机制
+  * 版本库管理任务
+
+## 底层命令和高层命令
+---
+* 底层命令（plumbing command）
+* 高层命令（porcelain command）
+* `.git/目录`
+
+  | 目录        | 描述                                                                                                             |
+  |-------------|------------------------------------------------------------------------------------------------------------------|
+  | config      | 项目配置                                                                                                         |
+  | description | 仅供GitWeb程序使用                                                                                               |
+  | hooks/      | 包含客户端/服务端的钩子脚本（hook scripts）                                                                      |
+  | info/       | 包含一ypora is available on macOS, Windows, and Linux */
+  | HEAD        | 目前被checkout的分支                                                                                             |
+  | objects/    | 存储所有数据内容                                                                                                 |
+  | refs/       | 存储指向数据（分支）的提交对象的指针                                                                             |
+  | index       | 保存暂存区信息                                                                                                   |
+
+## Git对象
+---
+  * Git的核心部分是一个简单的**键值对数据库（key-value data store）**
+    向该数据库插入任意类型的内容，Git会返回一个键，通过该键可以在任意时刻再次检索（retrieve）该内容
+  * 3条重要命令：
+    + `git hash-object -w test.txt`
+       将`test.txt`压缩保存到`.git/objects/`
+       即生成一个blob对象，并返回该blob对象的SHA-1值
+    + `git cat-file -p HASH_VALUE`
+       根据SHA-1查找到目标对象并还原打印出来
+    + `git cat-file -t HASH_VALUE`
+      根据SHA-1值查找到目标对象，返回目标对象的类型
+
+  * Git有哪些对象？
+    + 数据对象（data object）
+    + 树对象（tree object）
+    + 提交对象（commit object）
+    + 标签对象（tag object）
+
+  * 示例
+    ```shell
+    # 类似git add时所做的事情
     $ git hash-object -w test.txt
     8d6a8d555b676314f611a64bc9b0ce1e20bda51b
+
     $ git cat-file -p 8d6a8d555b676314f611a64bc9b0ce1e20bda51b
     0123456789abcdef
 
-    # modify test.txt
+    # 修改 test.txt，然后查看新内容
     $ git hash-object -w test.txt
     50f546b995d133a24030835c1c9a17c40a63193b
+
     $ git cat-file -p 50f546b995d133a24030835c1c9a17c40a63193b
     0123456789abcdef
     0123456789abcdef
     0123456789abcdef
 
+    # 如此一来，便可以在新旧内容之间进行切换（检出）
     # recover the first version of test.txt
     $ git cat-file -p 50f546b995d133a24030835c1c9a17c40a63193b > test.txt
     $ cat test.txt
@@ -3897,48 +4047,104 @@ $ git merge -S	# 签署合并生成的提交
     # Check the type of the file with SHA-1 value
     $ git cat-file -t 50f546b995d133a24030835c1c9a17c40a63193b
     blob
+  ```
+
+  * `git cat-file`命令不仅仅可以用来查看数据对象，也可以查看 *树对象* *commit对象*
+    ```shell
+    $ git cat-file -p master
+    tree cf9aee2c340aeaad26257708f7009c320d2a4b05
+    parent a3cc98efe6f3a3a2f345b949211028ffd5ebc348
+    author queue <phyque.zz@gmail.com> 1727441179 +0800
+    committer queue <phyque.zz@gmail.com> 1727441726 +0800
+    issue2
+
+    $ git cat-file -t master
+    commit
+
+    # 查看master指向的commit的父commit对象
+    $ git cat-file -p master^
+    tree 8171ca0ee88ba6a271b93ee0aab777c333229e39
+    parent cc3d826d6c0917c08982932a0b3d0b9d087837d5
+    author queue <phyque.zz@gmail.com> 1727441147 +0800
+    committer queue <phyque.zz@gmail.com> 1727441726 +0800
+    issue1
+
+    # 查看master指向的commit的对象指向的 树对象
+    ## 如下两条显示完全相同，实际上代表的都是master指向的commit对象指向的tree对象
+    $ git cat-file -p master^{tree}
+    100644 blob f8305e747aa9833c9c18f69f80a2f0349b69398e	.gitignore
+    100644 blob b1feb798c83950ebf7008ce238b6cd601be02914	main.cpp
+
+    $ git cat-file -p cf9aee2c340aeaad26257708f7009c320d2a4b05
+    100644 blob f8305e747aa9833c9c18f69f80a2f0349b69398e	.gitignore
+    100644 blob b1feb798c83950ebf7008ce238b6cd601be02914	main.cpp
+  ```
+
+### 树对象（tree object）
+
+* **树对象** 与 **数据对象** 是以 类似UNIX文件系统的形式组织的；
+  Git中所有内容均以 **树对象** 和 **数据对象** 的形式存储；
+  （这里把 **提交对象** **标签对象** 当做是git对象，而不是 项目数据内容，认为项目数据只包含目录结构以及目录下的内容）
+
+* 关系描述：
+  | 树对象     | tree object    |
+  |------------|----------------|
+  | 树对象记录 | tree entry     |
+  | 数据对象   | data object    |
+  | 子树对象   | subtree object |
+
+  > 1. 一个***树对象***至少包含一条***树对象记录***
+  > 2. ***树对象记录***中保存了***数据对象***或***子树对象***的指针（即SHA-1）
+  > 3. ***树对象记录***与***数据对象***或其保存的***子树对象***是一一对应的关系，除指针外，还保存了***目标对象（即数据对象或子树对象）***的模式/类型/文件名（子目录名）
+  >
+  > 树对象创建的时机：`git commit`运行时如果检测到暂存区中有新增***数据对象***位于新***子目录下***，则创建对应***子树对象***；
+  >
+  > 示例：初始化仓库后，第一次add 1个文件之后，objs目录下新增要给”数据对象“，执行commit之后，共包含3个对象：***数据对象***，***根树对象***，***提交对象***
+
+* 查看树对象以及一些测试：
+  ```shell
+  # 如果git仓库目录下有一个空目录（或者嵌套了多层空目录），git status并不会提示仓库是脏，需要提交的；
+  ## 也不需要git add；所以，如果要新建一个树对象，目录下至少要包含一个 /数据对象/
+  ## 所以有了上面第一点：一个树对象至少包含一条树对象记录，树对象的存在是依赖 数据对象 存在的；
+  $ git status -s
+  $ mkdir -p dir1/dir2
+  $ git status -s
+  $
+
+  # 查看树对象内容：
+  ## 查看master分支的父提交
+  $ git cat-file -p master^{tree}
+  100644 blob f8305e747aa9833c9c18f69f80a2f0349b69398e	.gitignore
+  100644 blob b1feb798c83950ebf7008ce238b6cd601be02914	main.cpp
+  ```
+
+* 简化版的Git数据模型
+  ![简化版Git数据模型](./image/简化版Git数据模型.svg)
+
+* 暂存区
+
+  * 条目(entry)：
+    ```shell
+    # 类型 + blob对象SHA-1 + FLAG + 文件名
+    ## SHA-1可以帮助git从 .git/objects 中找到文件，如果重新修改，重新暂存，则原先add的object会被替换掉
+
+    $ git ls-files --stage
+    100644 f8305e747aa9833c9c18f69f80a2f0349b69398e 0	.gitignore
+    100644 b1feb798c83950ebf7008ce238b6cd601be02914 0	main.cpp
     ```
-
-### 树对象 ###
-
-*   tree object
-
-*   类似UNIX文件系统的组织形式
-
-    >   git中的所有内容的存在形式：
-    >
-    >   *   树对象
-    >
-    >   *   数据对象
-    >
-    >   关系描述：
-    >
-    >   1.  一个***树对象***包含>=1条的***树对象记录***
-    >   2.  ***树对象记录***中保存了***数据对象***或***子树对象***的指针（即SHA-1）
-    >   3.  ***树对象记录***与***数据对象***或其保存的***子树对象***是一一对应的关系，除指针外，还保存了***目标对象（即数据对象或子树对象）***的模式/类型/文件名（子目录名）
-    >
-    >   树对象创建的时机：`git commit`运行时如果检测到暂存区中有新增***数据对象***位于新***子目录下***，则创建对应***子树对象***；
-    >
-    >   示例：初始化仓库后，第一次add 1个文件之后，objs目录下新增要给”数据对象“，执行commit之后，共包含3个对象：***数据对象***，***根树对象***，***提交对象***
-
-*   简化版的Git数据模型
-
-    ![简化版Git数据模型](./image/简化版Git数据模型.svg)
-
-
-*   暂存区
-
-    *   条目：***文件类型***+***blob对象SHA-1***+***FLAG***+***文件名***
-    *   暂存区中不保存***树对象***相关信息（暂存时不会创建树对象）
-    *   存储了当前分支的***最新快照***，即与已***检出***的内容一致——任何add执行前
-    *   当执行了add时：
-    *   新建***数据对象***——此时还不会创建新***树对象***
-    *   更新（或新增）暂存区中的对应条目的SHA-1值
-    *   当执行了commit时：
-    *   如果有新增目录，则先创建对应***子树对象***
-    *   如果有文件修改，则新建***子树对象***——只要是该文件路径中的目录，都必须重新创建新的树
-    *   创建***根树对象***，更新其中SHA-1信息/文件名等信息
-    *   创建***提交对象***，指向***根树对象***
+  * 暂存区中不保存***树对象***相关信息（暂存时不会创建树对象）
+  * 存储了当前分支的***最新快照***，即与已***检出***的内容保持一致
+  * 当执行了add时：
+    + 新建***数据对象***（此时仍然不会创建新***树对象***）
+    + 更新（或新增）暂存区中的对应条目的SHA-1值
+  * 当执行了rm时
+    + 从index中删除条目，仅此而已
+  * 当执行了commit时：
+    + 如果需要新增目录，则先创建对应***子树对象***
+    + 如果有文件修改，则新建***子树对象***
+    + 只要是该文件路径中的目录，都必须重新创建新的树
+  * 创建***根树对象***，更新其中SHA-1信息/文件名等信息
+  * 创建***提交对象***，指向***根树对象***
 
     ```shell
     # git init(empty)	obj-0
@@ -3952,91 +4158,83 @@ $ git merge -S	# 签署合并生成的提交
     ——如果test位于dir/下，则每次修改test提交时会新增2 tree obj——根树对象+dir子树对象
     ```
 
+### 提交对象（commit object）
 
+* 格式
+  ```shell
+  $ git cat-file -p a20b164
+  tree 2536799ba8f8d4826705cc0022fbf7be731f0939
+  parent af9921d230777325da0ac959953205c7770ff5a9
+  author sloth <terroristzheng@outllok.com> 1573388259 +0800
+  committer sloth <terroristzheng@outllok.com> 1573388259 +0800
 
-### 提交对象 ###
+  kick_thing
+  ```
 
-*   commit object
+* 关系描述：
+  * 每一个***提交对象***指向一个***顶层树对象***
+  * 从一个***顶层树对象***可以遍历到当前项目的所有***数据对象***
+  * 故可以通过一个***提交对象***找到对应的项目快照
 
-*   格式（`git cat-file -p a20b164`）：
+* 当执行`git add`与`git commit`时
 
+  > `git add`
+  > 将被改写的文件保存为数据对象
+  > 更新暂存区 就像上一小节讲述的那样，更新对应文件的记录信息
+  >
+  > `git commit`
+  > 依据文件的更新情况，创建对应的树对象
+  > 依据暂存区中的信息创建一个提交对象
+
+* 暂存区(index)
+
+  * 保存当前最新的快照中所有数据对象的引用/模式/文件名信息——提交时依据暂存区中**”当前分支的最新信息“**创建根树对象及提交对象
     ```shell
-    tree 2536799ba8f8d4826705cc0022fbf7be731f0939
-    parent af9921d230777325da0ac959953205c7770ff5a9
-    author sloth <terroristzheng@outllok.com> 1573388259 +0800
-    committer sloth <terroristzheng@outllok.com> 1573388259 +0800
-
-    kick_thing
-    ```
-
-*   关系描述：
-
-    *   每一个***提交对象***指向一个***顶层树对象***
-    *   从一个***顶层树对象***可以遍历到当前项目的所有***数据对象***
-    *   故可以通过一个***提交对象***找到对应的项目快照
-
-*   当执行`git add`与`git commit`时
-
-    >   `git add`
-    >
-    >   将被改写的文件保存为数据对象
-    >
-    >   更新暂存区
-    >
-    >   ​	就像下一小结讲述的那样，更新对应文件的记录信息
-    >
-    >   `git commit`
-    >
-    >   依据文件的更新情况，创建对应的树对象
-    >
-    >   依据暂存区中的信息创建一个提交对象
-
-*   暂存区(index)
-
-    *   保存当前最新的快照中所有数据对象的引用/模式/文件名信息——提交时依据暂存区中**”当前分支的最新信息“**创建根树对象及提交对象
-
-    ```
     $ git ls-files --stage
     100644 087a683fc75e2cb968b71a40e6ba7cd00b58fee2 0       dir/file3
     100644 fb0a03d992212388b6835ab96fe4affa483a100b 0       file1
     100644 c06d81c1f5220c3d4ac9aff03f6b9b91f0edeefc 0       file2
     ```
 
-    *   如果没有进行任何修改，则index中记录的是当前分支上的所有数据对象的信息
+  * 如果没有进行任何修改，则index中记录的是当前分支上的所有数据对象的信息
+  * 记录的信息中不包含树对象
+  * 树对象创建的时机
+    ——执行`git commit`时，git会依据当前暂存区中的修改决定是否创建新的树对象——就像“树对象"一节中描述的那样
 
-    *   记录的信息中不包含树对象
+### 对象存储
 
-    *   树对象创建的时机——执行`git commit`时，git会依据当前暂存区中的修改决定是否创建新的树对象——就像“树对象"一节中描述的那样
+* `.git/objects/`目录中的对象时如何保存的？
 
-### 对象存储 ###
+  ```
+  在存储对象之前，除文件之外，git会为文件添加头部，与文件内容合并后再做后续操作：
+  类型 len'\0'文件内容
+  如：
+  blob 3'\0'123
+  then？计算上述内容的SHA-1值
+  该文件不会被原样保存，git会使用zlib工具压缩该内容保存在SHA-1前两位作为目录名，SHA-1后38位命名的文件中
+  ```
 
-*   `.git/objects/`目录中的对象时如何保存的？
+* 可用的类型：
 
-    ```
-    在存储对象之前，除文件之外，git会为文件添加头部，与文件内容合并后再做后续操作：
-    类型 len'\0'文件内容
-    如：
-    blob 3'\0'123
-    then？计算上述内容的SHA-1值
-    该文件不会被原样保存，git会使用zlib工具压缩该内容保存在SHA-1前两位作为目录名，SHA-1后38位命名的文件中
-    ```
+  | blob   | 数据对象 |
+  |--------|----------|
+  | tree   | 树对象   |
+  | commit | 提交对象 |
 
-*   可用的类型：
+## Git引用
+---
+  * 本质：
+    refrences，缩写为refs
+    在Git中引用就是`.git/refs/`目录下的文件，
+    + 文件名即为 **引用名**
+    + 文件内容即 某个提交的`SHA-1`值；
+    + 分支/标签/远程分支的本质上就是某个提交的引用（有意义的名字）
 
-    *   blob——数据对象
-    *   tree——树对象
-    *   commit——提交对象
+  * 为什需要引用？
+    + 提交的SHA-1值不方便记忆，且没有任何意义——需要给提交起个名字，代表该提交
+    + 分支/远程分支/标签都需要一个方便记忆有意义的名字
 
-## Git引用 ##
-
-*   本质：（refrences，缩写refs）在Git中引用就是`.git/refs`中的文件，文件中存储了某个提交的`SHA-1`值；分支/标签/远程分支的本质事实上就是某个提交的引用（有意义的名字）
-
-* 为什需要引用？
-
-  *   提交的SHA-1值不方便记忆，且没有任何意义——需要给提交起个名字，代表该提交
-  *   分支/远程分支/标签都需要一个方便记忆有意义的名字
-
-*   `refs/`目录结构说明：
+  * `refs/`目录结构说明：
 
     ```shell
     $ tree .git/refs/
@@ -4052,12 +4250,10 @@ $ git merge -S	# 签署合并生成的提交
         └── h			本地仓库中的标签h
     ```
 
-*   引用/数据对象/树对象/提交对象之间的关系：
-
+  * 引用/数据对象/树对象/提交对象之间的关系：
     ![各种对象间的关系图解](.\image\各种对象间的关系图解.svg)
 
-*   创建引用的动作：
-
+  * 触发创建引用的动作：
     ```shell
     # 创建了一个test分支
     echo "aca40694f7b00df67121541f7a0a5778a6c6c469" > .git/refs/heads/test
@@ -4069,34 +4265,30 @@ $ git merge -S	# 签署合并生成的提交
     git checkout -b test
     ```
 
-### HEAD引用 ###
+### HEAD引用
 
-*   如何标记我们当前所在的分支呢？
+  * 如何标记我们当前所在的分支呢？
+    + `.git/HEAD`文件
+    + 该文件中的内容：`ref: refs/heads/test`
+    + 当执行各种操作时，git可以通过HEAD找到对应的分支，再由分支文件中记录的SHA-1找到对应的提交
+    + 切换分支时，会更新`HEAD`文件中的内容——当`git checkout aca406`即checkout一个提交SHA-1时，`HEAD`中的内容会被改写为SHA-1值
 
-    *   `.git/HEAD`文件
-    *   该文件中的内容：`ref: refs/heads/test`
-    *   当执行各种操作时，git可以通过HEAD找到对应的分支，再由分支文件中记录的SHA-1找到对应的提交
-    *   切换分支时，会更新`HEAD`文件中的内容——当`git checkout aca406`即checkout一个提交SHA-1时，`HEAD`中的内容会被改写为SHA-1值
-
-*   修改HEAD：
-
-    *   `git checkout`执行时——如上一小节所说，可以直接指定某个提交
-
-    *   `git symbolic-ref HEAD refs/heads/master`——切换到master分支的另一个写法
+  * 修改HEAD：
+    * `git checkout`执行时——如上一小节所说，可以直接指定某个提交
+    * `git symbolic-ref HEAD refs/heads/master`——切换到master分支的另一个写法
 
     不能仅仅指定分支名，需要完整指定`refs/heads/master`
 
-### 标签引用 ###
+### 标签引用
 
-*   标签对象（tag object）：第4中对象，类似提交对象，但并不指向”根树对象“，而是指向某个提交对象；包含标签创建者信息/日期/注释/指针（指向提交对象的指针）
+  * 标签对象（tag object）：
+    另外一种对象，类似提交对象，但并不指向”根树对象“，而是指向某个提交对象；
+    包含标签创建者信息/日期/注释/指针（指向提交对象的指针）
 
-*   注意：类似于永不移动的分支引用，永远指向一个提交对象；
-
-*   轻量标签：一个固定的引用，位于`.git/refs/tags/`目录下
-
-*   附注标签：一个标签对象+一个指向该对象的引用，同样位于`.git/refs/tags`
-
-*   新增标签的其他方法：
+  * 注意：类似于永不移动的分支引用，永远指向一个提交对象；
+  * 轻量标签：一个固定的引用，位于`.git/refs/tags/`目录下
+  * 附注标签：一个标签对象+一个指向该对象的引用，同样位于`.git/refs/tags`
+  * 新增标签的其他方法：
 
     ```
     # 新增一个轻量级标签
@@ -4107,6 +4299,7 @@ $ git merge -S	# 签署合并生成的提交
     $ git tag v1.1 -m "test tag"
     $ cat .git/refs/tags/v1.1
     fe598bd9ee99b8bf6b22b8b9a048f2230137d8a4
+
     $ git cat-file -p fe598bd9ee99b8bf6b22b8b9a048f2230137d8a4
     object aca40694f7b00df67121541f7a0a5778a6c6c469
     type commit
@@ -4118,19 +4311,18 @@ $ git merge -S	# 签署合并生成的提交
     # 标签可以指向任意对象：blob/tree/commit
     ```
 
-### 远程引用 ###
+### 远程引用
+  * 三种引用类型：
+    + HEAD引用
+    + 标签引用
+    + 远程引用（remote reference）
 
-*   三种引用类型：
-
-    *   HEAD引用
-    *   标签引用
-    *   远程引用（remote reference）
-
-*   定义：Git记录的最近一次推送操作时每一个分支所对应的值，位于`refs/remote`目录下
+  * 定义：Git记录的最近一次推送操作时每一个分支所对应的值，位于`refs/remote`目录下
 
     ```
     $ ls .git\refs\remotes\origin\
     fix_it  HEAD  master
+
     E:\repo\Nsnake (master -> origin)
     λ cat .git\refs\remotes\origin\HEAD——————————指向远程分支主分支
     ref: refs/remotes/origin/master
@@ -4144,27 +4336,22 @@ $ git merge -S	# 签署合并生成的提交
     87cdad1ce4bc201a21b124ef0f25ebdc5a9aebfd
     ```
 
-*   ”此时，如果查看 `refs/remotes/origin/master` 文件，可以发现 origin 远程版本库的 master 分支所对
+  * ”此时，如果查看 `refs/remotes/origin/master` 文件，可以发现 origin 远程版本库的 master 分支所对
     应的 SHA-1 值，就是最近一次与服务器通信时本地 master 分支所对应的 SHA-1 值“
 
-## 包文件 ##
+## 包文件
 
-*   松散（loose）对象格式：“Git最初向磁盘中存储对象时所用的格式”
-
-*   包文件（packfile）：二进制文件——Git通过将松散对象打包成包文件以节省空间，提高效率（`git gc`）
-
-*   摇摆的（dangling）：未被任何提交对象引用的对象，不会被打包
-
-*   ***包文件***与***索引文件***
-
-    >   pack-XXXXXXXXX.pack——包文件
+  * 松散（loose）对象格式：“Git最初向磁盘中存储对象时所用的格式”
+  * 包文件（packfile）：二进制文件——Git通过将松散对象打包成包文件以节省空间，提高效率（`git gc`）
+  * 摇摆的（dangling）：未被任何提交对象引用的对象，不会被打包
+  * ***包文件***与***索引文件***
+    > pack-XXXXXXXXX.pack——包文件
+    > pack-XXXXXXXXX.idx——索引文件
     >
-    >   pack-XXXXXXXXX.idx——索引文件
-    >
-    >   *   索引文件中保存了包文件中所有包含文件的偏移信息，可以做到快速定位包文件中的目标对象（blob/tree/commit）
-    >   *   ***Git打包对象时，会查找命名及大小相近的文件，并只保存文件不同版本之间的差异内容***
+    > * 索引文件中保存了包文件中所有包含文件的偏移信息，可以做到快速定位包文件中的目标对象（blob/tree/commit）
+    > * ***Git打包对象时，会查找命名及大小相近的文件，并只保存文件不同版本之间的差异内容***
 
-*   `git verify-pack -v pack-xxxxxx.idx`：查看包文件中的对象
+* `git verify-pack -v pack-xxxxxx.idx`：查看包文件中的对象
 
     ```
     b042a60ef7dff760008df33cee372b945b6e884e blob 22054 5799 1463
@@ -4175,45 +4362,45 @@ $ git merge -S	# 签署合并生成的提交
     # 较新的版本被完整存储
     ```
 
-## 引用规格 ##
+## 引用规格
 
-### 推送引用规格 ###
+### 推送引用规格
 
-### 删除引用 ###
+### 删除引用
 
-## 传输协议 ##
+## 传输协议
 
-### 哑协议 ###
+### 哑协议
 
-### 智能协议 ###
+### 智能协议
 
-### 协议小结 ###
+### 协议小结
 
-## 维护与数据恢复 ##
+## 维护与数据恢复
 
-### 维护 ###
+### 维护
 
-### 数据恢复 ###
+### 数据恢复
 
-### 移除对象 ###
+### 移除对象
 
-## 环境变量 ##
+## 环境变量
 
-### 全局行为 ###
+### 全局行为
 
-### 仓库位置 ###
+### 仓库位置
 
-### 路径规格 ###
+### 路径规格
 
-### 提交 ###
+### 提交
 
-### 网络 ###
+### 网络
 
-### 差异与合并 ###
+### 差异与合并
 
-### 调试 ###
+### 调试
 
-### 其他 ###
+### 其他
 
 ***Git在各种环境下的一些用例***
 
@@ -4229,17 +4416,17 @@ $ git merge -S	# 签署合并生成的提交
 
 ***如何利用Libgit2和JGit这类工具实现Git的脚本化及扩展***
 
-# Appendix A：其他环境中的Git #
+# Appendix A：其他环境中的Git
 
-# Appendix B：将Git嵌入你的应用 #
+# Appendix B：将Git嵌入你的应用
 
-# Appendix C：Git命令 #
+# Appendix C：Git命令
 
 
 
-## 命令汇总 ##
+## 命令汇总
 
-### 配置命令 ###
+### 配置命令
 
 ```
 git config --global user.name "Tom Jerry"
@@ -4280,7 +4467,7 @@ simple		类似于upstream，必须保证当前分支与其上游分支同名
 matching	push所有本地和远程都存在的同名分支
 ```
 
-### 基本工作流 ###
+### 基本工作流
 
 ```
 ### 初始化仓库的方式
@@ -4323,7 +4510,7 @@ git diff --staged
 git diff --cached
 ```
 
-### 标签命令 ###
+### 标签命令
 
 ```
 git tag -a tag_name	# 创建名为tag_name的注释标签
@@ -4345,7 +4532,7 @@ git checkout -b tag_branch tag_name
 ```
 
 
-### 分支命令 ###
+### 分支命令
 
 ```
 # 分支列举
@@ -4367,7 +4554,7 @@ git log --decorate
 
 
 
-### 远程仓库命令（包含远程分支） ###
+### 远程仓库命令（包含远程分支）
 
 ```
 git clone URL [DIR]
@@ -4413,7 +4600,7 @@ git branch -vv # 查看本地分支及远程分支的情况
 git push origin --delete serverfix
 ```
 
-### status命令 ###
+### status命令
 
 ```
 git status
@@ -4423,7 +4610,7 @@ git status -s
 
 
 
-### log命令 ###
+### log命令
 
 ```
 git log -p # 显示提交的diff
@@ -4482,7 +4669,7 @@ git log -- Makefile # 输出与Makefile相关的提交
 git log -- lib/
 ```
 
-### 变基 ###
+### 变基
 
 ```
 git rebase target_br	# 将当前修改基于共同分支的修改在target_br上重现
@@ -4497,7 +4684,7 @@ git rebase --onto [target_br] [root] [curr] #将curr基于root的diff应用在ta
 
 
 
-### 获取帮助 ###
+### 获取帮助
 
 ```
 git help <verb>
@@ -4506,9 +4693,13 @@ git <verb> -h
 man git-<verb>
 ```
 
-# Git使用记录 #
+### `cat-file`
 
-## git commit --amend 会重建commit对象 ##
+### `ls-files`
+
+# Git使用记录
+
+## git commit --amend 会重建commit对象
 
 *   回放
 
