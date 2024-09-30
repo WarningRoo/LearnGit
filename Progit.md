@@ -1196,9 +1196,10 @@ $ git checkout req53
 继续进行工作
 ```
 
-* `fast-forward`：直接通过移动分支指针即可完成合并操作，不会产生新的提交的合并操作
-* 切换分支前请保证，当前`working copy`中不存在未提交的修改；保证暂存区中没有没有与要切换到的分支冲突的修改；
-* `git merge bra`的方向：将分支bra与当前所在分支合并，当前分支前进一个提交
+  * `fast-forward`：直接通过移动分支指针即可完成合并操作，不会产生新的提交的合并操作
+  * 切换分支前请保证，当前`working copy`中不存在未提交的修改；保证暂存区中没有没有与要切换到的分支冲突的修改；
+  * `git merge bra`的方向：将分支bra与当前所在分支合并，当前分支前进一个提交
+  * `git merge`合并完成后会提示用户输入commit message，因为会自动生成一个提交；
 
 ### 基本的合并操作
 
@@ -3794,16 +3795,21 @@ $ git merge -S	# 签署合并生成的提交
 
 ### 开始使用子模块
   * 为当前仓库添加子模块
-    `git submodule add URL [path/to/module]`
+    `git submodule add [-b branch] URL [path/to/module]`
     + 缺省情况下将子模块安置在当前目录下 与子模块仓库同名的目录下
       可以指定 `path/to/module` 设置其他情况
     + 缺省情况下，URL不可以是 `file://`，这种协议下，仓库上传以后别人无法使用，没有意义；
       可以增加配置：`protocol.file.allow=always`，本地测试没关系:P
+    + 缺省情况下，父项目跟踪子模块的master分支；（将master分支引用的提交作为第一个锁定）
+      使用 -b branch 指定其他分支后，便可以跟踪其他分支；
+      一般的：master分支跟踪子模块的master分支；
+      branchxx分支跟踪子模块的branchxx分支；（强耦合的父子项目之间的关系）
     + `submodule add`动作会做什么？
       - 该动作会直接clone子模块到指定目录；
       - 新增 `.gitmodules` 文件（如果没有的话）
       - 在 `.gitmodules` 中新增子模块的表项（属于仓库的一部分，会上传）
       - 在 `.git/config` 中添加子模块的表项（属于`--local`配置，不会上传）
+      - 如果只修改 .git/config 可以认为是私有配置，不与其他人共享；
     + 旧版本的Git，会在子模块目录下创建对应的`.git`；
       新版本的Git，将项目所有子模块的`.git`都放置在了主项目 `.git/modules/xx` 位置
     + 示例：
@@ -3900,10 +3906,11 @@ f373351 Init libkick.so module here.
 
   * `git submodule update`
     + 在父项目 `.git/modules/`目录下创建子模块的 `.git` 目录（命名为子模块仓库名）
-    + 将子模块检出到对应的目录
-    + 下面示例中，前面显示的.git/config差异是init之后的差异，偷懒没有重新备份:P
+    + 将子模块 **被锁定到的commit** 检出到对应的目录
     ```shell
-    queue@nuc13:~/src/git$ diff -r before/ with_sub/
+    # >[submodule ...] 这部分是git submodule init以后的差异；
+    ## 多出来的文件是update以后的差异
+    $ diff -r before/ with_sub/
     diff -r before/.git/config with_sub/.git/config
     11a12,14
     > [submodule "sub"]
@@ -3928,17 +3935,360 @@ f373351 Init libkick.so module here.
     $ git submodule update --init --recursive
     ```
 
+
 ### 在包含子模块的项目上工作
-#### 从子模块的远端拉取上游修改
+
+#### 拉取子模块远程仓库中的修改
+  * 工作流程：
+    在包含子模块的项目中工作的最简流程；
+    拉取子模块远程仓库中的最新修改，然后在父项目add/commit以锁定最新的子模块修改；
+    ——如果要使用子模块仓库中的最新修改，则需要在父项目中添加新的commit；
+    ——所以如果子模块更新频繁，父项目也总是跟着跟进的话，在父项目中会产生大量这种仅仅更新子模块commit的提交；
+
+  * 【操作】拉取然后手动合并
+    ```shell
+    $ get fetch
+    $ git merge origin/master
+
+    # 锁定新提交之前，使用git status查看状态
+    $ git status
+    On branch master
+    Your branch is up to date with 'origin/master'.
+
+    Changes not staged for commit:
+    (use "git add <file>..." to update what will be committed)
+    (use "git restore <file>..." to discard changes in working directory)
+        modified:   sub (new commits)
+
+    no changes added to commit (use "git add" and/or "git commit -a")
+
+    # 锁定新提交之前，使用git diff可以看到新的子模块提交与旧的提交
+    ## 可以切换到子模块项目中执行 git diff b206c8..464cf5 查看差异:P
+    $ git diff
+    diff --git a/sub b/sub
+    index b206c82..464cf56 160000
+    --- a/sub
+    +++ b/sub
+    @@ -1 +1 @@
+    -Subproject commit b206c8278d22eed96232267a26eed01494da4b5a
+    +Subproject commit 464cf56eec3391b17fdc26e78ef63bdd33273074
+
+    # 直接查看子模块两次提交之间的所有 提交日志（这里只有一个，所以只显示一条日志）
+    $ git diff --submodule
+    queue@nuc13:~/src/git/test$ git diff --submodule
+    Submodule sub b206c82..464cf56:
+        > test for submodule
+
+    # 完成对子模块新commit的锁定，以后再检出主项目后，submodule update会检出子模块的这个commit
+    $ git add sub
+    $ git commit -m "refresh submodule commit"
+
+    # 给git diff默认添加--submodule选项
+    $ git config --local diff.submodule log
+    ```
+    + 理论上，可以merge子模块远程仓库上的任意分支；
+      但本小节我并不打算修改远程仓库，所以只是简单的，合并（一般是fast-forward）跟踪的子模块目标分支即可；
+    + 当然，主项目跟踪的子模块分支并非master时，当然就merge对应分支了……
+    + Git怎么知道，提交发生了变化呢？Git比较了谁？
+      ！！！同对普通文件的修改一样，Git比较的是暂存区中的目标的SHA-1与子模块项目的HEAD；
+      ！！！按照上述描述，当在子模块中使用git checkout时也会触发父项目提示子模块有（新）变化；
+      ！！！经过测试，确实如此！而且Git才不管你是新是旧，是不是分支，它只是忠实地比较
+
+  * 【操作】拉取并自动合并
+    + 除了第一次 `submodule update` 以外，后续`git submodule update`缺省不会从远端拉取内容；
+      只会检出子模块被锁定的commit
+    + `--remote`的作用：不仅从远端拉取数据，而且还会自动合并到 子模块跟踪分支（跟之前的那个跟踪分支不同）
+      ```shell
+      # 抓取所有子模块远程仓库中的更新，并由 子模块跟踪分支 合并对应远程分支的修改；
+      $ git submodule update --remote
+
+      # 抓取特定模块
+      $ git submodule update --remote xxx_submodule
+
+        # 设置子模块跟踪分支，设置跟踪子模块DbConnector的stable分支
+        $ git config -f .gitmodules submodule.DbConnector.branch stable
+        ## 只是修改了.gitmodules中的配置，并不会触发刷新
+        ## 即使现在执行submodule update也不会更新（因为新的分支尚未被锁定）
+        ## 那什么时候起作用呢？
+        ### 1. 别人克隆了该主项目，直接submodule update得到的子模块仍然是锁定的commit，而不是新branch
+        ###  第一次submodule update之后，执行了submodule update --remtoe
+        ###  git会拉取.gitmodules中设置的新分支并检出，仍然需要提交锁定！！
+        ### 2. 一般在添加子模块的时候就明确跟踪了哪个分支了；
+        ####  如果一定要修改跟踪分支，不仅仅要执行git config submodule.xxx.branch xxx
+        ####  相应地要去检出对应的分支并在父项目完成一次提交进行锁定动作！！！
+
+      # 在一些基础命令后添加--submodule可以相应的操作子模块或者查看子模块信息
+      $ git log -p --submodule
+      $ git diff --submodule
+      $ git diff --cached -submodule
+      ```
+
 #### 从项目远端拉取上游修改
+  * 前置环境：
+    当前位于一个包含子模块的项目中；并且我作为协作者与其他人合作；
+    当其他协作者 在主项目 中更新了子模块的锁定时；
+    我也需要做一些事情保证环境的正确！
+  * 需要进行的操作：
+    1. 拉取主项目所有数据；（`git pull`）
+    2. 主项目中的`git pull`命令会对子项目执行 `git fetch` 动作；
+       注意这里是fetch，只是拉取，不会执行任何合并与检出动作
+    3. 手动更新（即手动检出最新的锁定）
+       如果是第一次更新要先`git submodule init`
+       如果包含子模块嵌套，还需要添加`--recursive`
+    ```shell
+    git pull
+    git submodule update --init --recursive
+    或者直接：
+    git pull --recurse-submodules
+    ```
+  * 如果当前所在的主项目远端更新了子模块的地址怎么办？
+    类似的：
+    先保证`git pull`，然后使用`git submodule sync --recursive`更新`.git/config`配置；
+    （一定要sync吗？是的，看起来submodule update --remote时还是以.git/config为准，不sync仍然报错）
+    再重新执行更新动作：`git submodule update --init --recursive`
+
 #### 发布子模块改动
+
+  * 在子模块上修改代码之前创建分支的必要性：
+
+    > 虽然跟踪子模块是以分支进行的（缺省为master）
+    > 但`update`执行后，子模块HEAD中保存的实际上是被锁定的commit SHA-1，即位于detached HEAD；
+    > （相对的，如果是跟踪分支，则子模块HEAD中保存的应该是跟踪分支的 分支引用——字符串）
+
+    如果直接在 detached HEAD上修改；
+    1. 修改未提交便执行`submodule update`，直接完蛋:(
+       贴心的Git检测到这种风险，只是fetch了修改，但是并不会checkout覆盖你的修改；
+    2. 修改已提交，然后执行 `submodule update`
+       woring copy中的修改仍然会被覆盖，但是仍然可以找到那些修改
+       ————如何找呢？翻记录找到你修改的最新commit，然后 checkout 这个commit id；
+       ————创建分支就是给你的这些修改起个名字，方便找回
+
+  * 从子模块远端拉取修改
+    ```shell
+    # !!! 必须使用 --remote 选项，否则不会从远端拉取数据，而是使用锁定commit
+    # !!! 当working copy是dirty的时候，会产生告警，不会检出最新分支或者执行合并/rebase动作；
+    #     最起码要提交上去，是否创建分支都可以
+    # !!! 添加了--remote的update默认行为：从远端拉取数据，并检出跟踪分支
+
+    # 下面三个动作，都是从远端拉取跟踪分支，只不过处理方式不同：
+    ## 拉取并检出，相当于切换了分支（working copy不能为脏）
+    git submodule update --remote
+    ## 拉取，然后在当前子模块HEAD指向的分支执行`git merge 远端跟踪分支`
+    git submodule update --merge
+    ## 拉取，然后切换到 远端跟踪分支 执行 `git submodule rebase 子模块HEAD`
+    git submodule update --rebase
+    ```
+    + 不要慌，大概意思就是，从remote拉取数据，与你本地子模块上的分支进行各种合并/rebase操作以后，再进行提交
+      日常任务就是如此，合并别人的修改，然后push:P
+
+  * 如何发布针对子模块的修改？
+    + 上一小节描述了如何将子模块远端的修改与子模块本地的修改合并/rebase等操作；
+      这一小节该推送我们对子模块的修改到远端了！
+    + 只需要注意一件事情！！！
+      推送父项目之前，要保证所有子模块都已经推送了；
+      否则，其他用户在检出的主项目上可以看到子模块的某个锁定，但是这个憨怂锁定commit还在你本地，别人无法访问。
+    + 如何做？
+      ```shell
+      # 方法一：
+      ## 检查如果有未推送的子模块则报错并终止，等待你手动推送子模块后，重新手动父项目
+      git push --recurse-submodules=check
+
+      # 方法二：
+      ## 有未推送的子模块时，git自动尝试推送
+      git push --recurse-submodules=on-demand
+
+      # 设置上述两种方法作为 git-push 的默认行为：
+      git config push.recurseSubmodules on-demand check/on-demand
+      ```
+
 #### 合并子模块改动
+
+  * 说实话有点难以理解！！！
+    以后用到了再说吧！！！
+
 ### Tips
 #### foreach
+
+  * 对所有submodule执行命令（git命令或非git命令）：
+  ```shell
+  git submodule foreach 'git stash'
+  git submodule foreach 'git checkout -b featureA'
+  git submodule foreach 'git diff'
+  ```
+
 #### Useful Aliases
+
+  * 为命令设置别名
+    ```shell
+    git config alias.sdiff '!'"git diff && git submodule foreach 'git diff'"
+    git config alias.spush 'push --recurse-submodules=on-demand'
+    git config alias.supdate 'submodule update --remote --merge'
+
+    后续便可以使用：
+    git sdiff
+    git spush
+    git supdate
+    ```
+
 ### 子模块的问题
-#### 切换分支
-#### 从子目录切换到子模块
+#### 【问题一】切换分支
+  * 问题描述：
+    从一个包含子模块的分支切换到不包含子模块的分支，working copy中会残留子模块目录；
+    git status 会提示 untracked file：
+  * 解决方法：
+    2.13版本之前：手动删除目录即可；下次切换到包含子模块的分支还需要重新执行：
+    git submodule update --init --recursive
+
+  * 解决方法：
+    2.13版本之后：切换分支（checkout）时使用 --recurse-submodules 即可；
+    git会自动添加或者删除对应的子模块目录；
+
+#### 【问题二】从子目录切换到子模块
+  * 问题描述：
+    当想将父项目中的某一个目录作为一个子模块时，直接rm删除再git submodule add会报错；
+  * 解决方法：
+    git rm -r sub/
+    提交；
+    再git submodule add
+
+#### record
+  * 主项目一般修改较少，对于sonic而言，一般会有daily-merge每过一段时间更新所有子模块的“默认分支”，然后git push一次，以保持锁定最新分支；
+    所以，你git submodule update得到的内容可能并不是最新的，但一定是，主项目对应需要跟踪的分支，这个是固化在 .gitmodules 中的（以这里为准吗？）
+    如果submodule update以后发现，分支并不是最新的，可以自行尝试 pull然后checkout到对应分支，进行编译行为！！！
+
+### `submodule sync`
+    > sync [--recursive] [--] [<path>...]
+    >      Synchronizes submodules' remote URL configuration setting to the
+    >      value specified in .gitmodules.
+    >
+    >      It will only affect those submodules which already have a URL entry
+    >      in .git/config (that is the case when they are initialized or freshly added).
+    >
+    >      This is useful when submodule URLs change upstream and you need to update
+    >      your local repositories accordingly.
+    >
+    >      git submodule sync synchronizes all submodules while git submodule
+    >      sync -- A synchronizes submodule "A" only.
+    >
+    >      If --recursive is specified, this command will recurse into the
+    >      registered submodules, and sync any nested submodules within.
+
+  * 如文档所说，只是同步 *remote URL* 配置；
+  * 具体行为：
+    根据 `.gitmodules` 中的配置更新 `.git/config` 以及 `modules/<modulex>` 的配置；
+    （在新版本中，git将子模块`.git` clone到此处；）
+    对于后者实际上是修改远程仓库的地址（如下等价的方式）：
+    1. `git remote set-url origin <new-url>`
+    2. `git remote rm origin`
+       `git remote add origin <new-url`
+    3. `git config -f .git/config remote.origin.url <new-url>`
+
+> 执行`update`或`add`之后，之前说过，Git会在父项目的`.git/modules/`下创建子模块的仓库目录；
+> 子模块remote仓库的URL发生改变，即`.gitmodules` 中子模块URL发生改变；
+> `sync`的功能使用新URL更新 `.git/config` 以及 `.git/modules/<modulsx>/config`
+>
+> `update --remote` 既不读取 `.git/config` 也不读取 `.gitmodules`
+>    而是直接使用子模块仓库目录下的config中的`remote.origin.url`去从远端拉取数据；
+>    所以，不管怎么修改.gitmodules以及.git/config，只要不sync，都不会从更新的url去拉取数据；
+
+### `submodule update`
+
+  update [--init] [--remote] [-N|--no-fetch] [--[no-]recommend-shallow]
+         [-f|--force] [--checkout|--rebase|--merge] [--reference <repository>]
+         [--depth <depth>] [--recursive] [--jobs <n>] [--[no-]single-branch]
+         [--filter <filter spec>] [--] [<path>...]
+
+  > Update the registered submodules to match what the superproject
+  > expects by cloning missing submodules, fetching missing commits in
+  > submodules and updating the working tree of the submodules.
+
+  >> 通过以下方式更新子模块到父项目锁定的commit:
+  >> 1. 克隆缺少的submodule(s)
+  >> 2. fetch获取缺少的commit(s)——只在本地缺少锁定commit时才会去fetch，
+  >>    ——只要不缺少，就不会去fetch，即使远端有更新
+  >> 3. 检出锁定commit到working copy
+
+  > The "updating" can be done in several ways depending on command line
+  > options and the value of submodule.<name>.update configuration variable.
+
+  >> `update`动作由命令行参数 或者 submodule.<name>.update 配置决定如何执行；
+
+  > The command line option takes precedence over the configuration variable.
+  > If neither is given, a checkout is performed.
+
+  >> 命令行参数 优先 于 submodule.<name>update 配置，同时指定时前者覆盖后者；
+  >> 如果两者都没有给定，缺省执行 `checkout` 动作
+
+  > The update procedures supported both from the command line as well as
+  > through the submodule.<name>.update configuration are:
+
+  > `checkout` （默认行为）
+  >> the commit recorded in the superproject will be checked out in
+  >> the submodule on a detached HEAD.
+  >> 将父项目锁定的子模块commit检出为一个detached HEAD.
+  >> 即使这个commit指向了某个分支，也仍然是detached的。
+  >> （本质上，也就是将commit id写入子模块HEAD，而不是将 分支引用 写入到模块HEAD）
+
+  > If --force is specified, the submodule will be checked out
+  > (using git checkout --force), even if the commit specified in
+  > the index of the containing repository already matches the
+  > commit checked out in the submodule.
+  >> 一般情况下，git检查子模块HEAD是否与父项目锁定的子模块commit相同来决定是否检出；
+  >> 使用--force强制检出，而不去进行任何判断；
+
+  > `rebase`
+  > the current branch of the submodule will be rebased onto the
+  > commit recorded in the superproject.
+  >> 拉取子模块远端跟踪分支rebased onto the commit recorded
+  >> 相当于，在跟踪分支上执行git rebase commit-id
+
+  > `merge`
+  > the commit recorded in the superproject will be merged into the
+  > current branch in the submodule.
+  >> 将子模块锁定的commit merge到子模块跟踪分支上；
+  >> 相当于，在跟踪分支上执行git merge commit-id
+
+  > ---
+  > The following update procedures are only available via the
+  > submodule.<name>.update configuration variable:
+  > 指的是 `custom command` 与 `none`
+
+  > `custom command`
+  > arbitrary shell command that takes a single argument (the sha1
+  > of the commit recorded in the superproject) is executed. When
+  > submodule.<name>.update is set to !command, the remainder after
+  > the exclamation mark is the custom command.
+
+  > `none`
+  > the submodule is not updated.
+
+  > ---
+  > `--init`
+  > If the submodule is not yet initialized, and you just want to use
+  > the setting as stored in .gitmodules, you can automatically
+  > initialize the submodule with the --init option.
+  >> 连带`git submodule init`一起执行
+
+  > `--recursive`
+  > If --recursive is specified, this command will recurse into the
+  > registered submodules, and update any nested submodules within.
+
+  > `--filter`
+  > If --filter <filter spec> is specified, the given partial clone
+  > filter will be applied to the submodule. See git-rev-list(1) for
+  > details on filter specifications.
+
+  > `--remote`
+  >> 1. 只有`submodule update`时可以指定；
+  >> 2. 含义：update缺省只检查子模块锁定commit，`--remote`时缺省fetch跟踪分支并检出之；
+  >> 3. 远端缺省为子模块的remote-origin，即：.git/modules/sub/config branch.<name>remote
+  >> 4. 分支缺省为 .gitmodules .git/config 中配置的 submodule.<name>.branch，
+  >>    如果没有配置，则使用远程仓库HEAD，一般为master
+  >> 5. 对其他操作的影响：原先使用锁定的commit，现在使用跟踪分支:P
+
+  * 总结
+    `update`即根据被锁定的子模块commit，以特定的方式 merge/checkout/rebase/commands...
+    检出到子模块的working copy
 
 ## 打包
 
@@ -3983,16 +4333,16 @@ f373351 Init libkick.so module here.
 * 高层命令（porcelain command）
 * `.git/目录`
 
-  | 目录        | 描述                                                                                                             |
-  |-------------|------------------------------------------------------------------------------------------------------------------|
-  | config      | 项目配置                                                                                                         |
-  | description | 仅供GitWeb程序使用                                                                                               |
-  | hooks/      | 包含客户端/服务端的钩子脚本（hook scripts）                                                                      |
-  | info/       | 包含一ypora is available on macOS, Windows, and Linux */
-  | HEAD        | 目前被checkout的分支                                                                                             |
-  | objects/    | 存储所有数据内容                                                                                                 |
-  | refs/       | 存储指向数据（分支）的提交对象的指针                                                                             |
-  | index       | 保存暂存区信息                                                                                                   |
+  | 目录        | 描述                                                     |
+  |-------------|----------------------------------------------------------|
+  | config      | 项目配置                                                 |
+  | description | 仅供GitWeb程序使用                                       |
+  | hooks/      | 包含客户端/服务端的钩子脚本（hook scripts）              |
+  | info/       | 包含一ypora is available on macOS, Windows, and Linux */ |
+  | HEAD        | 目前被checkout的分支                                     |
+  | objects/    | 存储所有数据内容                                         |
+  | refs/       | 存储指向数据（分支）的提交对象的指针                     |
+  | index       | 保存暂存区信息                                           |
 
 ## Git对象
 ---
