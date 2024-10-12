@@ -3939,6 +3939,7 @@ f373351 Init libkick.so module here.
 ### 在包含子模块的项目上工作
 
 #### 拉取子模块远程仓库中的修改
+
   * 工作流程：
     在包含子模块的项目中工作的最简流程；
     拉取子模块远程仓库中的最新修改，然后在父项目add/commit以锁定最新的子模块修改；
@@ -4024,6 +4025,7 @@ f373351 Init libkick.so module here.
       ```
 
 #### 从项目远端拉取上游修改
+
   * 前置环境：
     当前位于一个包含子模块的项目中；并且我作为协作者与其他人合作；
     当其他协作者 在主项目 中更新了子模块的锁定时；
@@ -4035,6 +4037,7 @@ f373351 Init libkick.so module here.
     3. 手动更新（即手动检出最新的锁定）
        如果是第一次更新要先`git submodule init`
        如果包含子模块嵌套，还需要添加`--recursive`
+
     ```shell
     git pull
     git submodule update --init --recursive
@@ -4175,12 +4178,12 @@ f373351 Init libkick.so module here.
 
   * 如文档所说，只是同步 *remote URL* 配置；
   * 具体行为：
-    根据 `.gitmodules` 中的配置更新 `.git/config` 以及 `modules/<modulex>` 的配置；
+    根据 `.gitmodules` 中的配置更新 `.git/config` 以及 `modules/<module_name>/config` 的配置；
     （在新版本中，git将子模块`.git` clone到此处；）
     对于后者实际上是修改远程仓库的地址（如下等价的方式）：
     1. `git remote set-url origin <new-url>`
     2. `git remote rm origin`
-       `git remote add origin <new-url`
+       `git remote add origin <new-url>`
     3. `git config -f .git/config remote.origin.url <new-url>`
 
 > 执行`update`或`add`之后，之前说过，Git会在父项目的`.git/modules/`下创建子模块的仓库目录；
@@ -4203,20 +4206,20 @@ f373351 Init libkick.so module here.
   > submodules and updating the working tree of the submodules.
 
   >> 通过以下方式更新子模块到父项目锁定的commit:
-  >> 1. 克隆缺少的submodule(s)
-  >> 2. fetch获取缺少的commit(s)——只在本地缺少锁定commit时才会去fetch，
+  >> 1. **clone**缺少的submodule(s)
+  >> 2. **fetch**获取缺少的commit(s)——只在本地缺少锁定commit时才会去fetch，
   >>    ——只要不缺少，就不会去fetch，即使远端有更新
-  >> 3. 检出锁定commit到working copy
+  >> 3. **checkout**锁定commit到working copy
 
   > The "updating" can be done in several ways depending on command line
-  > options and the value of submodule.<name>.update configuration variable.
+  > options and the value of **submodule.<name>.update** configuration variable.
 
-  >> `update`动作由命令行参数 或者 submodule.<name>.update 配置决定如何执行；
+  >> `update`动作由命令行参数 或者 **submodule.<name>.update** 配置决定如何执行；
 
   > The command line option takes precedence over the configuration variable.
   > If neither is given, a checkout is performed.
 
-  >> 命令行参数 优先 于 submodule.<name>update 配置，同时指定时前者覆盖后者；
+  >> 命令行参数 优先 于 **submodule.<name>.update** 配置，同时指定时前者覆盖后者；
   >> 如果两者都没有给定，缺省执行 `checkout` 动作
 
   > The update procedures supported both from the command line as well as
@@ -4229,7 +4232,7 @@ f373351 Init libkick.so module here.
   >> 即使这个commit指向了某个分支，也仍然是detached的。
   >> （本质上，也就是将commit id写入子模块HEAD，而不是将 分支引用 写入到模块HEAD）
 
-  > If --force is specified, the submodule will be checked out
+  > If **--force** is specified, the submodule will be checked out
   > (using git checkout --force), even if the commit specified in
   > the index of the containing repository already matches the
   > commit checked out in the submodule.
@@ -4250,7 +4253,7 @@ f373351 Init libkick.so module here.
 
   > ---
   > The following update procedures are only available via the
-  > submodule.<name>.update configuration variable:
+  > **submodule.<name>.update** configuration variable:
   > 指的是 `custom command` 与 `none`
 
   > `custom command`
@@ -4279,12 +4282,40 @@ f373351 Init libkick.so module here.
   > details on filter specifications.
 
   > `--remote`
-  >> 1. 只有`submodule update`时可以指定；
-  >> 2. 含义：update缺省只检查子模块锁定commit，`--remote`时缺省fetch跟踪分支并检出之；
-  >> 3. 远端缺省为子模块的remote-origin，即：.git/modules/sub/config branch.<name>remote
-  >> 4. 分支缺省为 .gitmodules .git/config 中配置的 submodule.<name>.branch，
-  >>    如果没有配置，则使用远程仓库HEAD，一般为master
-  >> 5. 对其他操作的影响：原先使用锁定的commit，现在使用跟踪分支:P
+  > This option is only valid for the update command.
+  > Instead of using the superproject’s recorded SHA-1 to update the submodule,
+  > use the status of the **submodule’s remote-tracking branch**.
+  > The remote used is branch’s remote (**branch.<name>.remote**), defaulting to origin.
+  > The remote branch used defaults to the remote HEAD,
+  > but the branch name may be overridden by setting the **submodule.<name>.branch**
+  > option in either .gitmodules or .git/config (with .git/config taking precedence).
+  >> 1. 仅用于 **submodule update**
+  >> 2. update缺省checkout 锁定commit；`--remote`参数使checkout remote-tracking branch
+  >> 3. 缺省仓库为：origin（即缺省的branch.<name>.remote配置）
+  >> 4. 缺省分支为：HEAD（当前所在分支）（如果配置有submodule.<name>.branch，则使用该配置分支）
+  >>    （该配置可以位于.gitmodules或者.git/config）
+  >>    （当前所在分支一般为master）
+
+  > This works for any of the supported update procedures (--checkout, --rebase, etc.).
+  > The only change is the source of the target SHA-1.
+  > For example, submodule update --remote --merge will merge upstream
+  > submodule changes into the submodules, while submodule update
+  > --merge will merge superproject gitlink changes into the submodules.
+
+  > In order to ensure a current tracking branch state, update --remote
+  > fetches the submodule’s remote repository before calculating the SHA-1.
+  > If you don’t want to fetch, you should use submodule update --remote --no-fetch.
+
+  > Use this option to integrate changes from the upstream subproject
+  > with your submodule’s current HEAD.
+  > Alternatively, you can run git pull from the submodule,
+  > which is equivalent except for the remote branch name:
+  > update --remote uses the default upstream repository and submodule.<name>.branch,
+  > while git pull uses the submodule’s branch.<name>.merge.
+  > Prefer submodule.<name>.branch if you want to
+  > distribute the default upstream branch with the superproject and
+  > branch.<name>.merge if you want a more native feel while working in
+  > the submodule itself.
 
   * 总结
     `update`即根据被锁定的子模块commit，以特定的方式 merge/checkout/rebase/commands...
