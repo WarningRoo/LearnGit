@@ -858,16 +858,15 @@ nothing to commit, working directory clean
 * 这里文件名前添加”--“并且，两个横杠两边各有一个空格，用来说明后面是一个文件名，防止git误判，将同名分支检出
 
 * 最近的Git版本中，使用`git status`可以看到都建议使用 `git restore` 与 `git resotre --staged` 来分别撤消未暂存以及已暂存的修改；
-
   原由是：`git reset`功能强大，多用于修改commit历史，且较为复杂存在误操作丢失修改的风险；而专门新增了restore命令用来回退已暂存或以修改的内容；
 
 ## 远程仓库的使用
 
-*   已移动到下一章节
+  * 已移动到下一章节
 
 ## 标记
 
-* **将某个特定的历史版本标记为重要版本的方法**
+  * **将某个特定的历史版本标记为重要版本的方法**
 
 ### 列举标签
 
@@ -1984,7 +1983,7 @@ git push origin new_br	# 会将new_br推送到origin中
 * `merge` review
 
     ```shell
-    初始状态：
+    # 初始状态：
     λ git log --oneline --decorate --all --graph
     * 109caa5 (HEAD -> exp) exp ahead 2
     * 9c01382 exp ahead 1
@@ -2121,7 +2120,7 @@ git push origin new_br	# 会将new_br推送到origin中
     pick 109caa5 exp ahead 2
 
     只需要将第二行pick按照注释提示，修改为squash，保存退出
-    （在emcas中，直接在第二行按下s键，然后C-c C-c make it happen.）
+    （在emacs中，直接在第二行按下s键，然后C-c C-c make it happen.）
 
     # 最终rebase操作完成后，会提示用户重新键入新的commit注释信息
     # 操作完成后状态：
@@ -2593,45 +2592,40 @@ $ ssh-keygen
 
 ## 为项目做贡献
 
-*   为项目做贡献的方式，由三大因素所决定：
+  * 决定贡献方式的三大因素：
 
-    *   活跃贡献者的数量
+    * 活跃贡献者的数量
+      > 随着活跃贡献者数量的增多，仓库接受的提交/合并也会剧增，如何操作才可以保证如下两点？
+      >
+      > * 仓库是否可以轻松地接受commit？
+      > * 修改是否可以简单的合并？
 
-    >   随着活跃贡献者数量的增多，仓库接受的提交/合并也会剧增，如何操作才可以保证如下两点？
-    >
-    >   *   仓库是否可以轻松地接受commit？
-    >   *   修改是否可以简单的合并？
+    * 项目使用的工作流程
+      > 是否时集中式的管理方式？开发人员对主线代码的权限如何？是否由仓库的维护者与整合者？
+      > 不同开发人员的修改合入仓库是否都经过完整评审？评审流程如何？
 
-    *   项目使用的工作流程
-
-    >   是否时集中式的管理方式？开发人员对主线代码的权限如何？是否由仓库的维护者与整合者？
-    >
-    >   不同开发人员的修改合入仓库是否都经过完整评审？评审流程如何？
-
-    *   提交权限
-
-    >   仓库写权限；仓库以何种方式接受贡献？是否存在贡献规范？
+    * 提交权限
+      > 仓库写权限；仓库以何种方式接受贡献？是否存在贡献规范？
 
 ### 提交准则
 
-*   空白错误检查
+  * 空白错误检查
 
     `git diff --check`——暂存之前检查；无法检查已暂存的修改；
 
-    *   行尾空格与制表符
-    *   行首空格与制表符混用
+    * 行尾空格与制表符
+    * 行首空格与制表符混用
 
-*   每一个提交都应该是一个逻辑上的独立变更集
+  * 每一个提交都应该是一个逻辑上的独立变更集
 
-    *   如果多个变更集涉及对同一个文件的修改，考虑使用“交互式暂存”对文件分部分暂存
-    *   使用“重写历史”——生成干净易懂的历史
+    * 如果多个变更集涉及对同一个文件的修改，考虑使用“交互式暂存”对文件分部分暂存
+    * 使用“重写历史”——生成干净易懂的历史
 
-*   提交信息
+  * 提交信息
 
-    *   格式：
-
-    ```
-    修改摘要(<=50字符(25汉字))
+    * 格式：
+      ```
+      修改摘要(<=50字符(25汉字))
 
     更详细的解释文字。在大概 72 个字符的时候换行。
     某些情形下，“修改摘要”被当作电子邮件的标题，剩
@@ -2641,50 +2635,49 @@ $ ssh-keygen
 
     空行接着更进一步的段落。
 
-     - 句号也是可以的。
+        - 句号也是可以的。
+        - 使用 - 或 *，与描述文字间用空格分隔
+        - 不同段用空行分隔
+      ```
 
-     - 使用 - 或 *，与描述文字间用空格分隔
+    * 修改摘要控制再50字符（25汉字）之内
 
-     - 不同段用空行分隔
-    ```
+    * 修改摘要与正文间的空行使必须的
 
-    *   修改摘要控制再50字符（25汉字）之内
+    * 正文每行最好不要超过72（80-4-4，80减去前后缩进）
 
-    *   修改摘要与正文间的空行使必须的
+    * 摘要的一些常见描述：
 
-    *   正文每行最好不要超过72（80-4-4，80减去前后缩进）
+      | Leading active verb | Explanation                       |
+      |---------------------|-----------------------------------|
+      | Add                 | 新增功能，特性，测试，依赖项      |
+      | Cut                 | 删除功能，特性，测试，依赖项      |
+      | Fix                 | 解决一个issue，bug/排版/异常/误报 |
+      | Bump                | 提升版本，如依赖项                |
+      | Make                | 更改构造过程/工具或基础设施       |
+      | Start               | 开始实现，如新建特性              |
+      | Stop                | 终止实现，如删除特性              |
+      | Refactor            | 代码重构                          |
+      | Reformat            | 代码格式化，如空白/缩进等         |
+      | Optimize            | 性能重构                          |
+      | Document            | 文档重构，如帮助文件等            |
 
-    *   摘要的一些常见描述：
+    * 两种commit方式：
 
-    | Leading active verb | Explanation                       |
-    | ------------------- | --------------------------------- |
-    | Add                 | 新增功能，特性，测试，依赖项      |
-    | Cut                 | 删除功能，特性，测试，依赖项      |
-    | Fix                 | 解决一个issue，bug/排版/异常/误报 |
-    | Bump                | 提升版本，如依赖项                |
-    | Make                | 更改构造过程/工具或基础设施       |
-    | Start               | 开始实现，如新建特性              |
-    | Stop                | 终止实现，如删除特性              |
-    | Refactor            | 代码重构                          |
-    | Reformat            | 代码格式化，如空白/缩进等         |
-    | Optimize            | 性能重构                          |
-    | Document            | 文档重构，如帮助文件等            |
+      ```shell
+      git commit -m "Title" -m "Description"
+      # Title会作为摘要部分
+      # Description会作为正文部分
 
-    *   两种commit方式：
-
-    ```
-    # 使用git commit -m "Title" -m "Description"
-    Title会作为摘要部分
-    Description会作为正文部分
-
-    # 使用不带参数的commit，在文本编辑器中操作
-    ```
+      git commit
+      # 使用不带参数的commit，在文本编辑器中操作
+      ```
 
 ### 私有小型团队
 
-*   场景：少量开发者参与的私有项目，任何开发者都具有仓库的推送权限
+  * 场景：少量开发者参与的私有项目，任何开发者都具有仓库的推送权限
 
-*   特点：
+  * 特点：
 
     *   类似集中式版本控制系统
     *   离线提交，分支，合并功能
@@ -3452,16 +3445,16 @@ $ ssh-keygen
 
 ### 储藏工作
   * 命令记录：
-    | Commands                          | Descriptionss                                      |
-    | --------------------------------- | -------------------------------------------------- |
+    | Commands                          | Descriptionss                                 |
+    |-----------------------------------|-----------------------------------------------|
     | git stash                         | 贮藏当前工作目录以及暂存区中的修改                 |
     | ~~git stash save~~                | ~~贮藏当前工作目录及暂存区中的修改~~               |
     | git stash push                    | 贮藏当前工作目录及暂存区中的修改                   |
-    | git stash list                    | 显示当前已贮藏的内容                               |
-    | git stash apply stash@{n}         | 在当前所在分支应用编号为n的贮藏                    |
+    | git stash list                    | 显示当前已贮藏的内容                             |
+    | git stash apply stash@{n}         | 在当前所在分支应用编号为n的贮藏                   |
     | git stash apply stash@{n} --index | 恢复贮藏的同时，暂存之前已暂存的修改               |
-    | git stash drop stash@{n}          | 被应用的贮藏不会自动从栈中移除，该命令用于移除贮藏 |
-    | git stash pop stash@{n}           | 应用于当前分支并移除目标贮藏                       |
+    | git stash drop stash@{n}          | 被应用的贮藏不会自动从栈中移除，该命令用于移除贮藏   |
+    | git stash pop stash@{n}           | 应用于当前分支并移除目标贮藏                     |
 
   * WIP：Work In Progress，半成品，正在制作中
 
@@ -3814,14 +3807,14 @@ $ git merge -S	# 签署合并生成的提交
       新版本的Git，将项目所有子模块的`.git`都放置在了主项目 `.git/modules/xx` 位置
     + 示例：
       ```shell
-$ git submodule add file:///home/queue/src/git/sub.git
-Cloning into '/home/queue/src/git/test/sub'...
-remote: Enumerating objects: 17, done.
-remote: Counting objects: 100% (17/17), done.
-remote: Compressing objects: 100% (16/16), done.
-remote: Total 17 (delta 8), reused 0 (delta 0), pack-reused 0
-Receiving objects: 100% (17/17), done.
-Resolving deltas: 100% (8/8), done.
+      $ git submodule add file:///home/queue/src/git/sub.git
+      Cloning into '/home/queue/src/git/test/sub'...
+      remote: Enumerating objects: 17, done.
+      remote: Counting objects: 100% (17/17), done.
+      remote: Compressing objects: 100% (16/16), done.
+      remote: Total 17 (delta 8), reused 0 (delta 0), pack-reused 0
+      Receiving objects: 100% (17/17), done.
+      Resolving deltas: 100% (8/8), done.
 
 $ git status
 On branch master
@@ -4746,15 +4739,12 @@ f373351 Init libkick.so module here.
 ## 引用规格
 
 ### 推送引用规格
-
 ### 删除引用
 
 ## 传输协议
 
 ### 哑协议
-
 ### 智能协议
-
 ### 协议小结
 
 ## 维护与数据恢复
@@ -4959,7 +4949,7 @@ git push origin refs/heads/serverfix:refs/heads/serverfix
 git push origin serverfix:serverfix
 git push origin sf:serverfix
 git push hello hmaster
- # 如果origin/hmaster不存在，则会在远程仓库中创建之，所以要使用下面这种形式，直接推送合并到远程仓库中的master中
+# 如果origin/hmaster不存在，则会在远程仓库中创建之，所以要使用下面这种形式，直接推送合并到远程仓库中的master中
 git push hello hmaster:master
 
 git remote rename origin new_name
